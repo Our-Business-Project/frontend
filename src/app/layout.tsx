@@ -1,8 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import ThemeRegistry from "@/ThemeRegistry";
-
-const inter = Inter({ subsets: ["latin"] });
+import ThemeRegistry from "@/core/theme/ThemeRegistry";
 
 export const metadata: Metadata = {
   title: "Your Business Adviser | Калькулятор для Вашого Успішного Бізнесу",
@@ -17,7 +14,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body>
         <ThemeRegistry options={{ key: "mui" }}>{children}</ThemeRegistry>
       </body>
     </html>
