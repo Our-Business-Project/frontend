@@ -14,7 +14,6 @@ export default function Footer() {
       sx={{
         backgroundColor: (theme) => theme.palette.grey[800],
         position: "absolute",
-        bottom: 0,
         width: "100%",
         p: 6,
       }}
@@ -22,7 +21,7 @@ export default function Footer() {
       <Container>
         <Grid container spacing={5}>
           <Grid item xs={12} sm={4}>
-            <Typography variant="h7" color="text.primary" gutterBottom>
+            <Typography color="text.primary" gutterBottom>
               About Us
             </Typography>
             <Typography color="text.secondary">
@@ -31,7 +30,7 @@ export default function Footer() {
             </Typography>
           </Grid>
           <Grid item xs={12} sm={4}>
-            <Typography variant="h7" color="text.primary" gutterBottom>
+            <Typography color="text.primary" gutterBottom>
               Contact Us
             </Typography>
             <Typography color="text.secondary">
@@ -45,7 +44,7 @@ export default function Footer() {
             </Typography>
           </Grid>
           <Grid item xs={12} sm={4}>
-            <Typography variant="h7" color="text.primary" gutterBottom>
+            <Typography color="text.primary" gutterBottom>
               Follow Us
             </Typography>
             <Box>
