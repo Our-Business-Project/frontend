@@ -12,7 +12,7 @@ export default function Footer() {
     <Box
       component="footer"
       sx={{
-        backgroundColor: (theme) => theme.palette.grey[800],
+        backgroundColor: "primary.main",
         position: "absolute",
         width: "100%",
         p: 6,
@@ -21,53 +21,52 @@ export default function Footer() {
       <Container>
         <Grid container spacing={5}>
           <Grid item xs={12} sm={4}>
-            <Typography color="text.primary" gutterBottom>
+            <Typography gutterBottom>
               About Us
             </Typography>
-            <Typography color="text.secondary">
+            <Typography>
               We are XYZ company, dedicated to providing the best service to our
               customers.
             </Typography>
           </Grid>
           <Grid item xs={12} sm={4}>
-            <Typography color="text.primary" gutterBottom>
+            <Typography gutterBottom>
               Contact Us
             </Typography>
-            <Typography color="text.secondary">
+            <Typography >
               123 Main Street, Anytown, USA
             </Typography>
-            <Typography color="text.secondary">
+            <Typography >
               Email: info@example.com
             </Typography>
-            <Typography color="text.secondary">
+            <Typography >
               Phone: +1 234 567 8901
             </Typography>
           </Grid>
           <Grid item xs={12} sm={4}>
-            <Typography color="text.primary" gutterBottom>
+            <Typography  gutterBottom>
               Follow Us
             </Typography>
             <Box>
-              <Link href="https://www.facebook.com/" color="inherit">
+              <Link href="https://www.facebook.com/">
                 <Facebook />
               </Link>
               <Link
                 href="https://www.instagram.com/"
-                color="inherit"
                 sx={{ pl: 1, pr: 1 }}
               >
                 <Instagram />
               </Link>
-              <Link href="https://www.twitter.com/" color="inherit">
+              <Link href="https://www.twitter.com/" >
                 <Twitter />
               </Link>
             </Box>
           </Grid>
         </Grid>
         <Box mt={5}>
-          <Typography color="text.secondary" align="center">
+          <Typography  align="center">
             {"Copyright © "}
-            <Link color="inherit" href="https://your-website.com/">
+            <Link href="https://your-website.com/">
               Your Website
             </Link>{" "}
             {new Date().getFullYear()}
