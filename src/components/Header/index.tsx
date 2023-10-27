@@ -8,13 +8,10 @@ import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import { Divider } from "@mui/material";
 
-const pages = ["головна сторінка", "Калькулятор", "Мій профіль"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 export default function Header() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
