@@ -5,6 +5,13 @@ export const customTheme = createTheme({
   typography: {
     fontFamily: "Montserrat",
     fontSize: 18,
+    h1: {
+      fontSize: "40px",
+      fontWeight: "700",
+    },
+    h2: {
+      fontSize: "34px",
+    },
     button: {
       textTransform: "none",
     },
@@ -12,16 +19,15 @@ export const customTheme = createTheme({
   palette: {
     // mode:"dark",
     primary: {
-      main: "rgba(36, 175, 122, 0.9)",
-      light: "rgba(172, 226, 200, 1)",
-      dark: "rgba(172, 226, 200, 1)",
+      main: "rgba(36, 175, 122, 1)",
+      light: "rgba(36, 175, 122, 0.9)",
     },
     background: {
-      default: "#ACE2C8",
+      default: "#E4F1EC",
     },
     text: {
       primary: "rgba(255, 255, 255, 1)",
-      secondary: "rgba(255, 255, 255, 0.8)",
+      secondary: "#00643E",
     },
     action: {
       active: "rgba(255, 255, 255, 0.8)",

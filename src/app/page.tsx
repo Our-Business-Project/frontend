@@ -1,4 +1,8 @@
-import { Box, Container } from "@mui/material";
+import { Box, Container, Typography} from "@mui/material";
+import Intro from "@/components/Intro";
+import CalcInput from "@/components/CustomElemnts/CalcInput";
+
+import * as React from "react";
 
 export default function Home() {
   return (
@@ -14,60 +18,29 @@ export default function Home() {
         backgroundAttachment: "fixed",
       }}
     >
-      <Container
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          flexDirection: "column",
-        }}
-      >
-        <Box
-          sx={{
-            bgcolor: "primary.main",
-            height: "500px",
-            width: "800px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            margin: "200px",
-          }}
-        >
+      <Intro />
+      <Box sx={{ height: "1000px", bgcolor: "background.default" }}>
+        <Container>
+          <Typography
+            variant="h2"
+            sx={{
+              color: "text.secondary",
+            }}
+          >
+            odjdoc
+          </Typography>
           <Box>
-            <h1>Hello, gays</h1>
+            <CalcInput measure="шт" label="План виробництва"></CalcInput>
+            <CalcInput measure="грн" label="Собівартість товару"></CalcInput>
+            <CalcInput measure="грн" label="Ціна за одиницю товару"></CalcInput>
+            <CalcInput measure="грн" label="Бажаю заробити"></CalcInput>
           </Box>
-        </Box>
-        <Box
-          sx={{
-            bgcolor: "primary.main",
-            height: "500px",
-            width: "800px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            margin: "200px",
-          }}
-        >
-          <Box>
-            <h1>Hello, gays</h1>
-          </Box>
-        </Box>
-        <Box
-          sx={{
-            bgcolor: "primary.main",
-            height: "500px",
-            width: "800px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            margin: "200px",
-          }}
-        >
-          <Box>
-            <h1>Hello, gays</h1>
-          </Box>
-        </Box>
-      </Container>
+          <CalcInput measure="шт" label="План виробництва"></CalcInput>
+          <CalcInput measure="грн" label="Собівартість товару"></CalcInput>
+          <CalcInput measure="грн" label="Ціна за одиницю товару"></CalcInput>
+          <CalcInput measure="грн" label="Бажаю заробити"></CalcInput>
+        </Container>
+      </Box>
     </Box>
   );
 }
