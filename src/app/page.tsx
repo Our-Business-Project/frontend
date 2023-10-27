@@ -1,4 +1,4 @@
-import { Box, Container, Typography} from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import Intro from "@/components/Intro";
 import CalcInput from "@/components/CustomElemnts/CalcInput";
 
@@ -27,9 +27,9 @@ export default function Home() {
               color: "text.secondary",
             }}
           >
-            odjdoc
+            Загальна інформація (обов'язково)
           </Typography>
-          <Box>
+          <Box sx ={{}}>
             <CalcInput measure="шт" label="План виробництва"></CalcInput>
             <CalcInput measure="грн" label="Собівартість товару"></CalcInput>
             <CalcInput measure="грн" label="Ціна за одиницю товару"></CalcInput>
