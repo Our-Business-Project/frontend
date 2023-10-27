@@ -1,27 +1,22 @@
 import { Box, Typography } from '@mui/material';
 
-export default function CategoryLayout({ children }: { children: React.ReactNode }) {
+export default function CategoryLayout({ children, title }: { children: React.ReactNode; title: string }) {
   return (
     <Box>
       <Typography
         variant="h2"
         sx={{
-          pt: '50px',
+          pt: '100px',
           color: 'text.secondary',
           textAlign: 'center',
         }}
       >
-        Загальна інформація (обов'язково)
+        {title}
       </Typography>
       <Box
         sx={{
-          display: 'flex',
-          alignItems: 'center',
-          textAlign: 'center',
-          padding: '0',
-          margin: '0',
-          justifyContent: 'center',
-          flexWrap: 'wrap',
+          display: 'grid',
+          gridTemplateColumns: 'repeat(3, 1fr)',
         }}
       >
         {children}

@@ -1,10 +1,12 @@
+'use client';
 import { Box, Container } from '@mui/material';
-import Intro from '@/components/Intro';
-import CategoryLayout from '@/components/CustomElemnts/CalcInput';
-import CalcInput from '@/components/CustomElemnts/CalcInput';
+import Intro from '@/components/HomeComponents/Intro';
+import FormFields from '@/components/HomeComponents/FormFields';
 import * as React from 'react';
+import PopupLayout from '@/components/PopUpComponents/PopupLayout';
 
 export default function Home() {
+
   return (
     <Box
       sx={{
@@ -21,12 +23,7 @@ export default function Home() {
       <Intro />
       <Box sx={{ height: '1000px', bgcolor: 'background.default' }}>
         <Container>
-          {/* <CategoryLayout> */}
-          <CalcInput measure="шт" label="План виробництва"></CalcInput>
-          <CalcInput measure="грн" label="Собівартість товару"></CalcInput>
-          <CalcInput measure="грн" label="Ціна за одиницю товару"></CalcInput>
-          <CalcInput measure="грн" label="Бажаю заробити"></CalcInput>
-          {/* </CategoryLayout> */}
+          <FormFields />
         </Container>
       </Box>
     </Box>

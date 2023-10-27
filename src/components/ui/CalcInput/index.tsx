@@ -1,8 +1,28 @@
 import { Divider, FormHelperText, FormControl, InputAdornment, OutlinedInput } from '@mui/material';
+import * as React from 'react';
+import PopupLayout from '@/components/PopUpComponents/PopupLayout';
 
-export default function CalcInput({ measure, label }: { measure: string; label: string }) {
+export default function CalcInput({
+  measure,
+  label,
+  switcher,
+}: {
+  measure: string;
+  label: string;
+  switcher?: boolean | false;
+}) {
+  const [open, setOpen] = React.useState(true);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
-    <FormControl sx={{ m: 1, maxWidth: '260px', margin: '40px' }} variant="outlined">
+    <FormControl sx={{ m: 1, maxWidth: '260px', margin: '20px' }} variant="outlined" onClick={handleClickOpen}>
       <FormHelperText sx={{ color: 'text.secondary', fontSize: '18px', m: '0' }} id="outlined-weight-helper-text">
         {label}
       </FormHelperText>
@@ -26,6 +46,7 @@ export default function CalcInput({ measure, label }: { measure: string; label: 
         }
         aria-describedby="outlined-weight-helper-text"
       />
+      {switcher && <PopupLayout handleClose={handleClose} open={open} />}
     </FormControl>
   );
 }

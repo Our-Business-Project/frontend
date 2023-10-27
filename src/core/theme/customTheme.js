@@ -4,7 +4,7 @@ import '@fontsource/montserrat';
 export const customTheme = createTheme({
   typography: {
     fontFamily: 'Montserrat',
-    fontSize: 18,
+    fontSize: 16,
     h1: {
       fontSize: '40px',
       fontWeight: '700',
@@ -27,7 +27,7 @@ export const customTheme = createTheme({
     },
     text: {
       primary: 'rgba(255, 255, 255, 1)',
-      secondary: '#00643E',
+      secondary: '#00452B',
     },
     action: {
       active: 'rgba(255, 255, 255, 0.8)',
