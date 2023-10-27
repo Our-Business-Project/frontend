@@ -1,3 +1,4 @@
+.next
 dist
 commitlint.config.ts
 next-env.d.ts

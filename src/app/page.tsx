@@ -1,35 +1,35 @@
-import { Box, Container, Typography } from "@mui/material";
-import Intro from "@/components/Intro";
-import CalcInput from "@/components/CustomElemnts/CalcInput";
+import { Box, Container, Typography } from '@mui/material';
+import Intro from '@/components/Intro';
+import CalcInput from '@/components/CustomElemnts/CalcInput';
 
-import * as React from "react";
+import * as React from 'react';
 
 export default function Home() {
   return (
     <Box
       sx={{
-        padding: "0",
-        margin: "0",
+        padding: '0',
+        margin: '0',
         backgroundImage: `url(https://cdn.comss.net/img/092022/microsoft-edge.jpg?aspect_ratio=3:2)`,
-        backgroundSize: "cover",
-        backgroundPosition: " center center",
-        backgroundRepeat: "no-repeat",
-        height: "100%",
-        backgroundAttachment: "fixed",
+        backgroundSize: 'cover',
+        backgroundPosition: ' center center',
+        backgroundRepeat: 'no-repeat',
+        height: '100%',
+        backgroundAttachment: 'fixed',
       }}
     >
       <Intro />
-      <Box sx={{ height: "1000px", bgcolor: "background.default" }}>
+      <Box sx={{ height: '1000px', bgcolor: 'background.default' }}>
         <Container>
           <Typography
             variant="h2"
             sx={{
-              color: "text.secondary",
+              color: 'text.secondary',
             }}
           >
             Загальна інформація (обов'язково)
           </Typography>
-          <Box sx ={{}}>
+          <Box sx={{}}>
             <CalcInput measure="шт" label="План виробництва"></CalcInput>
             <CalcInput measure="грн" label="Собівартість товару"></CalcInput>
             <CalcInput measure="грн" label="Ціна за одиницю товару"></CalcInput>

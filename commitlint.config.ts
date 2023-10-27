@@ -14,29 +14,29 @@ Examples:
 `;
 
 const configuration: UserConfig = {
-    parserPreset: {
-        parserOpts: {
-            headerPattern: COMMIT_MESSAGE_REGEXP,
-            headerCorrespondence: ['modifier', 'description'],
-        },
+  parserPreset: {
+    parserOpts: {
+      headerPattern: COMMIT_MESSAGE_REGEXP,
+      headerCorrespondence: ['modifier', 'description'],
     },
-    defaultIgnores: true,
-    plugins: [
-        {
-            rules: {
-                'commit-message-match': ({ header }): [true] | [false, string] => {
-                    if (!COMMIT_MESSAGE_REGEXP.test(header)) {
-                        return [false, COMMIT_MESSAGE_MATCH_RULE_MESSAGE];
-                    }
+  },
+  defaultIgnores: true,
+  plugins: [
+    {
+      rules: {
+        'commit-message-match': ({ header }): [true] | [false, string] => {
+          if (!COMMIT_MESSAGE_REGEXP.test(header)) {
+            return [false, COMMIT_MESSAGE_MATCH_RULE_MESSAGE];
+          }
 
-                    return [true];
-                },
-            },
+          return [true];
         },
-    ],
-    rules: {
-        'commit-message-match': [2, 'always'],
+      },
     },
+  ],
+  rules: {
+    'commit-message-match': [2, 'always'],
+  },
 };
 
 export default configuration;
