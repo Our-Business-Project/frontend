@@ -2,14 +2,8 @@ import { Divider, FormHelperText, FormControl, InputAdornment, OutlinedInput } f
 
 export default function CalcInput({ measure, label }: { measure: string; label: string }) {
   return (
-    <FormControl
-      sx={{ m: 1, maxWidth: "260px", margin: "40px" }}
-      variant="outlined"
-    >
-      <FormHelperText
-        sx={{ color: "text.secondary", fontSize: "18px", m: "0" }}
-        id="outlined-weight-helper-text"
-      >
+    <FormControl sx={{ m: 1, maxWidth: '260px', margin: '40px' }} variant="outlined">
+      <FormHelperText sx={{ color: 'text.secondary', fontSize: '18px', m: '0' }} id="outlined-weight-helper-text">
         {label}
       </FormHelperText>
       <OutlinedInput

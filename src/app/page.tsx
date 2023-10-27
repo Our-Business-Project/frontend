@@ -1,8 +1,8 @@
-import { Box, Container } from "@mui/material";
-import Intro from "@/components/Intro";
-import CategoryLayout from "@/components/CustomElemnts/CalcInput";
-import CalcInput from "@/components/CustomElemnts/CalcInput";
-import * as React from "react";
+import { Box, Container } from '@mui/material';
+import Intro from '@/components/Intro';
+import CategoryLayout from '@/components/CustomElemnts/CalcInput';
+import CalcInput from '@/components/CustomElemnts/CalcInput';
+import * as React from 'react';
 
 export default function Home() {
   return (
@@ -22,10 +22,10 @@ export default function Home() {
       <Box sx={{ height: '1000px', bgcolor: 'background.default' }}>
         <Container>
           {/* <CategoryLayout> */}
-            <CalcInput measure="шт" label="План виробництва"></CalcInput>
-            <CalcInput measure="грн" label="Собівартість товару"></CalcInput>
-            <CalcInput measure="грн" label="Ціна за одиницю товару"></CalcInput>
-            <CalcInput measure="грн" label="Бажаю заробити"></CalcInput>
+          <CalcInput measure="шт" label="План виробництва"></CalcInput>
+          <CalcInput measure="грн" label="Собівартість товару"></CalcInput>
+          <CalcInput measure="грн" label="Ціна за одиницю товару"></CalcInput>
+          <CalcInput measure="грн" label="Бажаю заробити"></CalcInput>
           {/* </CategoryLayout> */}
         </Container>
       </Box>
