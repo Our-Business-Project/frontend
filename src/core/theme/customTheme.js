@@ -7,10 +7,14 @@ export const customTheme = createTheme({
     fontSize: 18,
     h1: {
       fontSize: '40px',
-      fontWeight: '700',
+      fontWeight: 700,
     },
     h2: {
       fontSize: '34px',
+    },
+    h3: {
+      fontSize: '32px',
+      fontWeight: 500,
     },
     button: {
       textTransform: 'none',
@@ -41,8 +45,7 @@ export const customTheme = createTheme({
       styleOverrides: {
         body: {
           overflow: 'auto!important',
-          padding: '0!important',
-          marginTop: 64,
+          padding: '64px 0 0 0!important',
         },
       },
     },

@@ -1,8 +1,8 @@
 import { Controller } from 'react-hook-form';
-import TextField from '@mui/material/TextField';
+import TextField, { TextFieldProps } from '@mui/material/TextField';
 import { Props } from './props';
 
-export default function ParentInput({ name, control, label }: Props) {
+export default function ParentInput({ name, control, label, ...props }: Props & TextFieldProps) {
   return (
     <Controller
       name={name}
@@ -16,7 +16,8 @@ export default function ParentInput({ name, control, label }: Props) {
           value={value}
           fullWidth
           label={label}
-          variant="outlined"
+          variant="standard"
+          {...props}
         />
       )}
     />
