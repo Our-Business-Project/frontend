@@ -1,7 +1,7 @@
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import Intro from "@/components/Intro";
+import CategoryLayout from "@/components/CustomElemnts/CalcInput";
 import CalcInput from "@/components/CustomElemnts/CalcInput";
-
 import * as React from "react";
 
 export default function Home() {
@@ -21,24 +21,12 @@ export default function Home() {
       <Intro />
       <Box sx={{ height: "1000px", bgcolor: "background.default" }}>
         <Container>
-          <Typography
-            variant="h2"
-            sx={{
-              color: "text.secondary",
-            }}
-          >
-            Загальна інформація (обов'язково)
-          </Typography>
-          <Box sx ={{}}>
+          {/* <CategoryLayout> */}
             <CalcInput measure="шт" label="План виробництва"></CalcInput>
             <CalcInput measure="грн" label="Собівартість товару"></CalcInput>
             <CalcInput measure="грн" label="Ціна за одиницю товару"></CalcInput>
             <CalcInput measure="грн" label="Бажаю заробити"></CalcInput>
-          </Box>
-          <CalcInput measure="шт" label="План виробництва"></CalcInput>
-          <CalcInput measure="грн" label="Собівартість товару"></CalcInput>
-          <CalcInput measure="грн" label="Ціна за одиницю товару"></CalcInput>
-          <CalcInput measure="грн" label="Бажаю заробити"></CalcInput>
+          {/* </CategoryLayout> */}
         </Container>
       </Box>
     </Box>
