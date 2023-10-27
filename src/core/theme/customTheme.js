@@ -32,6 +32,9 @@ export const customTheme = createTheme({
     action: {
       active: 'rgba(255, 255, 255, 0.8)',
     },
+    error: {
+      main: '#e41749',
+    },
   },
   components: {
     MuiCssBaseline: {
@@ -39,6 +42,7 @@ export const customTheme = createTheme({
         body: {
           overflow: 'auto!important',
           padding: '0!important',
+          marginTop: 64,
         },
       },
     },

@@ -1,6 +1,6 @@
 import { Box, Container, Typography } from '@mui/material';
 import Intro from '../components/HomeComponents/Intro';
-import CalcInput from '../components/ui/CalcInput';
+import CalcInput from '../components/ui/InputComponents/CalcInput';
 
 import * as React from 'react';
 
