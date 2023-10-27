@@ -33,4 +33,14 @@ export const customTheme = createTheme({
       active: 'rgba(255, 255, 255, 0.8)',
     },
   },
+  components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: {
+          overflow: 'auto!important',
+          padding: '0!important',
+        },
+      },
+    },
+  },
 });
