@@ -11,7 +11,7 @@ export default function CalcInput({
   label: string;
   switcher?: boolean | false;
 }) {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState<boolean>(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -22,10 +22,11 @@ export default function CalcInput({
   };
 
   return (
-    <FormControl sx={{ m: 1, maxWidth: '260px', margin: '20px' }} variant="outlined" onClick={handleClickOpen}>
-      <FormHelperText sx={{ color: 'text.secondary', fontSize: '18px', m: '0' }} id="outlined-weight-helper-text">
-        {label}
-      </FormHelperText>
+    <FormControl sx={{ m: 1, maxWidth: '260px', margin: '20px' }} variant="outlined">
+      <FormHelperText
+        sx={{ color: 'text.secondary', fontSize: '18px', m: '0' }}
+        id="outlined-weight-helper-text"
+      ></FormHelperText>
       <OutlinedInput
         sx={{ bgcolor: 'primary.main', borderColor: 'text.primary' }}
         endAdornment={
@@ -45,6 +46,7 @@ export default function CalcInput({
           </InputAdornment>
         }
         aria-describedby="outlined-weight-helper-text"
+        onClick={handleClickOpen}
       />
       {switcher && <PopupLayout handleClose={handleClose} open={open} />}
     </FormControl>

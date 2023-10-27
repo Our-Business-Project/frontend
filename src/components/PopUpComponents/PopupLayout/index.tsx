@@ -7,8 +7,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import ExpensesFields from '../ExpensesFields';
 
-export default function PopupLayout({ handleClose, open }: { handleClose: () => void, open: boolean }) {
-
+export default function PopupLayout({ handleClose, open }: { handleClose: () => void; open: boolean }) {
   return (
     <Dialog maxWidth="md" open={open} onClose={handleClose} aria-labelledby="responsive-dialog-title">
       <DialogTitle color={'text.secondary'} id="responsive-dialog-title">
