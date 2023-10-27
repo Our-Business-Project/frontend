@@ -8,18 +8,18 @@ export default function Home() {
   return (
     <Box
       sx={{
-        padding: "0",
-        margin: "0",
+        padding: '0',
+        margin: '0',
         backgroundImage: `url(https://cdn.comss.net/img/092022/microsoft-edge.jpg?aspect_ratio=3:2)`,
-        backgroundSize: "cover",
-        backgroundPosition: " center center",
-        backgroundRepeat: "no-repeat",
-        height: "100%",
-        backgroundAttachment: "fixed",
+        backgroundSize: 'cover',
+        backgroundPosition: ' center center',
+        backgroundRepeat: 'no-repeat',
+        height: '100%',
+        backgroundAttachment: 'fixed',
       }}
     >
       <Intro />
-      <Box sx={{ height: "1000px", bgcolor: "background.default" }}>
+      <Box sx={{ height: '1000px', bgcolor: 'background.default' }}>
         <Container>
           {/* <CategoryLayout> */}
             <CalcInput measure="шт" label="План виробництва"></CalcInput>

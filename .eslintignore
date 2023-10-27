@@ -1,0 +1,6 @@
+.next
+dist
+commitlint.config.ts
+next-env.d.ts
+next.config.js
+tsconfig.json

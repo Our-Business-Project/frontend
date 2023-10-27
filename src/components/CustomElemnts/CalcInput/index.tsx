@@ -1,10 +1,4 @@
-import {
-  Divider,
-  FormHelperText,
-  FormControl,
-  InputAdornment,
-  OutlinedInput,
-} from "@mui/material";
+import { Divider, FormHelperText, FormControl, InputAdornment, OutlinedInput } from '@mui/material';
 
 export default function CalcInput({ measure, label }: { measure: string; label: string }) {
   return (
@@ -19,18 +13,18 @@ export default function CalcInput({ measure, label }: { measure: string; label: 
         {label}
       </FormHelperText>
       <OutlinedInput
-        sx={{ bgcolor: "primary.main", borderColor: "text.primary" }}
+        sx={{ bgcolor: 'primary.main', borderColor: 'text.primary' }}
         endAdornment={
           <InputAdornment position="end">
             <Divider
               orientation="horizontal"
               variant="fullWidth"
               sx={{
-                height: "calc(1.4375em + 17px)",
-                margin: "0 17px",
-                padding: "0",
-                borderColor: "text.primary",
-                borderWidth: "1px",
+                height: 'calc(1.4375em + 17px)',
+                margin: '0 17px',
+                padding: '0',
+                borderColor: 'text.primary',
+                borderWidth: '1px',
               }}
             />
             {measure}
