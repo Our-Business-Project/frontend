@@ -1,29 +1,36 @@
+import { Ref, forwardRef } from 'react';
 import { Controller } from 'react-hook-form';
 import { styled } from '@mui/material';
 import TextField, { TextFieldProps } from '@mui/material/TextField';
 import { Props } from './props';
 
-export default function DefaultInput({ name, control, label, ...props }: Props & TextFieldProps) {
+function MyFormInput({ name, control, label, ...props }: Props & TextFieldProps, ref: Ref<any>) {
   return (
     <Controller
       name={name}
       control={control}
-      render={({ field: { onChange, value }, fieldState: { error } }) => (
+      defaultValue=""
+      render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
         <CustomTextField
           helperText={error ? error.message : null}
           size="small"
           error={!!error}
-          onChange={onChange}
-          value={value}
           fullWidth
           label={label}
           variant="standard"
           {...props}
+          onBlur={onBlur}
+          onChange={onChange}
+          value={value}
+          inputRef={ref}
         />
       )}
     />
   );
 }
+
+const FormInput = forwardRef(MyFormInput);
+export default FormInput;
 
 const CustomTextField = styled(TextField)(({ theme }) => ({
   '& label': {

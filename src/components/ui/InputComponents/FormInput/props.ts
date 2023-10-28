@@ -6,3 +6,4 @@ export declare interface Props {
   control: Control<FieldValues> | undefined;
   label: ReactNode;
 }
+export type Ref = HTMLInputElement;

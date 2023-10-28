@@ -1,20 +1,26 @@
 import { useForm, SubmitHandler, FieldValues } from 'react-hook-form';
+import { joiResolver } from '@hookform/resolvers/joi';
 import { Box, BoxProps, Button, useTheme } from '@mui/material';
-import { useContext } from 'react';
-import DefaultInput from '../../ui/InputComponents/DefaultInput';
+import { useContext, useRef } from 'react';
+import FormInput from '../../ui/InputComponents/FormInput';
 import { AuthContext } from '@/core/contexts/Auth.context';
+import { signInSchema } from '@/core/validation/signIn.validation';
 
 interface IFormInput {
   email: string;
   password: string;
 }
 
+const defaultValues = {
+  email: '',
+  password: '',
+};
+
 export default function SignInForm(props: BoxProps) {
-  const { control, handleSubmit } = useForm({
-    defaultValues: {
-      email: '',
-      password: '',
-    },
+  const { control, register, handleSubmit } = useForm({
+    defaultValues,
+    resolver: joiResolver(signInSchema),
+    mode: 'onChange',
   } as FieldValues);
 
   const theme = useTheme();
@@ -30,8 +36,8 @@ export default function SignInForm(props: BoxProps) {
       {authContext?.auth.data?.user.firstName}
       <form onSubmit={handleSubmit(onSubmit as SubmitHandler<FieldValues>)}>
         <Box display="flex" flexDirection="column" rowGap="75px">
-          <DefaultInput name={'email'} control={control} label={'Пошта'} />
-          <DefaultInput name={'password'} control={control} label={'Пароль'} />
+          <FormInput control={control} label="Пошта" {...register('email')} />
+          <FormInput control={control} label="Пароль" {...register('password')} type="password" />
           <Button
             sx={{
               margin: '25px auto 0',
@@ -53,6 +59,7 @@ export default function SignInForm(props: BoxProps) {
                 borderColor: theme.palette.primary.light,
               },
             }}
+            type="submit"
           >
             Увійти
           </Button>
