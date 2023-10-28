@@ -24,7 +24,7 @@ export default function Header() {
   };
 
   return (
-    <AppBar position="fixed">
+    <AppBar position="fixed" sx={{ padding: '0!important' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography

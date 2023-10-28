@@ -2,10 +2,10 @@
 import { Box, Container, Typography } from '@mui/material';
 import Intro from '@/components/HomeComponents/Intro';
 import FormFields from '@/components/HomeComponents/FormFields';
+
 import * as React from 'react';
 
-export default function Home() {
-
+export default function HomePage() {
   return (
     <Box
       sx={{
@@ -20,7 +20,7 @@ export default function Home() {
       }}
     >
       <Intro />
-      <Box sx={{ p:'50px 0', bgcolor: 'background.default' }}>
+      <Box sx={{ p: '50px 0', bgcolor: 'background.default' }}>
         <Container>
           <FormFields />
         </Container>

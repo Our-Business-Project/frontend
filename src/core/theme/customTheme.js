@@ -7,10 +7,14 @@ export const customTheme = createTheme({
     fontSize: 16,
     h1: {
       fontSize: '40px',
-      fontWeight: '700',
+      fontWeight: 700,
     },
     h2: {
       fontSize: '34px',
+    },
+    h3: {
+      fontSize: '32px',
+      fontWeight: 500,
     },
     button: {
       // textTransform: 'none',
@@ -33,6 +37,19 @@ export const customTheme = createTheme({
     },
     action: {
       active: 'rgba(255, 255, 255, 0.8)',
+    },
+    error: {
+      main: '#e41749',
+    },
+  },
+  components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: {
+          overflow: 'auto!important',
+          padding: '64px 0 0 0!important',
+        },
+      },
     },
   },
 });
