@@ -4,7 +4,7 @@ import CalcInput from '../components/ui/InputComponents/CalcInput';
 
 import * as React from 'react';
 
-export default function Home() {
+export default function HomePage() {
   return (
     <Box
       sx={{

@@ -2,15 +2,15 @@ import { useForm, SubmitHandler, FieldValues } from 'react-hook-form';
 import DefaultInput from '../../ui/InputComponents/DefaultInput';
 
 interface IFormInput {
-  firstName: string;
-  lastName: string;
+  email: string;
+  password: string;
 }
 
 export default function SignInForm() {
   const { control, handleSubmit } = useForm({
     defaultValues: {
-      firstName: '',
-      lastName: '',
+      email: '',
+      password: '',
     },
   } as FieldValues);
 
@@ -20,8 +20,8 @@ export default function SignInForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit as SubmitHandler<FieldValues>)}>
-      <DefaultInput name={'firstName'} control={control} label={"Ім'я"} />
-      <DefaultInput name={'lastName'} control={control} label={'Фамілія'} />
+      <DefaultInput name={'email'} control={control} label={'Пошта'} />
+      <DefaultInput name={'password'} control={control} label={'Пароль'} />
       <input type="submit" />
     </form>
   );
