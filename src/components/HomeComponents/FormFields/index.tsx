@@ -1,5 +1,5 @@
-import CategoryLayout from "@/components/CategoryLayout";
-import CalcInput from "@/components/ui/CalcInput";
+import CategoryLayout from '@/components/CategoryLayout';
+import CalcInput from '@/components/ui/InputComponents/CalcInput';
 
 export default function FormFields() {
   const inputFields = [

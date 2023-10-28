@@ -1,5 +1,5 @@
 import * as React from 'react';
-import CalcInput from '@/components/ui/CalcInput';
+import CalcInput from '@/components/ui/InputComponents/CalcInput';
 import { Box } from '@mui/material';
 
 export default function ExpensesFields() {
