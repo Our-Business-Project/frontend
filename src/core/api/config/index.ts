@@ -1,5 +1,5 @@
-const apiRoot = process.env.REACT_APP_URL_API;
+const apiRoot = process.env.BACKEND_API_URL;
 
 const authUrl = apiRoot + '/auth';
-export const signIn = authUrl + '/sign-in';
-export const signUp = authUrl + '/sign-up';
+export const signInUrl = authUrl + '/sign-in';
+export const signUpUrl = authUrl + '/sign-up';
