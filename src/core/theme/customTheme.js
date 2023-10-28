@@ -4,7 +4,7 @@ import '@fontsource/montserrat';
 export const customTheme = createTheme({
   typography: {
     fontFamily: 'Montserrat',
-    fontSize: 18,
+    fontSize: 16,
     h1: {
       fontSize: '40px',
       fontWeight: '700',
@@ -13,21 +13,23 @@ export const customTheme = createTheme({
       fontSize: '34px',
     },
     button: {
-      textTransform: 'none',
+      // textTransform: 'none',
+    },
+    body2: {
+      fontSize: '14px',
     },
   },
   palette: {
-    // mode:"dark",
     primary: {
       main: 'rgba(36, 175, 122, 1)',
-      light: 'rgba(36, 175, 122, 0.9)',
+      light: 'rgba(36, 175, 122, 0.8)',
     },
     background: {
       default: '#E4F1EC',
     },
     text: {
       primary: 'rgba(255, 255, 255, 1)',
-      secondary: '#00643E',
+      secondary: '#00452B',
     },
     action: {
       active: 'rgba(255, 255, 255, 0.8)',
