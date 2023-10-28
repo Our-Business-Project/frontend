@@ -13,14 +13,16 @@ export const customTheme = createTheme({
       fontSize: '34px',
     },
     button: {
-      textTransform: 'none',
+      // textTransform: 'none',
+    },
+    body2: {
+      fontSize: '14px',
     },
   },
   palette: {
-    // mode:"dark",
     primary: {
       main: 'rgba(36, 175, 122, 1)',
-      light: 'rgba(36, 175, 122, 0.9)',
+      light: 'rgba(36, 175, 122, 0.8)',
     },
     background: {
       default: '#E4F1EC',

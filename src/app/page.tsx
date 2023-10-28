@@ -1,9 +1,8 @@
 'use client';
-import { Box, Container } from '@mui/material';
+import { Box, Container, Typography } from '@mui/material';
 import Intro from '@/components/HomeComponents/Intro';
 import FormFields from '@/components/HomeComponents/FormFields';
 import * as React from 'react';
-import PopupLayout from '@/components/PopUpComponents/PopupLayout';
 
 export default function Home() {
 
@@ -21,7 +20,7 @@ export default function Home() {
       }}
     >
       <Intro />
-      <Box sx={{ height: '1000px', bgcolor: 'background.default' }}>
+      <Box sx={{ p:'50px 0', bgcolor: 'background.default' }}>
         <Container>
           <FormFields />
         </Container>

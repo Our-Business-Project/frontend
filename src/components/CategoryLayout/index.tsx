@@ -6,7 +6,6 @@ export default function CategoryLayout({ children, title }: { children: React.Re
       <Typography
         variant="h2"
         sx={{
-          pt: '100px',
           color: 'text.secondary',
           textAlign: 'center',
         }}
@@ -15,8 +14,9 @@ export default function CategoryLayout({ children, title }: { children: React.Re
       </Typography>
       <Box
         sx={{
+          justifyItems: 'center',
+          gridTemplateColumns: { xs: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)', lg: 'repeat(3, 1fr)' },
           display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
         }}
       >
         {children}

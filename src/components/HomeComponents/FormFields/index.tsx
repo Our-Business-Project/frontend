@@ -3,11 +3,11 @@ import CalcInput from "@/components/ui/CalcInput";
 
 export default function FormFields() {
   const inputFields = [
-    { measure: "шт", label: "План виробництва" },
-    { measure: "грн", label: "Собівартість товару" },
-    { measure: "грн", label: "Ціна за одиницю товару" },
-    { measure: "грн", label: "Бажаю заробити" },
-    { measure: "грн", label: "Постійні витрати", switcher: true }
+    { measure: 'шт', label: 'План виробництва' },
+    { measure: 'грн', label: 'Собівартість товару' },
+    { measure: 'грн', label: 'Ціна за одиницю товару' },
+    { measure: 'грн', label: 'Бажаю заробити' },
+    { measure: 'грн', label: 'Постійні витрати', helper: true },
   ];
 
   return (
