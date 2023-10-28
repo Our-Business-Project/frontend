@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
-import ThemeRegistry from '../core/theme/ThemeRegistry';
-import Header from '../components/global/Header';
-import Footer from '../components/global/Footer';
+import ThemeRegistry from '@/core/theme/ThemeRegistry';
+import Header from '@/components/global/Header';
+import Footer from '@/components/global/Footer';
 
 export const metadata: Metadata = {
   title: 'Your Business Adviser | Калькулятор для Вашого Успішного Бізнесу',
