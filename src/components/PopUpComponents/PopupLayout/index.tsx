@@ -32,7 +32,7 @@ export default function PopupLayout({
         {title}
       </DialogTitle>
       <DialogContent dividers>
-        <DialogContentText>
+        <DialogContentText component='div'>
           <ExpensesFields />
         </DialogContentText>
       </DialogContent>
