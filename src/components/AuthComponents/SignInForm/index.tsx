@@ -1,10 +1,13 @@
 import { useForm, SubmitHandler, FieldValues } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
-import { Box, BoxProps, Button, useTheme } from '@mui/material';
-import { useContext, useRef } from 'react';
+import { Box, BoxProps, Typography } from '@mui/material';
+import { useContext } from 'react';
 import FormInput from '../../ui/InputComponents/FormInput';
 import { AuthContext } from '@/core/contexts/Auth.context';
 import { signInSchema } from '@/core/validation/signIn.validation';
+import FormButton from '@/components/ui/ButtonComponents/FormButton';
+import Link from 'next/link';
+import DefaultLink from '@/components/ui/LinkComponents/DefaultLink';
 
 interface IFormInput {
   email: string;
@@ -23,7 +26,6 @@ export default function SignInForm(props: BoxProps) {
     mode: 'onChange',
   } as FieldValues);
 
-  const theme = useTheme();
   const authContext = useContext(AuthContext);
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
@@ -35,36 +37,16 @@ export default function SignInForm(props: BoxProps) {
     <Box {...props}>
       {authContext?.auth.data?.user.firstName}
       <form onSubmit={handleSubmit(onSubmit as SubmitHandler<FieldValues>)}>
-        <Box display="flex" flexDirection="column" rowGap="75px">
+        <Box display="flex" flexDirection="column" rowGap="52px">
           <FormInput control={control} label="Пошта" {...register('email')} />
           <FormInput control={control} label="Пароль" {...register('password')} type="password" />
-          <Button
-            sx={{
-              margin: '25px auto 0',
-              borderRadius: '15px',
-              bgcolor: theme.palette.background.paper,
-              boxShadow: theme.shadows[1],
-              fontSize: '24px',
-              fontWeight: 300,
-              width: 200,
-              color: theme.palette.common.black,
-              textTransform: 'capitalize',
-              border: 1,
-              borderColor: theme.palette.background.paper,
-              ':hover': {
-                bgcolor: theme.palette.background.paper,
-                color: theme.palette.primary.light,
-                boxShadow: 'none',
-                border: 1,
-                borderColor: theme.palette.primary.light,
-              },
-            }}
-            type="submit"
-          >
-            Увійти
-          </Button>
+          <FormButton type="submit">Увійти</FormButton>
         </Box>
       </form>
+      <Box display="flex" alignItems="center" justifyContent="space-between" pt="30px">
+        <Typography fontSize="1rem">Ще не маєш акаунт?</Typography>
+        <DefaultLink href="sign-up">Зареєструватись</DefaultLink>
+      </Box>
     </Box>
   );
 }

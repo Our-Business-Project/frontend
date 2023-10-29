@@ -12,7 +12,7 @@ function MyFormInput({ name, control, label, ...props }: Props & TextFieldProps,
       defaultValue=""
       render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
         <CustomTextField
-          helperText={error ? error.message : null}
+          helperText={error ? error.message : ' '}
           size="small"
           error={!!error}
           fullWidth
