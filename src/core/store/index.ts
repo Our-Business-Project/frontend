@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from './reducers/auth.reducer';
+import calculatorReducer from './reducers/calculator.reducer';
 
 const store = configureStore({
   reducer: {
     auth: authReducer,
+    calculatorData: calculatorReducer,
   },
 });
 
