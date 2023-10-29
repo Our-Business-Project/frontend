@@ -71,9 +71,7 @@ function ActionButtons({ handleClose, successBtnText }: { handleClose: () => voi
   return (
     <>
       <Button onClick={handleClose}>Закрити</Button>
-      <Button onClick={handleClose}>
-        {successBtnText}
-      </Button>
+      <Button onClick={handleClose}>{successBtnText}</Button>
     </>
   );
 }

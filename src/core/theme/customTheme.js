@@ -24,12 +24,16 @@ export const customTheme = createTheme({
     },
   },
   palette: {
+    common: {
+      black: '#484848',
+    },
     primary: {
       main: 'rgba(36, 175, 122, 1)',
       light: 'rgba(36, 175, 122, 0.8)',
     },
     background: {
       default: '#E4F1EC',
+      paper: '#D6FAE0',
     },
     text: {
       primary: 'rgba(255, 255, 255, 1)',
@@ -42,6 +46,17 @@ export const customTheme = createTheme({
       main: '#e41749',
     },
   },
+  shadows: [
+    '0 0 5px 3px rgba(36, 175, 122, 1)',
+    '0 0 15px 0 #D6FAE0',
+    'none',
+    'none',
+    'none',
+    'none',
+    'none',
+    'none',
+    'none',
+  ],
   components: {
     MuiCssBaseline: {
       styleOverrides: {
