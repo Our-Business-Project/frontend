@@ -20,12 +20,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <Provider store={store}>
           <AuthProvider>
-              {' '}
-              <ThemeRegistry options={{ key: 'mui' }}>
-                <Header />
-                {children}
-                <Footer />
-              </ThemeRegistry>
+            {' '}
+            <ThemeRegistry options={{ key: 'mui' }}>
+              <Header />
+              {children}
+              <Footer />
+            </ThemeRegistry>
           </AuthProvider>
           <ToastContainer />
         </Provider>
