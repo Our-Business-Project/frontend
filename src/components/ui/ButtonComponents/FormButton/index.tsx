@@ -5,13 +5,14 @@ export default function FormButton({ children, ...props }: ButtonProps) {
 }
 
 const CustomButton = styled(Button)(({ theme }) => ({
-  margin: '25px auto 0',
-  borderRadius: '15px',
+  margin: '1.5625rem auto 0',
+  padding: '0.75rem 3.125rem',
+  borderRadius: '0.9375rem',
   backgroundColor: theme.palette.background.paper,
   boxShadow: theme.shadows[1],
-  fontSize: '24px',
+  fontSize: '1.5rem',
+  minWidth: 200,
   fontWeight: 300,
-  width: 200,
   color: theme.palette.common.black,
   textTransform: 'capitalize',
   border: 1,
