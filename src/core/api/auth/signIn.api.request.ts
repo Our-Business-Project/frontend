@@ -1,11 +1,10 @@
 'use client';
 
 import { AuthResponse } from '@/core/models/AuthResponse.model';
-import { ErrorResponse } from '@/core/models/ErrorResponse.model';
 import { guestPost } from '../../helpers/apiRequests';
 import { signInUrl } from '../config';
 
-type SignInUserProps = {
+export type SignInUserProps = {
   email: string;
   password: string;
 };
@@ -13,14 +12,9 @@ type SignInUserProps = {
 export const signInApiRequest = async (payload: SignInUserProps): Promise<AuthResponse> => {
   try {
     const response = await guestPost(signInUrl, payload);
-    const respData = response.data as AuthResponse | ErrorResponse;
+    const respData = response.data;
 
-    if (response.status === 200) {
-      return respData as AuthResponse;
-    } else {
-      const error = respData as ErrorResponse;
-      throw new Error(error.message);
-    }
+    return respData as AuthResponse;
   } catch (error) {
     throw error;
   }

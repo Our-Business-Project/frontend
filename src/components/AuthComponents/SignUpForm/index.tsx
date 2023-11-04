@@ -19,7 +19,7 @@ interface IFormInput {
   email: string;
   phone: string;
   password: string;
-  repeatPassword: string;
+  repeatPassword: string | undefined;
 }
 
 const defaultValues = {
@@ -48,7 +48,7 @@ const GridItemPasswd = forwardRef(({ ...props }: TextInputProps, ref: Ref<HTMLIn
 ));
 
 export default function SignUpForm(props: BoxProps) {
-  const { control, register, handleSubmit } = useForm({
+  const { control, register, handleSubmit, reset } = useForm({
     defaultValues,
     resolver: joiResolver(signUpSchema),
     mode: 'onChange',
@@ -57,7 +57,10 @@ export default function SignUpForm(props: BoxProps) {
   const authContext = useContext(AuthContext);
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    authContext?.login(data);
+    reset(defaultValues);
+    data.phone = data.phone.replace(/\D/g, '');
+    delete data.repeatPassword;
+    authContext?.register(data);
   };
 
   return (
