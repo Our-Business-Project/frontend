@@ -1,18 +1,18 @@
-import { Ref, forwardRef, useMemo, useState } from 'react';
+import { Ref, forwardRef, useCallback, useMemo, useState } from 'react';
 import { IconButton, InputAdornment } from '@mui/material';
 import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
-import { Props } from '../global/CustomInputWithMask/props';
+import { Props } from './props';
 import PhoneInput from '../PhoneInput';
 import InputWithController from '../global/CustomInputWithController';
 
-const MyPhoneInput = PhoneInput;
-const MyEmailInput = InputWithController;
-
-function MyEmailOrPhoneInput({ name, control, label, ...props }: Props, ref: Ref<HTMLInputElement>) {
+function MyEmailOrPhoneInput({ name, label, label1, control, callback, ...props }: Props, ref: Ref<HTMLInputElement>) {
   const [showPhoneField, setShowPhoneField] = useState(false);
 
-  const handleClickShowEmailOrPhone = () => setShowPhoneField((show) => !show);
+  const handleClickShowEmailOrPhone = useCallback(() => {
+    setShowPhoneField((show) => !show);
+    callback && callback();
+  }, [callback]);
 
   const handleMouseDownShowEmailOrPhone = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -33,13 +33,13 @@ function MyEmailOrPhoneInput({ name, control, label, ...props }: Props, ref: Ref
         </InputAdornment>
       ),
     }),
-    [showPhoneField]
+    [handleClickShowEmailOrPhone, showPhoneField]
   );
 
   return showPhoneField ? (
-    <MyPhoneInput name={name} control={control} label={label} InputProps={inpProps} {...props} ref={ref} />
+    <PhoneInput name={name} control={control} label={label} InputProps={inpProps} {...props} ref={ref} />
   ) : (
-    <MyEmailInput name={name} control={control} label={label} InputProps={inpProps} {...props} ref={ref} />
+    <InputWithController name={name} control={control} label={label1} InputProps={inpProps} {...props} ref={ref} />
   );
 }
 

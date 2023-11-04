@@ -4,7 +4,7 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { InputRef, Props } from '../global/CustomTextField/props';
 import InputWithController from '../global/CustomInputWithController';
 
-function MyPasswordInput({ name, control, label, ...props }: Props, ref: InputRef) {
+function MyPasswordInput(props: Props, ref: InputRef) {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -31,17 +31,7 @@ function MyPasswordInput({ name, control, label, ...props }: Props, ref: InputRe
     [showPassword]
   );
 
-  return (
-    <InputWithController
-      name={name}
-      control={control}
-      label={label}
-      InputProps={inpProps}
-      type={showPassword ? 'text' : 'password'}
-      {...props}
-      ref={ref}
-    />
-  );
+  return <InputWithController InputProps={inpProps} type={showPassword ? 'text' : 'password'} {...props} ref={ref} />;
 }
 
 const PasswordInput = forwardRef(MyPasswordInput);

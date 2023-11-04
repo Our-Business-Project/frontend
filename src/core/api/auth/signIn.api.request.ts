@@ -19,7 +19,7 @@ export const signInApiRequest = async (payload: SignInUserProps): Promise<AuthRe
   } catch (error) {
     const err = error as unknown as AxiosError;
     const data = err.response?.data as ErrorResponse;
-    console.log(data);
+
     if (data.error === 'No such user exists') {
       throw new Error('Користувач не існує');
     } else if (data.error === 'Invalid email/password') {

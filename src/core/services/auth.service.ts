@@ -14,7 +14,7 @@ export const signInService = (payload: SignInUserProps) => {
     } catch (err) {
       const error = err as Error;
       dispatch(authFailed(error.message));
-      errorNotify('Не вдалося увійти');
+      errorNotify(error.message);
     }
   };
 };

@@ -1,9 +1,10 @@
-import { Ref, forwardRef, useContext } from 'react';
+import { forwardRef, useContext } from 'react';
 import { useForm, SubmitHandler, FieldValues } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { Box, BoxProps, Grid, Typography, styled } from '@mui/material';
 import TextInput from '../../ui/InputComponents/FormInput/TextInput';
-import { Props as TextInputProps } from '../../ui/InputComponents/FormInput/global/CustomTextField/props';
+import { Props as TextInputProps } from '../../ui/InputComponents/FormInput/global/CustomInputWithMask/props';
+import { InputRef } from '../../ui/InputComponents/FormInput/global/CustomTextField/props';
 import PasswordInput from '@/components/ui/InputComponents/FormInput/PasswordInput';
 import { AuthContext } from '@/core/contexts/Auth.context';
 import { signUpSchema } from '@/core/validation/signUp.validation';
@@ -29,17 +30,17 @@ const defaultValues = {
   repeatPassword: '',
 };
 
-const GridItemText = forwardRef(({ ...props }: TextInputProps, ref: Ref<HTMLInputElement>) => (
+const GridItemText = forwardRef(({ ...props }: TextInputProps, ref: InputRef) => (
   <Grid item sm={5}>
     <TextInput {...props} ref={ref} />
   </Grid>
 ));
-const GridItemPhone = forwardRef(({ ...props }: TextInputProps, ref: Ref<HTMLInputElement>) => (
+const GridItemPhone = forwardRef(({ ...props }: TextInputProps, ref: InputRef) => (
   <Grid item sm={5}>
     <PhoneInput {...props} ref={ref} />
   </Grid>
 ));
-const GridItemPasswd = forwardRef(({ ...props }: TextInputProps, ref: Ref<HTMLInputElement>) => (
+const GridItemPasswd = forwardRef(({ ...props }: TextInputProps, ref: InputRef) => (
   <Grid item sm={5}>
     <PasswordInput {...props} ref={ref} />
   </Grid>
