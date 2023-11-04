@@ -1,21 +1,23 @@
+import { useContext } from 'react';
 import { useForm, SubmitHandler, FieldValues } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { Box, BoxProps, Typography, styled } from '@mui/material';
-import { useContext } from 'react';
 import TextInput from '../../ui/InputComponents/FormInput/TextInput';
 import { AuthContext } from '@/core/contexts/Auth.context';
 import { signInSchema } from '@/core/validation/signIn.validation';
 import FormButton from '@/components/ui/ButtonComponents/FormButton';
 import DefaultLink from '@/components/ui/LinkComponents/DefaultLink';
 import PasswordInput from '@/components/ui/InputComponents/FormInput/PasswordInput';
+import PhoneInput from '@/components/ui/InputComponents/FormInput/PhoneInput';
+import EmailOrPhoneInput from '@/components/ui/InputComponents/FormInput/EmailOrPhoneInput';
 
 interface IFormInput {
-  email: string;
+  emailOrPhone: string;
   password: string;
 }
 
 const defaultValues = {
-  email: '',
+  emailOrPhone: '',
   password: '',
 };
 
@@ -37,7 +39,7 @@ export default function SignInForm(props: BoxProps) {
       {authContext?.auth.data?.user.firstName}
       <form onSubmit={handleSubmit(onSubmit as SubmitHandler<FieldValues>)}>
         <FormContainer>
-          <TextInput control={control} label="Пошта" {...register('email')} />
+          <EmailOrPhoneInput control={control} label="Телефон" {...register('emailOrPhone')} />
           <PasswordInput control={control} label="Пароль" {...register('password')} />
           <FormButton type="submit">Увійти</FormButton>
         </FormContainer>

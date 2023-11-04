@@ -4,14 +4,12 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import { Box, BoxProps, Grid, Typography, styled } from '@mui/material';
 import TextInput from '../../ui/InputComponents/FormInput/TextInput';
 import { Props as TextInputProps } from '../../ui/InputComponents/FormInput/global/CustomTextField/props';
-import { Props as PhoneInputProps } from '@/components/ui/InputComponents/FormInput/PhoneInput/props';
 import PasswordInput from '@/components/ui/InputComponents/FormInput/PasswordInput';
 import { AuthContext } from '@/core/contexts/Auth.context';
 import { signUpSchema } from '@/core/validation/signUp.validation';
 import FormButton from '@/components/ui/ButtonComponents/FormButton';
 import DefaultLink from '@/components/ui/LinkComponents/DefaultLink';
 import PhoneInput from '@/components/ui/InputComponents/FormInput/PhoneInput';
-import { phoneMask } from '@/core/validation/constants/masks';
 
 interface IFormInput {
   firstName: string;
@@ -33,17 +31,17 @@ const defaultValues = {
 
 const GridItemText = forwardRef(({ ...props }: TextInputProps, ref: Ref<HTMLInputElement>) => (
   <Grid item sm={5}>
-    <TextInput ref={ref} {...props} />
+    <TextInput {...props} ref={ref} />
   </Grid>
 ));
-const GridItemPhone = forwardRef(({ ...props }: PhoneInputProps, ref: Ref<HTMLInputElement>) => (
+const GridItemPhone = forwardRef(({ ...props }: TextInputProps, ref: Ref<HTMLInputElement>) => (
   <Grid item sm={5}>
-    <PhoneInput ref={ref} {...props} />
+    <PhoneInput {...props} ref={ref} />
   </Grid>
 ));
 const GridItemPasswd = forwardRef(({ ...props }: TextInputProps, ref: Ref<HTMLInputElement>) => (
   <Grid item sm={5}>
-    <PasswordInput ref={ref} {...props} />
+    <PasswordInput {...props} ref={ref} />
   </Grid>
 ));
 
@@ -71,7 +69,7 @@ export default function SignUpForm(props: BoxProps) {
           <GridItemText control={control} label="Ім'я" {...register('firstName')} />
           <GridItemText control={control} label="Прізвище" {...register('lastName')} />
           <GridItemText control={control} label="Пошта" {...register('email')} />
-          <GridItemPhone control={control} label="Номер телефону" mask={phoneMask} {...register('phone')} />
+          <GridItemPhone control={control} label="Номер телефону" {...register('phone')} />
           <GridItemPasswd control={control} label="Пароль" {...register('password')} />
           <GridItemPasswd control={control} label="Підтвердити Пароль" {...register('repeatPassword')} />
           <FormButton type="submit">Зареєструватись</FormButton>

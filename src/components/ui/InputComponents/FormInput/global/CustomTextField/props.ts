@@ -1,9 +1,9 @@
-import { ReactNode } from 'react';
+import { Ref } from 'react';
+import { TextFieldProps } from '@mui/material';
 import { Control, FieldValues } from 'react-hook-form';
 
-export declare interface Props {
+export type Props = {
   name: string;
   control: Control<FieldValues> | undefined;
-  label: ReactNode;
-}
-export type Ref = HTMLInputElement;
+} & TextFieldProps;
+export type InputRef = Ref<HTMLInputElement>;

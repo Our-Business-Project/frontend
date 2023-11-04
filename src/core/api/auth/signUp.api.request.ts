@@ -1,9 +1,9 @@
 'use client';
 
+import { AxiosError } from 'axios';
 import { AuthResponse } from '@/core/models/AuthResponse.model';
 import { guestPost } from '../../helpers/apiRequests';
 import { signUpUrl } from '../config';
-import { AxiosError } from 'axios';
 
 export type SignUpUserProps = {
   firstName: string;
@@ -24,6 +24,5 @@ export const signUpApiRequest = async (payload: SignUpUserProps): Promise<AuthRe
     } else {
       throw new Error('Не вдалося зареєструватись');
     }
-    throw error;
   }
 };

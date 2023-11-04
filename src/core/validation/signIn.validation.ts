@@ -1,16 +1,15 @@
 import Joi from 'joi';
 const tlds = require('../../../node_modules/@sideway/address/lib/tlds.js');
 
-import { passwordRegex } from './constants/regex';
+import { passwordRegex, phoneRegex } from './constants/regex';
 
 export const signInSchema = Joi.object({
-  email: Joi.string()
-    .email({ tlds: { allow: tlds } })
+  emailOrPhone: Joi.alternatives()
+    .try(Joi.string().email({ tlds: { allow: tlds } }), Joi.string().pattern(phoneRegex))
+    .required()
     .messages({
-      'string.email': 'Невірна пошта',
-      'string.empty': `Обов'язкове поле`,
-    })
-    .required(),
+      'alternatives.match': 'Невірна пошта / телефон',
+    }),
   password: Joi.string().min(8).max(255).pattern(passwordRegex).required().messages({
     'string.empty': `Обов'язкове поле`,
     'string.min': 'Мінімум 8 символів',
