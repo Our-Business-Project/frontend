@@ -8,7 +8,7 @@ const CustomBox = styled(Box)(({ theme }) => ({
   margin: '2rem auto',
   padding: '3.75rem 3.125rem',
   backgroundColor: theme.palette.primary.light,
-  borderRadius: '15px',
+  borderRadius: '0.9375rem',
   boxShadow: theme.shadows[0],
   maxWidth: 1000,
   minWidth: 320,

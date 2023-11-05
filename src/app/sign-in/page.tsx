@@ -15,7 +15,7 @@ export default function SignInPage() {
       <FormBox>
         <Typography variant="h3">Вхід</Typography>
         <Container>
-          <SignInForm sx={{ paddingTop: '145px' }} />
+          <SignInForm sx={{ paddingTop: '9.0625rem' }} />
         </Container>
       </FormBox>
     </BackgroundBox>

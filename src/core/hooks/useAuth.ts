@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { signInService } from '../services/auth.service';
+import { SignInUserProps, SignUpUserProps, signInService, signUpService } from '../services/auth.service';
 import { selectAuth } from '../store/selectors/auth.selector';
 import { AuthState } from '../store/reducers/auth.reducer';
 import { useLocalStorage } from './useLocalStorage';
@@ -12,8 +12,15 @@ export const useAuth = () => {
   const auth = useAppSelector(selectAuth);
 
   const login = useCallback(
-    (payload: LoginProps) => {
+    (payload: SignInUserProps) => {
       dispatch(signInService(payload));
+    },
+    [dispatch]
+  );
+
+  const register = useCallback(
+    (payload: SignUpUserProps) => {
+      dispatch(signUpService(payload));
     },
     [dispatch]
   );
@@ -23,23 +30,24 @@ export const useAuth = () => {
       setLocalToken(auth.data.accessToken);
     }
 
-    return !!token || !!auth.data?.accessToken;
-  }, [token, auth.data?.accessToken, setLocalToken]);
+    const isAuth = !!token || !!auth.data?.accessToken;
+
+    if (!isAuth) removeLocalToken();
+
+    return isAuth;
+  }, [auth.data?.accessToken, token, removeLocalToken, setLocalToken]);
 
   return {
     auth,
     login,
+    register,
     isAuthenticated,
   };
 };
 
-type LoginProps = {
-  email: string;
-  password: string;
-};
-
 export type UseAuthReturn = {
   auth: AuthState;
-  login: (payload: LoginProps) => void;
+  login: (payload: SignInUserProps) => void;
+  register: (payload: SignUpUserProps) => void;
   isAuthenticated: () => boolean;
 };

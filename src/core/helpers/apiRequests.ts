@@ -10,11 +10,7 @@ export const get = async (url: string, token: string) => {
     },
   };
 
-  try {
-    return await axios(config);
-  } catch (error) {
-    throw error;
-  }
+  return await axios(config);
 };
 
 export const post = async (url: string, token: string, payload: object) => {
@@ -28,11 +24,7 @@ export const post = async (url: string, token: string, payload: object) => {
     data: payload,
   };
 
-  try {
-    return await axios(config);
-  } catch (error) {
-    throw error;
-  }
+  return await axios(config);
 };
 
 export const guestPost = async (url: string, payload: object) => {
@@ -45,11 +37,7 @@ export const guestPost = async (url: string, payload: object) => {
     data: payload,
   };
 
-  try {
-    return await axios(config);
-  } catch (error) {
-    throw error;
-  }
+  return await axios(config);
 };
 
 export const del = async (url: string, token: string) => {
@@ -62,9 +50,5 @@ export const del = async (url: string, token: string) => {
     },
   };
 
-  try {
-    return await axios(config);
-  } catch (error) {
-    throw error;
-  }
+  return await axios(config);
 };

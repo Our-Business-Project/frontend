@@ -8,6 +8,8 @@ import { AuthProvider } from '@/core/contexts/Auth.context';
 import Header from '@/components/global/Header';
 import Footer from '@/components/global/Footer';
 
+import 'react-toastify/dist/ReactToastify.css';
+
 const metadata: Metadata = {
   title: 'Your Business Adviser | Калькулятор для Вашого Успішного Бізнесу',
   description:
