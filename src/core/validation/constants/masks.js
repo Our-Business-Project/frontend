@@ -1,1 +1,1 @@
-export const phoneMask = '+380 (99) 999-99-99';
+export const phoneMask = '+380 (__) ___-__-__';
