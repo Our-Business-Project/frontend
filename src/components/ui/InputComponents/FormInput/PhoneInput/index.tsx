@@ -1,13 +1,22 @@
 import { forwardRef } from 'react';
-import { Props } from '../global/CustomInputWithMask/props';
+import MaskInput from '../global/MaskInput';
+import { Props } from './props';
 import CustomTextField from '../global/CustomTextField';
-import { withMask } from '../global/CustomInputWithMask';
 import { InputRef } from '../global/CustomTextField/props';
 import { withController } from '../global/CustomInputWithController';
 
-function MyPhoneInput(props: Props, ref: InputRef) {
-  return <CustomTextField {...props} ref={ref} />;
+function MyPhoneInput({ InputProps, ...props }: Props, ref: InputRef) {
+  return (
+    <CustomTextField
+      InputProps={{
+        ...InputProps,
+        inputComponent: MaskInput,
+      }}
+      {...props}
+      ref={ref}
+    />
+  );
 }
 
-const PhoneInput = withController(withMask(forwardRef(MyPhoneInput)));
+const PhoneInput = withController(forwardRef(MyPhoneInput));
 export default PhoneInput;

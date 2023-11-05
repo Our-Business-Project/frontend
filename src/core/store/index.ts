@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from './reducers/auth.reducer';
-import calculatorReducer from './reducers/calculator.reducer';
+import profileReducer from './reducers/profile.reducer';
 
 const store = configureStore({
   reducer: {
     auth: authReducer,
-    calculatorData: calculatorReducer,
+    profile: profileReducer,
   },
 });
 

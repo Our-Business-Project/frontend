@@ -1,6 +1,6 @@
-import { Props as CustomInputWithMaskProps } from '../global/CustomInputWithMask/props';
+import { Props as CustomTextField } from '../global/CustomTextField/props';
 
 export type Props = {
   label1: string;
   callback: () => void | undefined;
-} & CustomInputWithMaskProps;
+} & CustomTextField;

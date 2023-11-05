@@ -1,5 +1,5 @@
 'use client';
-import { Box, Container, Typography } from '@mui/material';
+import { Box, Container } from '@mui/material';
 import Intro from '@/components/HomeComponents/Intro';
 import FormFields from '@/components/HomeComponents/FormFields';
 

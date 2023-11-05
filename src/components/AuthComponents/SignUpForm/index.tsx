@@ -1,16 +1,16 @@
-import { forwardRef, useContext } from 'react';
+import { forwardRef } from 'react';
 import { useForm, SubmitHandler, FieldValues } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
-import { Box, BoxProps, Grid, Typography, styled } from '@mui/material';
+import { Box, Grid, Typography, styled } from '@mui/material';
 import TextInput from '../../ui/InputComponents/FormInput/TextInput';
-import { Props as TextInputProps } from '../../ui/InputComponents/FormInput/global/CustomInputWithMask/props';
+import { Props as TextInputProps } from '../../ui/InputComponents/FormInput/global/CustomTextField/props';
 import { InputRef } from '../../ui/InputComponents/FormInput/global/CustomTextField/props';
 import PasswordInput from '@/components/ui/InputComponents/FormInput/PasswordInput';
-import { AuthContext } from '@/core/contexts/Auth.context';
 import { signUpSchema } from '@/core/validation/signUp.validation';
 import FormButton from '@/components/ui/ButtonComponents/FormButton';
 import DefaultLink from '@/components/ui/LinkComponents/DefaultLink';
 import PhoneInput from '@/components/ui/InputComponents/FormInput/PhoneInput';
+import { Props } from './props';
 
 interface IFormInput {
   firstName: string;
@@ -46,33 +46,35 @@ const GridItemPasswd = forwardRef(({ ...props }: TextInputProps, ref: InputRef) 
   </Grid>
 ));
 
-export default function SignUpForm(props: BoxProps) {
-  const { control, register, handleSubmit, reset } = useForm({
+export default function SignUpForm({ register, ...props }: Props) {
+  const {
+    control,
+    register: formRegister,
+    handleSubmit,
+    reset,
+  } = useForm({
     defaultValues,
     resolver: joiResolver(signUpSchema),
     mode: 'onChange',
   } as FieldValues);
 
-  const authContext = useContext(AuthContext);
-
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
     reset(defaultValues);
     data.phone = data.phone.replace(/\D/g, '');
     delete data.repeatPassword;
-    authContext?.register(data);
+    register(data);
   };
 
   return (
     <Box {...props}>
-      {authContext?.auth.data?.user.firstName}
       <form onSubmit={handleSubmit(onSubmit as SubmitHandler<FieldValues>)}>
         <Grid container rowGap="3.25rem" columnGap="6.25rem" columns={12}>
-          <GridItemText control={control} label="Ім'я" {...register('firstName')} />
-          <GridItemText control={control} label="Прізвище" {...register('lastName')} />
-          <GridItemText control={control} label="Пошта" {...register('email')} />
-          <GridItemPhone control={control} label="Номер телефону" {...register('phone')} />
-          <GridItemPasswd control={control} label="Пароль" {...register('password')} />
-          <GridItemPasswd control={control} label="Підтвердити Пароль" {...register('repeatPassword')} />
+          <GridItemText control={control} label="Ім'я" {...formRegister('firstName')} />
+          <GridItemText control={control} label="Прізвище" {...formRegister('lastName')} />
+          <GridItemText control={control} label="Пошта" {...formRegister('email')} />
+          <GridItemPhone control={control} label="Номер телефону" {...formRegister('phone')} />
+          <GridItemPasswd control={control} label="Пароль" {...formRegister('password')} />
+          <GridItemPasswd control={control} label="Підтвердити Пароль" {...formRegister('repeatPassword')} />
           <FormButton type="submit">Зареєструватись</FormButton>
         </Grid>
       </form>
