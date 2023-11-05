@@ -5,7 +5,7 @@ import { CalcContext } from '@/core/contexts/Calc.context';
 import { CalculatorData } from '@/core/models/СalculatorData.model';
 
 export default function FormFields() {
-const inputFields: CalculatorData | null = useContext(CalcContext);
+  const inputFields: CalculatorData | null = useContext(CalcContext);
 
   const fieldKeys = inputFields ? Object.keys(inputFields) : [];
 
