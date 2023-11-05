@@ -69,3 +69,4 @@ const TextContainer = styled(Box)(() => ({
   justifyContent: 'space-between',
   paddingTop: '1.875rem',
 }));
+

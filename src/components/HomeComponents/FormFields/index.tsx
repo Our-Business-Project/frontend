@@ -3,11 +3,18 @@ import CalcInput from '@/components/ui/InputComponents/CalcInput';
 
 export default function FormFields() {
   const inputFields = [
-    { measure: 'шт', label: 'План виробництва' },
-    { measure: 'грн', label: 'Собівартість товару' },
-    { measure: 'грн', label: 'Ціна за одиницю товару' },
-    { measure: 'грн', label: 'Бажаю заробити' },
-    { measure: 'грн', label: 'Постійні витрати', helper: true },
+    { label: 'План виробництва', borderRadius: '0 0 15px 0', disabled: false, slider: true },
+    { label: 'Собівартість', borderRadius: '0 0 15px 15px', disabled: false, slider: true },
+    { label: 'Ціна за одиницю товару', borderRadius: '0 0 0 15px', disabled: false, slider: true },
+    { label: 'Маржинальний прибуток' },
+    { label: 'Виробнича собівартість', borderRadius: '0 15px 15px 0' },
+    { label: 'Постійні витрати' },
+    { label: 'Виторг від реалізації', borderRadius: '15px 0 0 15px' },
+    { label: 'Точка беззбитковості' },
+    { label: 'Прибуток' },
+    { label: 'Хочу...' },
+    { label: 'Точка беззбитковості' },
+    { label: 'Точка беззбитковості' },
   ];
 
   return (
@@ -18,3 +25,5 @@ export default function FormFields() {
     </CategoryLayout>
   );
 }
+
+

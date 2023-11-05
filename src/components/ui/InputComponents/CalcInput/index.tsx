@@ -1,103 +1,95 @@
-import {
-  Divider,
-  FormHelperText,
-  FormControl,
-  InputAdornment,
-  OutlinedInput,
-  Badge,
-  Tooltip,
-  Typography,
-} from '@mui/material';
-import InfoIcon from '@mui/icons-material/Info';
+import { Divider, FormControl, Typography, TextField, Box, styled, Slider } from '@mui/material';
+import MuiInput from '@mui/material/Input';
 import * as React from 'react';
-import PopupLayout from '@/components/PopUpComponents/PopupLayout';
 
 export default function CalcInput({
-  measure,
   label,
   helper,
+  borderRadius = '15px',
+  disabled = true,
+  slider = false,
+  maxValue = 10000,
 }: {
-  measure: string;
   label: string;
   helper?: boolean | false;
+  borderRadius?: string;
+  disabled?: boolean;
+  slider?: boolean;
+  maxValue?: number;
 }) {
-  const [open, setOpen] = React.useState<boolean>(false);
-  const [openAllowed, setOpenAllowed] = React.useState<boolean>(true);
+  const [value, setValue] = React.useState(7000);
 
-  const handleClickOpenOnce = () => {
-    if (openAllowed) {
-      setOpen(true);
-      setOpenAllowed(false);
+  const handleSliderChange = (event: Event, newValue: number | number[]) => {
+    setValue(newValue as number);
+  };
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(event.target.value === '' ? 0 : Number(event.target.value));
+  };
+
+  const handleBlur = () => {
+    if (value < 0) {
+      setValue(0);
+    } else if (value > maxValue) {
+      setValue(maxValue);
     }
   };
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
   return (
-    <FormControl sx={{ m: 1, maxWidth: '260px', margin: '20px' }} variant="outlined">
-      <FormHelperText sx={{ color: 'text.secondary', fontSize: '18px', m: '0' }} id="outlined-weight-helper-text">
-        {helper ? (
-          <Badge
-            badgeContent={
-              <Tooltip title={<Typography fontSize={10}> Потібна допомога? </Typography>} placement="right-start">
-                <InfoIcon
-                  onClick={handleClickOpen}
-                  fontSize="small"
-                  sx={{
-                    ml: '20px',
-                    color: 'primary.light',
-                    '&:hover': {
-                      cursor: 'pointer',
-                    },
-                  }}
-                />
-              </Tooltip>
-            }
-          >
-            {label}
-          </Badge>
-        ) : (
-          label
-        )}
-      </FormHelperText>
-
-      <OutlinedInput
-        required
-        sx={{ bgcolor: 'primary.main', borderColor: 'text.primary' }}
-        endAdornment={
-          <InputAdornment position="end">
-            <Divider
-              orientation="horizontal"
-              variant="fullWidth"
-              sx={{
-                height: 'calc(1.4375em + 17px)',
-                margin: '0 17px',
-                padding: '0',
-                borderColor: 'text.primary',
-                borderWidth: '1px',
-              }}
-            />
-            {measure}
-          </InputAdornment>
-        }
-        aria-describedby="outlined-weight-helper-text"
-        onClick={handleClickOpenOnce}
-      />
-      {helper && (
-        <PopupLayout
-          handleClose={handleClose}
-          open={open}
-          title="Потрібна допомога з розрахунком?"
-          successBtnText="Розрахувати"
-          checkbox={true}
+    <TotalWrapper>
+      <InputWrapper
+        sx={{
+          borderRadius: borderRadius,
+          bgcolor: 'secondary.main',
+        }}
+      >
+        <Typography textAlign="center" mb="8px" variant="body2">
+          {label}
+        </Typography>
+        <Divider sx={{ borderColor: 'text.primary' }} />
+        <FormControl sx={{ m: '8px auto 0 auto', width: '100px' }} fullWidth variant="filled">
+          <Input
+            onBlur={handleBlur}
+            value={value}
+            size="small"
+            onChange={handleInputChange}
+            id="standard-basic"
+            disabled={disabled}
+          />
+        </FormControl>
+      </InputWrapper>
+      {slider && (
+        <Slider
+          value={typeof value === 'number' ? value : 0}
+          onChange={handleSliderChange}
+          aria-labelledby="input-slider"
+          step={500}
+          min={0}
+          max={maxValue}
+          size="small"
+          aria-label="Small"
+          valueLabelDisplay="auto"
         />
       )}
-    </FormControl>
+    </TotalWrapper>
   );
 }
+
+const InputWrapper = styled(Box)`
+  display: flex;
+  flex-direction: column;
+  padding: 15px 0;
+  width: 250px;
+`;
+
+const TotalWrapper = styled(Box)`
+  margin: 16px 0;
+  display: flex;
+  flex-direction: column;
+`;
+
+const Input = styled(MuiInput)`
+  font-size: 14px;
+  text-align: center;
+  padding-left: 30px;
+`;

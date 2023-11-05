@@ -25,18 +25,20 @@ export const customTheme = createTheme({
   },
   palette: {
     common: {
-      black: '#484848',
+      black: '#031A20',
     },
     primary: {
-      main: 'rgba(36, 175, 122, 1)',
-      light: 'rgba(36, 175, 122, 0.8)',
+      main: '#217793',
+      light: 'rgba(86, 173, 193, 0.8)',
+    },
+    secondary: {
+      main: '#416E8E',
     },
     background: {
-      default: '#E4F1EC',
-      paper: '#D6FAE0',
+      default: '#FFFFFF',
     },
     text: {
-      primary: 'rgba(255, 255, 255, 1)',
+      primary: '#FFFFFF',
       secondary: '#00452B',
     },
     action: {
