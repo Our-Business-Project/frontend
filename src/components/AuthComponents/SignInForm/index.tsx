@@ -1,8 +1,9 @@
-import { useContext } from 'react';
+import { useEffect } from 'react';
+import { redirect } from 'next/navigation';
 import { useForm, SubmitHandler, FieldValues } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { Box, BoxProps, Typography, styled } from '@mui/material';
-import { AuthContext } from '@/core/contexts/Auth.context';
+import { useAuth } from '@/core/hooks/useAuth';
 import { signInSchema } from '@/core/validation/signIn.validation';
 import FormButton from '@/components/ui/ButtonComponents/FormButton';
 import DefaultLink from '@/components/ui/LinkComponents/DefaultLink';
@@ -26,16 +27,21 @@ export default function SignInForm(props: BoxProps) {
     mode: 'onChange',
   } as FieldValues);
 
-  const authContext = useContext(AuthContext);
+  const { isAuthenticated, login } = useAuth();
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
     data.emailOrPhone = !data.emailOrPhone.includes('@') ? data.emailOrPhone.replace(/\D/g, '') : data.emailOrPhone;
-    authContext?.login(data);
+    login(data);
   };
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      redirect('/profile');
+    }
+  }, [isAuthenticated]);
 
   return (
     <Box {...props}>
-      {authContext?.auth.data?.user.firstName}
       <form onSubmit={handleSubmit(onSubmit as SubmitHandler<FieldValues>)}>
         <FormContainer>
           <EmailOrPhoneInput

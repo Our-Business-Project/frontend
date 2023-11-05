@@ -1,4 +1,4 @@
-import { forwardRef, useContext } from 'react';
+import { forwardRef } from 'react';
 import { useForm, SubmitHandler, FieldValues } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { Box, BoxProps, Grid, Typography, styled } from '@mui/material';
@@ -6,7 +6,7 @@ import TextInput from '../../ui/InputComponents/FormInput/TextInput';
 import { Props as TextInputProps } from '../../ui/InputComponents/FormInput/global/CustomInputWithMask/props';
 import { InputRef } from '../../ui/InputComponents/FormInput/global/CustomTextField/props';
 import PasswordInput from '@/components/ui/InputComponents/FormInput/PasswordInput';
-import { AuthContext } from '@/core/contexts/Auth.context';
+import { useAuth } from '@/core/hooks/useAuth';
 import { signUpSchema } from '@/core/validation/signUp.validation';
 import FormButton from '@/components/ui/ButtonComponents/FormButton';
 import DefaultLink from '@/components/ui/LinkComponents/DefaultLink';
@@ -53,18 +53,18 @@ export default function SignUpForm(props: BoxProps) {
     mode: 'onChange',
   } as FieldValues);
 
-  const authContext = useContext(AuthContext);
+  const { auth, register: reg } = useAuth();
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
     reset(defaultValues);
     data.phone = data.phone.replace(/\D/g, '');
     delete data.repeatPassword;
-    authContext?.register(data);
+    reg(data);
   };
 
   return (
     <Box {...props}>
-      {authContext?.auth.data?.user.firstName}
+      {auth.data?.user.firstName}
       <form onSubmit={handleSubmit(onSubmit as SubmitHandler<FieldValues>)}>
         <Grid container rowGap="3.25rem" columnGap="6.25rem" columns={12}>
           <GridItemText control={control} label="Ім'я" {...register('firstName')} />

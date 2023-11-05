@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { SignInUserProps, SignUpUserProps, signInService, signUpService } from '../services/auth.service';
 import { selectAuth } from '../store/selectors/auth.selector';
 import { AuthState } from '../store/reducers/auth.reducer';
@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from './useRedux';
 
 export const useAuth = () => {
   const { storedValue: token, setValue: setLocalToken, removeValue: removeLocalToken } = useLocalStorage('token');
+  const { storedValue: userId, setValue: setLocalUserId, removeValue: removeLocalUserId } = useLocalStorage('id');
 
   const dispatch = useAppDispatch();
   const auth = useAppSelector(selectAuth);
@@ -25,23 +26,37 @@ export const useAuth = () => {
     [dispatch]
   );
 
-  const isAuthenticated = useCallback(() => {
+  const isAuthenticated = useMemo(() => {
     if (auth.data?.accessToken) {
       setLocalToken(auth.data.accessToken);
+      setLocalUserId(auth.data.user._id);
     }
 
     const isAuth = !!token || !!auth.data?.accessToken;
 
-    if (!isAuth) removeLocalToken();
+    if (!isAuth) {
+      removeLocalToken();
+      removeLocalUserId();
+    }
 
     return isAuth;
-  }, [auth.data?.accessToken, token, removeLocalToken, setLocalToken]);
+  }, [
+    auth.data?.accessToken,
+    auth.data?.user._id,
+    token,
+    setLocalToken,
+    setLocalUserId,
+    removeLocalToken,
+    removeLocalUserId,
+  ]);
 
   return {
     auth,
     login,
     register,
     isAuthenticated,
+    token,
+    userId,
   };
 };
 
@@ -49,5 +64,7 @@ export type UseAuthReturn = {
   auth: AuthState;
   login: (payload: SignInUserProps) => void;
   register: (payload: SignUpUserProps) => void;
-  isAuthenticated: () => boolean;
+  isAuthenticated: boolean;
+  token: string;
+  userId: string;
 };
