@@ -1,14 +1,12 @@
-import { useEffect } from 'react';
-import { redirect } from 'next/navigation';
 import { useForm, SubmitHandler, FieldValues } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
-import { Box, BoxProps, Typography, styled } from '@mui/material';
-import { useAuth } from '@/core/hooks/useAuth';
+import { Box, Typography, styled } from '@mui/material';
 import { signInSchema } from '@/core/validation/signIn.validation';
 import FormButton from '@/components/ui/ButtonComponents/FormButton';
 import DefaultLink from '@/components/ui/LinkComponents/DefaultLink';
 import PasswordInput from '@/components/ui/InputComponents/FormInput/PasswordInput';
 import EmailOrPhoneInput from '@/components/ui/InputComponents/FormInput/EmailOrPhoneInput';
+import { Props } from './props';
 
 interface IFormInput {
   emailOrPhone: string;
@@ -20,25 +18,17 @@ const defaultValues = {
   password: '',
 };
 
-export default function SignInForm(props: BoxProps) {
+export default function SignInForm({ login, ...props }: Props) {
   const { control, register, handleSubmit, resetField } = useForm({
     defaultValues,
     resolver: joiResolver(signInSchema),
     mode: 'onChange',
   } as FieldValues);
 
-  const { isAuthenticated, login } = useAuth();
-
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
     data.emailOrPhone = !data.emailOrPhone.includes('@') ? data.emailOrPhone.replace(/\D/g, '') : data.emailOrPhone;
     login(data);
   };
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      redirect('/profile');
-    }
-  }, [isAuthenticated]);
 
   return (
     <Box {...props}>

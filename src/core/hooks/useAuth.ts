@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { SignInUserProps, SignUpUserProps, signInService, signUpService } from '../services/auth.service';
 import { selectAuth } from '../store/selectors/auth.selector';
 import { AuthState } from '../store/reducers/auth.reducer';
@@ -11,6 +11,16 @@ export const useAuth = () => {
 
   const dispatch = useAppDispatch();
   const auth = useAppSelector(selectAuth);
+
+  useEffect(() => {
+    if (auth.data) {
+      setLocalToken(auth.data.accessToken);
+      setLocalUserId(auth.data.user._id);
+    } else if (!token) {
+      removeLocalToken();
+      removeLocalUserId();
+    }
+  });
 
   const login = useCallback(
     (payload: SignInUserProps) => {
@@ -26,29 +36,7 @@ export const useAuth = () => {
     [dispatch]
   );
 
-  const isAuthenticated = useMemo(() => {
-    if (auth.data?.accessToken) {
-      setLocalToken(auth.data.accessToken);
-      setLocalUserId(auth.data.user._id);
-    }
-
-    const isAuth = !!token || !!auth.data?.accessToken;
-
-    if (!isAuth) {
-      removeLocalToken();
-      removeLocalUserId();
-    }
-
-    return isAuth;
-  }, [
-    auth.data?.accessToken,
-    auth.data?.user._id,
-    token,
-    setLocalToken,
-    setLocalUserId,
-    removeLocalToken,
-    removeLocalUserId,
-  ]);
+  const isAuthenticated = useMemo(() => !!token, [token]);
 
   return {
     auth,

@@ -1,5 +1,5 @@
 import { forwardRef, useMemo, useState } from 'react';
-import { IconButton, InputAdornment, TextFieldProps } from '@mui/material';
+import { IconButton, InputAdornment } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { InputRef, Props } from '../global/CustomTextField/props';
 import InputWithController from '../global/CustomInputWithController';
