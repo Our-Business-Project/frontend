@@ -1,6 +1,12 @@
-import { TextField, styled } from '@mui/material';
+import { forwardRef } from 'react';
+import { TextField, TextFieldProps, styled } from '@mui/material';
+import { InputRef } from './props';
 
-const CustomTextField = styled(TextField)(({ theme }) => ({
+function CustomTextField(props: TextFieldProps, ref: InputRef) {
+  return <MyCustomTextField size="small" fullWidth variant="standard" {...props} ref={ref} />;
+}
+
+const MyCustomTextField = styled(TextField)(({ theme }) => ({
   '& label': {
     color: theme.palette.text.primary,
   },
@@ -64,4 +70,4 @@ const CustomTextField = styled(TextField)(({ theme }) => ({
     opacity: 0,
   },
 }));
-export default CustomTextField;
+export default forwardRef(CustomTextField);

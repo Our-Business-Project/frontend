@@ -1,37 +1,13 @@
-import { Ref, forwardRef } from 'react';
-import InputMask from 'react-input-mask';
-import { Controller } from 'react-hook-form';
-import { TextFieldProps } from '@mui/material/TextField';
-import { Props } from '../global/CustomTextField/props';
+import { forwardRef } from 'react';
+import { Props } from '../global/CustomInputWithMask/props';
 import CustomTextField from '../global/CustomTextField';
-import { phoneMask } from '@/core/validation/constants/masks';
+import { withMask } from '../global/CustomInputWithMask';
+import { InputRef } from '../global/CustomTextField/props';
+import { withController } from '../global/CustomInputWithController';
 
-function MyPhoneInput({ name, control, label, ...props }: Props & TextFieldProps, ref: Ref<HTMLInputElement>) {
-  return (
-    <Controller
-      name={name}
-      control={control}
-      defaultValue=""
-      render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
-        <InputMask mask={phoneMask} maskChar="_" onBlur={onBlur} onChange={onChange} value={value}>
-          {
-            (() => (
-              <CustomTextField
-                helperText={error ? error.message : ' '}
-                size="small"
-                error={!!error}
-                fullWidth
-                label={label}
-                variant="standard"
-                inputRef={ref}
-              />
-            )) as unknown as React.ReactNode
-          }
-        </InputMask>
-      )}
-    />
-  );
+function MyPhoneInput(props: Props, ref: InputRef) {
+  return <CustomTextField {...props} ref={ref} />;
 }
 
-const PhoneInput = forwardRef(MyPhoneInput);
+const PhoneInput = withController(withMask(forwardRef(MyPhoneInput)));
 export default PhoneInput;

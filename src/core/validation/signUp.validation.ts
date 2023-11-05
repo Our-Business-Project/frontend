@@ -32,9 +32,8 @@ export const signUpSchema = Joi.object({
   phone: Joi.string()
     .pattern(phoneRegex)
     .messages({
-      'string.email': 'Невірний телефон',
       'string.empty': "Обов'язкове поле",
-      'string.pattern.base': 'Повинен бути у форматі +380 (99) 999-99-99',
+      'string.pattern.base': 'Невірний телефон',
     })
     .required(),
   password: Joi.string().min(8).max(255).pattern(passwordRegex).required().messages({

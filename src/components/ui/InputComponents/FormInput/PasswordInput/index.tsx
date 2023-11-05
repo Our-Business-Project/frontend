@@ -1,13 +1,10 @@
-import { Ref, forwardRef, useMemo, useState } from 'react';
-import { Controller } from 'react-hook-form';
-import { TextFieldProps } from '@mui/material/TextField';
-import { IconButton, InputAdornment } from '@mui/material';
+import { forwardRef, useMemo, useState } from 'react';
+import { IconButton, InputAdornment, TextFieldProps } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { InputRef, Props } from '../global/CustomTextField/props';
+import InputWithController from '../global/CustomInputWithController';
 
-import { Props } from '../global/CustomTextField/props';
-import CustomTextField from '../global/CustomTextField';
-
-function MyPasswordInput({ name, control, label, ...props }: Props & TextFieldProps, ref: Ref<HTMLInputElement>) {
+function MyPasswordInput(props: Props, ref: InputRef) {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -34,30 +31,7 @@ function MyPasswordInput({ name, control, label, ...props }: Props & TextFieldPr
     [showPassword]
   );
 
-  return (
-    <Controller
-      name={name}
-      control={control}
-      defaultValue=""
-      render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
-        <CustomTextField
-          helperText={error ? error.message : ' '}
-          size="small"
-          error={!!error}
-          fullWidth
-          label={label}
-          variant="standard"
-          type={showPassword ? 'text' : 'password'}
-          InputProps={inpProps}
-          {...props}
-          onBlur={onBlur}
-          onChange={onChange}
-          value={value}
-          inputRef={ref}
-        />
-      )}
-    />
-  );
+  return <InputWithController InputProps={inpProps} type={showPassword ? 'text' : 'password'} {...props} ref={ref} />;
 }
 
 const PasswordInput = forwardRef(MyPasswordInput);

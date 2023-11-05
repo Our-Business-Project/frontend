@@ -1,33 +1,11 @@
-import { Ref, forwardRef } from 'react';
-import { Controller } from 'react-hook-form';
-import { TextFieldProps } from '@mui/material/TextField';
-import { Props } from '../global/CustomTextField/props';
+import { forwardRef } from 'react';
+import { InputRef, Props } from '../global/CustomTextField/props';
 import CustomTextField from '../global/CustomTextField';
+import { withController } from '../global/CustomInputWithController';
 
-function MyTextInput({ name, control, label, ...props }: Props & TextFieldProps, ref: Ref<HTMLInputElement>) {
-  return (
-    <Controller
-      name={name}
-      control={control}
-      defaultValue=""
-      render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
-        <CustomTextField
-          helperText={error ? error.message : ' '}
-          size="small"
-          error={!!error}
-          fullWidth
-          label={label}
-          variant="standard"
-          {...props}
-          onBlur={onBlur}
-          onChange={onChange}
-          value={value}
-          inputRef={ref}
-        />
-      )}
-    />
-  );
+function MyTextInput(props: Props, ref: InputRef) {
+  return <CustomTextField {...props} ref={ref} />;
 }
 
-const TextInput = forwardRef(MyTextInput);
+const TextInput = withController(forwardRef(MyTextInput));
 export default TextInput;

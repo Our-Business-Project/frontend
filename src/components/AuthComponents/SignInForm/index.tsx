@@ -1,26 +1,26 @@
+import { useContext } from 'react';
 import { useForm, SubmitHandler, FieldValues } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { Box, BoxProps, Typography, styled } from '@mui/material';
-import { useContext } from 'react';
-import TextInput from '../../ui/InputComponents/FormInput/TextInput';
 import { AuthContext } from '@/core/contexts/Auth.context';
 import { signInSchema } from '@/core/validation/signIn.validation';
 import FormButton from '@/components/ui/ButtonComponents/FormButton';
 import DefaultLink from '@/components/ui/LinkComponents/DefaultLink';
 import PasswordInput from '@/components/ui/InputComponents/FormInput/PasswordInput';
+import EmailOrPhoneInput from '@/components/ui/InputComponents/FormInput/EmailOrPhoneInput';
 
 interface IFormInput {
-  email: string;
+  emailOrPhone: string;
   password: string;
 }
 
 const defaultValues = {
-  email: '',
+  emailOrPhone: '',
   password: '',
 };
 
 export default function SignInForm(props: BoxProps) {
-  const { control, register, handleSubmit } = useForm({
+  const { control, register, handleSubmit, resetField } = useForm({
     defaultValues,
     resolver: joiResolver(signInSchema),
     mode: 'onChange',
@@ -29,6 +29,7 @@ export default function SignInForm(props: BoxProps) {
   const authContext = useContext(AuthContext);
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
+    data.emailOrPhone = !data.emailOrPhone.includes('@') ? data.emailOrPhone.replace(/\D/g, '') : data.emailOrPhone;
     authContext?.login(data);
   };
 
@@ -37,7 +38,13 @@ export default function SignInForm(props: BoxProps) {
       {authContext?.auth.data?.user.firstName}
       <form onSubmit={handleSubmit(onSubmit as SubmitHandler<FieldValues>)}>
         <FormContainer>
-          <TextInput control={control} label="Пошта" {...register('email')} />
+          <EmailOrPhoneInput
+            control={control}
+            label="Телефон"
+            label1="Пошта"
+            callback={() => resetField('emailOrPhone')}
+            {...register('emailOrPhone')}
+          />
           <PasswordInput control={control} label="Пароль" {...register('password')} />
           <FormButton type="submit">Увійти</FormButton>
         </FormContainer>
