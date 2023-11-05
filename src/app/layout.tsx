@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import store from '@/core/store';
 import ThemeRegistry from '@/core/theme/ThemeRegistry';
 import { AuthProvider } from '@/core/contexts/Auth.context';
+import { CalcProvider } from '@/core/contexts/Calc.context';
 import Header from '@/components/global/Header';
 import Footer from '@/components/global/Footer';
 
@@ -21,14 +22,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body>
         <Provider store={store}>
-          <AuthProvider>
-            {' '}
-            <ThemeRegistry options={{ key: 'mui' }}>
-              <Header />
-              {children}
-              <Footer />
-            </ThemeRegistry>
-          </AuthProvider>
+          <CalcProvider>
+            <AuthProvider>
+              <ThemeRegistry options={{ key: 'mui' }}>
+                <Header />
+                {children}
+                <Footer />
+              </ThemeRegistry>
+            </AuthProvider>
+          </CalcProvider>
           <ToastContainer />
         </Provider>
       </body>
