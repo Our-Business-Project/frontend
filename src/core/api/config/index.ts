@@ -5,3 +5,4 @@ export const signInUrl = authUrl + '/sign-in';
 export const signUpUrl = authUrl + '/sign-up';
 
 export const usersUrl = apiRoot + '/users';
+export const mailVerifyUrl = apiRoot + '/mail/verify';
