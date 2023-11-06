@@ -1,4 +1,4 @@
-import { AUTH_REQUEST, AUTH_SUCCESS, AUTH_FAILED } from '../constants/auth.constants';
+import { AUTH_REQUEST, AUTH_SUCCESS, AUTH_FAILED, AUTH_RESET } from '../constants/auth.constants';
 import { AuthActions } from '../actions/auth.action';
 import { AuthResponse } from '@/core/models/AuthResponse.model';
 
@@ -40,6 +40,12 @@ export default function authReducer(state = initialState, action: AuthActions): 
         data: null,
         error: action.message,
         pending: false,
+      };
+    }
+
+    case AUTH_RESET: {
+      return {
+        ...initialState,
       };
     }
 

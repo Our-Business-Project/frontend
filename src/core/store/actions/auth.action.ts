@@ -1,5 +1,5 @@
 import { AuthResponse } from '@/core/models/AuthResponse.model';
-import { AUTH_REQUEST, AUTH_SUCCESS, AUTH_FAILED } from '../constants/auth.constants';
+import { AUTH_REQUEST, AUTH_SUCCESS, AUTH_FAILED, AUTH_RESET } from '../constants/auth.constants';
 
 interface AuthRequestAction {
   type: typeof AUTH_REQUEST;
@@ -15,7 +15,11 @@ interface AuthFailedAction {
   message: string;
 }
 
-type AuthActions = AuthRequestAction | AuthSuccessAction | AuthFailedAction;
+interface AuthResetAction {
+  type: typeof AUTH_RESET;
+}
+
+type AuthActions = AuthRequestAction | AuthSuccessAction | AuthFailedAction | AuthResetAction;
 
 const authRequest = (): AuthRequestAction => ({
   type: AUTH_REQUEST,
@@ -31,5 +35,9 @@ const authFailed = (message: string): AuthFailedAction => ({
   message,
 });
 
+const authReset = (): AuthResetAction => ({
+  type: AUTH_RESET,
+});
+
 export type { AuthActions };
-export { authRequest, authSuccess, authFailed };
+export { authRequest, authSuccess, authFailed, authReset };
