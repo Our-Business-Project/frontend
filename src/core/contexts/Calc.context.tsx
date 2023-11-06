@@ -17,6 +17,7 @@ export function CalcProvider({ children }: PropsWithChildren<{}>) {
       borderRadius: '0 0 15px 0',
       disabled: false,
       slider: true,
+      maxValue: 10000,
     },
     CostPrice: {
       name: 'CostPrice',
@@ -25,6 +26,7 @@ export function CalcProvider({ children }: PropsWithChildren<{}>) {
       borderRadius: '0 0 15px 15px',
       disabled: false,
       slider: true,
+      maxValue: 10000,
     },
     PricePerUnit: {
       name: 'PricePerUnit',
@@ -33,6 +35,7 @@ export function CalcProvider({ children }: PropsWithChildren<{}>) {
       borderRadius: '0 0 0 15px',
       disabled: false,
       slider: true,
+      maxValue: 10000,
     },
     GrossProfit: { name: 'GrossProfit', value: 4, label: 'Маржинальний дохід' },
     ProductionCost: {
@@ -45,7 +48,7 @@ export function CalcProvider({ children }: PropsWithChildren<{}>) {
     Revenue: { name: 'Revenue', value: 0, label: 'Виторг від реалізації', borderRadius: '15px 0 0 15px' },
     BreakEvenPoint: { name: 'BreakEvenPoint', value: 0, label: 'Точка беззбитковості' },
     Profit: { name: 'Profit', value: 0, label: 'Прибуток' },
-    Want: { name: 'GrossProfit', value: 0, label: 'Хочу...' },
+    Want: { name: 'Want', value: 0, label: 'Хочу...' },
   };
 
   const [data, setData] = useState(contextValues);
@@ -60,24 +63,20 @@ export function CalcProvider({ children }: PropsWithChildren<{}>) {
         },
       };
 
-      updatedData.GrossProfit.value = updatedData.PricePerUnit.value - updatedData.CostPrice.value;
-      updatedData.ProductionCost.value = updatedData.ProductionPlan.value * updatedData.CostPrice.value;
-      updatedData.Revenue.value = updatedData.ProductionPlan.value * updatedData.PricePerUnit.value;
-      updatedData.BreakEvenPoint.value = updatedData.FixedCosts.value / updatedData.GrossProfit.value;
-
-      console.log(newValue);
+      updatedData.GrossProfit.value = +(updatedData.PricePerUnit.value - updatedData.CostPrice.value).toFixed(2);
+      updatedData.ProductionCost.value = +(updatedData.ProductionPlan.value * updatedData.CostPrice.value).toFixed(2);
+      updatedData.Revenue.value = +(updatedData.ProductionPlan.value * updatedData.PricePerUnit.value).toFixed(2);
+      updatedData.BreakEvenPoint.value = Math.round(+(updatedData.FixedCosts.value / updatedData.GrossProfit.value));
+      updatedData.Profit.value = +(
+        updatedData.ProductionPlan.value * updatedData.GrossProfit.value -
+        updatedData.FixedCosts.value
+      ).toFixed(2);
 
       setData(updatedData);
     }
   };
 
-  useEffect(() => {
-    // console.log(data)
-    // data.GrossProfit.value = data.PricePerUnit.value - data.CostPrice.value;
-    // data.ProductionCost.value = data.ProductionPlan.value * data.CostPrice.value;
-    // data.Revenue.value = data.ProductionPlan.value * data.PricePerUnit.value;
-    // data.BreakEvenPoint.value = data.FixedCosts.value / data.GrossProfit.value;
-  }, [data]);
+  useEffect(() => {}, [data]);
 
   return <CalcContext.Provider value={{ data, updateContext }}>{children}</CalcContext.Provider>;
 }

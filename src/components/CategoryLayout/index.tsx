@@ -1,20 +1,11 @@
 import React from 'react'; // Добавьте этот импорт
 import { Box, Typography } from '@mui/material';
 
-export default function CategoryLayout({ children, title }: { children: React.ReactNode; title: string }) {
+export default function CategoryLayout({ children }: { children: React.ReactNode }) {
   const childrenArray = React.Children.toArray(children) as React.ReactNode[];
 
   return (
     <Box sx={{ borderRadius: '15px 100px 15px 100px' }}>
-      <Typography
-        variant="h2"
-        sx={{
-          color: 'text.secondary',
-          textAlign: 'center',
-        }}
-      >
-        {title}
-      </Typography>
       <Box
         sx={{
           display: 'flex',

@@ -20,8 +20,7 @@ export default function CalcInput({
   }
   const { updateContext, data } = calcContext;
 
-  React.useEffect(() => {
-  }, [value]);
+  React.useEffect(() => {}, [value]);
 
   const handleSliderChange = (event: Event, newValue: number | number[]) => {
     const updatedValue = Array.isArray(newValue) ? newValue[0] : newValue;
@@ -33,13 +32,13 @@ export default function CalcInput({
     updateContext(`${name}`, newValue);
   };
 
-  // const handleBlur = () => {
-  //   if (localValue < 0) {
-  //     setLocalValue(0);
-  //   } else if (localValue > maxValue) {
-  //     setLocalValue(maxValue);
-  //   }
-  // };
+  const handleBlur = () => {
+    if (value < 0) {
+      updateContext(`${name}`, 0);
+    } else if (value > maxValue) {
+      updateContext(`${name}`, maxValue);
+    }
+  };
 
   return (
     <TotalWrapper>
@@ -54,35 +53,33 @@ export default function CalcInput({
         </Typography>
         <Divider sx={{ borderColor: 'text.primary' }} />
         <FormControl sx={{ m: '8px auto 0 auto', width: '100px' }} fullWidth variant="filled">
-          {slider ? (
-            <Input
-              // onBlur={handleBlur}
-              value={value}
-              size="small"
-              onChange={handleInputChange}
-              id="standard-basic"
-              // disabled={disabled}
-            />
-          ) : (
-            <Input
-              value={value}
-              size="small"
-              id="standard-basic"
-              // disabled={disabled}
-            />
-          )}
+          <Input
+            onBlur={handleBlur}
+            value={value}
+            size="small"
+            onChange={handleInputChange}
+            aria-label="Always visible"
+            type="number"
+            id="standard-basic"
+            inputProps={{
+              step: 1000,
+              min: 0,
+              max: maxValue,
+              type: 'number',
+              'aria-labelledby': 'input-slider',
+            }}
+          />
         </FormControl>
       </InputWrapper>
       {slider && (
         <Slider
           value={typeof value === 'number' ? value : 0}
           onChange={handleSliderChange}
-          aria-labelledby="input-slider"
-          step={1000}
+          step={maxValue/100}
           min={0}
           max={maxValue}
           size="small"
-          aria-label="Small"
+          aria-label="Always visible"
           valueLabelDisplay="auto"
         />
       )}
@@ -106,5 +103,5 @@ const TotalWrapper = styled(Box)`
 const Input = styled(MuiInput)`
   font-size: 14px;
   text-align: center;
-  padding-left: 30px;
+  padding-left: 10px;
 `;
