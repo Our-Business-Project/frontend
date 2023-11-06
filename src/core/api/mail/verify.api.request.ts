@@ -6,9 +6,9 @@ import { post } from '../../helpers/apiRequests';
 import { mailVerifyUrl } from '../config';
 import { ErrorResponse } from '@/core/models/ErrorResponse.model';
 
-export const mailVerifyRequest = async (token: string): Promise<MessageResponse> => {
+export const mailVerifyRequest = async (token: string, mailToken: string): Promise<MessageResponse> => {
   try {
-    const response = await post(mailVerifyUrl, token, {});
+    const response = await post(mailVerifyUrl, token, { token: mailToken });
 
     return response.data as MessageResponse;
   } catch (error) {
