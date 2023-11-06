@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import AppWrapper from '@/components/global/AppWrapper';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const metadata: Metadata = {
   title: 'Your Business Adviser | Калькулятор для Вашого Успішного Бізнесу',

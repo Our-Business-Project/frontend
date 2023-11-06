@@ -28,7 +28,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/core/theme/customTheme.js",
-    "src/components/HomeComponents/FormFields/index.tsx"
+    "src/components/HomeComponents/CalcTabs/index.tsx"
   ],
   "exclude": ["node_modules", "dist", "commitlint.config.ts"]
 }

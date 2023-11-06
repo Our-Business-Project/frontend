@@ -1,103 +1,111 @@
-import {
-  Divider,
-  FormHelperText,
-  FormControl,
-  InputAdornment,
-  OutlinedInput,
-  Badge,
-  Tooltip,
-  Typography,
-} from '@mui/material';
-import InfoIcon from '@mui/icons-material/Info';
+import { Divider, FormControl, Typography, Box, styled, Slider } from '@mui/material';
+import MuiInput from '@mui/material/Input';
 import * as React from 'react';
-import PopupLayout from '@/components/PopUpComponents/PopupLayout';
+import { CalculatorDataUnit } from '@/core/models/СalculatorData.model';
+import { CalcContext } from '@/core/contexts/Calc.context';
 
 export default function CalcInput({
-  measure,
+  name,
   label,
-  helper,
-}: {
-  measure: string;
-  label: string;
-  helper?: boolean | false;
-}) {
-  const [open, setOpen] = React.useState<boolean>(false);
-  const [openAllowed, setOpenAllowed] = React.useState<boolean>(true);
+  value,
+  borderRadius = '15px',
+  disabled = true,
+  slider = false,
+  maxValue = 100000,
+}: CalculatorDataUnit) {
+  const calcContext = React.useContext(CalcContext);
 
-  const handleClickOpenOnce = () => {
-    if (openAllowed) {
-      setOpen(true);
-      setOpenAllowed(false);
+  if (!calcContext) {
+    return <Typography title="Щось пішло не так..." />;
+  }
+  const { updateContext } = calcContext;
+
+  const handleSliderChange = (event: Event, newValue: number | number[]) => {
+    const updatedValue = Array.isArray(newValue) ? newValue[0] : newValue;
+    updateContext(`${name}`, updatedValue);
+  };
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = event.target.value === '' ? 0 : Number(event.target.value);
+    updateContext(`${name}`, newValue);
+  };
+
+  const handleBlur = () => {
+    if (value < 0) {
+      updateContext(`${name}`, 0);
+    } else if (value > maxValue) {
+      updateContext(`${name}`, maxValue);
     }
   };
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
   return (
-    <FormControl sx={{ m: 1, maxWidth: '260px', margin: '20px' }} variant="outlined">
-      <FormHelperText sx={{ color: 'text.secondary', fontSize: '18px', m: '0' }} id="outlined-weight-helper-text">
-        {helper ? (
-          <Badge
-            badgeContent={
-              <Tooltip title={<Typography fontSize={10}> Потібна допомога? </Typography>} placement="right-start">
-                <InfoIcon
-                  onClick={handleClickOpen}
-                  fontSize="small"
-                  sx={{
-                    ml: '20px',
-                    color: 'primary.light',
-                    '&:hover': {
-                      cursor: 'pointer',
-                    },
-                  }}
-                />
-              </Tooltip>
-            }
-          >
-            {label}
-          </Badge>
-        ) : (
-          label
-        )}
-      </FormHelperText>
-
-      <OutlinedInput
-        required
-        sx={{ bgcolor: 'primary.main', borderColor: 'text.primary' }}
-        endAdornment={
-          <InputAdornment position="end">
-            <Divider
-              orientation="horizontal"
-              variant="fullWidth"
-              sx={{
-                height: 'calc(1.4375em + 17px)',
-                margin: '0 17px',
-                padding: '0',
-                borderColor: 'text.primary',
-                borderWidth: '1px',
-              }}
-            />
-            {measure}
-          </InputAdornment>
-        }
-        aria-describedby="outlined-weight-helper-text"
-        onClick={handleClickOpenOnce}
-      />
-      {helper && (
-        <PopupLayout
-          handleClose={handleClose}
-          open={open}
-          title="Потрібна допомога з розрахунком?"
-          successBtnText="Розрахувати"
-          checkbox={true}
+    <TotalWrapper>
+      <InputWrapper
+        sx={{
+          borderRadius: borderRadius,
+          bgcolor: 'secondary.main',
+        }}
+      >
+        <Typography textAlign="center" mb="8px" variant="body2">
+          {label}
+        </Typography>
+        <Divider sx={{ borderColor: 'text.primary' }} />
+        <FormControl sx={{ m: '8px auto 0 auto', width: '100px' }} fullWidth variant="filled">
+          <Input
+            onBlur={handleBlur}
+            value={value}
+            size="small"
+            onChange={handleInputChange}
+            aria-label="Always visible"
+            type="number"
+            id="standard-basic"
+            inputProps={{
+              step: 1000,
+              min: 0,
+              max: maxValue,
+              type: 'number',
+              'aria-labelledby': 'input-slider',
+            }}
+            disabled={disabled}
+            sx={{
+              '& .MuiInputBase-input.Mui-disabled': {
+                WebkitTextFillColor: '#fff',
+              },
+            }}
+          />
+        </FormControl>
+      </InputWrapper>
+      {slider && (
+        <Slider
+          value={typeof value === 'number' ? value : 0}
+          onChange={handleSliderChange}
+          step={maxValue / 100}
+          min={0}
+          max={maxValue}
+          size="small"
+          aria-label="Always visible"
+          valueLabelDisplay="auto"
         />
       )}
-    </FormControl>
+    </TotalWrapper>
   );
 }
+
+const InputWrapper = styled(Box)`
+  display: flex;
+  flex-direction: column;
+  padding: 15px 0;
+  width: 250px;
+`;
+
+const TotalWrapper = styled(Box)`
+  margin: 16px 0;
+  display: flex;
+  flex-direction: column;
+`;
+
+const Input = styled(MuiInput)`
+  font-size: 14px;
+  text-align: center;
+  padding-left: 10px;
+`;
