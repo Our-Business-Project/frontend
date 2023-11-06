@@ -1,9 +1,9 @@
 import { getProfileRequest } from '../api/profile/getProfile.api.request';
-import { errorNotify, successNotify } from '../helpers/notifications';
+import { errorNotify } from '../helpers/notifications';
 import { AppDispatch } from '../store';
 import { profileFailed, profileRequest, profileSuccess } from '../store/actions/profile.action';
 
-export const getProfileInfo = (token: string, id: string) => {
+export const getProfileInfoService = (token: string, id: string) => {
   return async (dispatch: AppDispatch) => {
     dispatch(profileRequest());
     try {
