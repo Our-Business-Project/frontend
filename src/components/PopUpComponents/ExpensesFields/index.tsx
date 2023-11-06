@@ -20,9 +20,14 @@ export default function ExpensesFields() {
         gridTemplateColumns: { xs: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)' },
       }}
     >
-      {inputFields.map((field, index) => (
+      {/* {inputFields.map((field, index) => (
         <CalcInput key={index} {...field} />
-      ))}
+      ))} */}
+
+      
+      {/* тут была ошибка типов, но этот элемент делался пока не поменялась структура 
+      Попап пока в принципе не актуален,
+      но удалять не буду. Вдруг понадобится, поэтому просто закоментировала */}
     </Box>
   );
 }

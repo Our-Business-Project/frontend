@@ -18,9 +18,7 @@ export default function CalcInput({
   if (!calcContext) {
     return <Typography title="Щось пішло не так..." />;
   }
-  const { updateContext, data } = calcContext;
-
-  React.useEffect(() => {}, [value]);
+  const { updateContext } = calcContext;
 
   const handleSliderChange = (event: Event, newValue: number | number[]) => {
     const updatedValue = Array.isArray(newValue) ? newValue[0] : newValue;
