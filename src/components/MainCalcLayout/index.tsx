@@ -1,5 +1,5 @@
 import React from 'react'; // Добавьте этот импорт
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 
 export default function MainCalcLayout({ children }: { children: React.ReactNode }) {
   const childrenArray = React.Children.toArray(children) as React.ReactNode[];

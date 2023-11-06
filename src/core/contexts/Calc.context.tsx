@@ -44,7 +44,7 @@ export function CalcProvider({ children }: PropsWithChildren<{}>) {
       label: 'Виробнича собівартість',
       borderRadius: '0 15px 15px 0',
     },
-    FixedCosts: { name: 'FixedCosts', value: 168000, label: 'Постійні витрати', disabled: false},
+    FixedCosts: { name: 'FixedCosts', value: 168000, label: 'Постійні витрати', disabled: false },
     Revenue: { name: 'Revenue', value: 0, label: 'Виторг від реалізації', borderRadius: '15px 0 0 15px' },
     BreakEvenPoint: { name: 'BreakEvenPoint', value: 0, label: 'Точка беззбитковості' },
     Profit: { name: 'Profit', value: 0, label: 'Прибуток' },
