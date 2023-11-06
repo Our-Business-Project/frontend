@@ -90,7 +90,7 @@ const MainMenu = () => {
 const RightMenu = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, logout } = useAuth();
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -102,7 +102,7 @@ const RightMenu = () => {
 
   const menu = [
     { name: 'Профіль', url: '/profile' },
-    { name: 'Вихід', onClick: () => console.log('logout') },
+    { name: 'Вихід', onClick: () => logout() },
   ];
 
   return (

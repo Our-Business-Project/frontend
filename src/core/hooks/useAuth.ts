@@ -1,5 +1,12 @@
 import { useCallback, useEffect, useMemo } from 'react';
-import { SignInUserProps, SignUpUserProps, signInService, signUpService } from '../services/auth.service';
+import { redirect } from 'next/navigation';
+import {
+  SignInUserProps,
+  SignUpUserProps,
+  logoutService,
+  signInService,
+  signUpService,
+} from '../services/auth.service';
 import { selectAuth } from '../store/selectors/auth.selector';
 import { AuthState } from '../store/reducers/auth.reducer';
 import { useLocalStorage } from './useLocalStorage';
@@ -36,12 +43,20 @@ export const useAuth = () => {
     [dispatch]
   );
 
+  const logout = useCallback(() => {
+    dispatch(logoutService());
+    removeLocalToken();
+    removeLocalUserId();
+    redirect('/');
+  }, [dispatch, removeLocalToken, removeLocalUserId]);
+
   const isAuthenticated = useMemo(() => !!token, [token]);
 
   return {
     auth,
     login,
     register,
+    logout,
     isAuthenticated,
     token,
     userId,
