@@ -1,4 +1,4 @@
-import CategoryLayout from '@/components/CategoryLayout';
+import MainCalcLayout from '@/components/MainCalcLayout';
 import CalcInput from '@/components/ui/InputComponents/CalcInput';
 import { CalcContext } from '@/core/contexts/Calc.context';
 import { Typography } from '@mui/material';
@@ -10,7 +10,7 @@ import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 
-export default function FormFields() {
+export default function CalcTabs() {
   const [value, setValue] = React.useState('1');
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
@@ -35,11 +35,11 @@ export default function FormFields() {
           </TabList>
         </Box>
         <TabPanel value="1">
-          <CategoryLayout>
+          <MainCalcLayout>
             {Object.keys(data).map((key) => (
               <CalcInput key={key} {...data[key]} />
             ))}
-          </CategoryLayout>
+          </MainCalcLayout>
         </TabPanel>
         <TabPanel value="2">Item Two</TabPanel>
         <TabPanel value="3">Item Three</TabPanel>

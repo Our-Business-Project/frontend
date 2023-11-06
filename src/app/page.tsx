@@ -1,7 +1,7 @@
 'use client';
 import { Box, Container } from '@mui/material';
 import Intro from '@/components/HomeComponents/Intro';
-import FormFields from '@/components/HomeComponents/FormFields';
+import CalcTabs from '@/components/HomeComponents/CalcTabs';
 
 import * as React from 'react';
 import BackgroundBox from '@/components/ui/BoxComponents/BackgroundBox';
@@ -14,7 +14,7 @@ export default function HomePage() {
       <Intro />
       <Box sx={{ p: '50px 0', bgcolor: 'background.default' }}>
         <Container>
-          <FormFields />
+          <CalcTabs />
         </Container>
       </Box>
     </BackgroundBox>

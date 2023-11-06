@@ -68,6 +68,12 @@ export default function CalcInput({
               type: 'number',
               'aria-labelledby': 'input-slider',
             }}
+            disabled={disabled}
+            sx={{
+              '& .MuiInputBase-input.Mui-disabled': {
+                WebkitTextFillColor: '#fff',
+              },
+            }}
           />
         </FormControl>
       </InputWrapper>
@@ -75,7 +81,7 @@ export default function CalcInput({
         <Slider
           value={typeof value === 'number' ? value : 0}
           onChange={handleSliderChange}
-          step={maxValue/100}
+          step={maxValue / 100}
           min={0}
           max={maxValue}
           size="small"
