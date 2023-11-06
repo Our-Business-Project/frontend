@@ -1,39 +1,45 @@
 import { Divider, FormControl, Typography, Box, styled, Slider } from '@mui/material';
 import MuiInput from '@mui/material/Input';
 import * as React from 'react';
+import { CalculatorDataUnit } from '@/core/models/СalculatorData.model';
+import { CalcContext } from '@/core/contexts/Calc.context';
 
 export default function CalcInput({
+  name,
   label,
-  helper,
+  value,
   borderRadius = '15px',
   disabled = true,
   slider = false,
-  maxValue = 10000,
-}: {
-  label: string;
-  helper?: boolean | false;
-  borderRadius?: string;
-  disabled?: boolean;
-  slider?: boolean;
-  maxValue?: number;
-}) {
-  const [value, setValue] = React.useState(7000);
+  maxValue = 100000,
+}: CalculatorDataUnit) {
+  const calcContext = React.useContext(CalcContext);
+
+  if (!calcContext) {
+    return <Typography title="Щось пішло не так..." />;
+  }
+  const { updateContext, data } = calcContext;
+
+  React.useEffect(() => {
+  }, [value]);
 
   const handleSliderChange = (event: Event, newValue: number | number[]) => {
-    setValue(newValue as number);
+    const updatedValue = Array.isArray(newValue) ? newValue[0] : newValue;
+    updateContext(`${name}`, updatedValue);
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value === '' ? 0 : Number(event.target.value));
+    const newValue = event.target.value === '' ? 0 : Number(event.target.value);
+    updateContext(`${name}`, newValue);
   };
 
-  const handleBlur = () => {
-    if (value < 0) {
-      setValue(0);
-    } else if (value > maxValue) {
-      setValue(maxValue);
-    }
-  };
+  // const handleBlur = () => {
+  //   if (localValue < 0) {
+  //     setLocalValue(0);
+  //   } else if (localValue > maxValue) {
+  //     setLocalValue(maxValue);
+  //   }
+  // };
 
   return (
     <TotalWrapper>
@@ -48,14 +54,23 @@ export default function CalcInput({
         </Typography>
         <Divider sx={{ borderColor: 'text.primary' }} />
         <FormControl sx={{ m: '8px auto 0 auto', width: '100px' }} fullWidth variant="filled">
-          <Input
-            onBlur={handleBlur}
-            value={value}
-            size="small"
-            onChange={handleInputChange}
-            id="standard-basic"
-            disabled={disabled}
-          />
+          {slider ? (
+            <Input
+              // onBlur={handleBlur}
+              value={value}
+              size="small"
+              onChange={handleInputChange}
+              id="standard-basic"
+              // disabled={disabled}
+            />
+          ) : (
+            <Input
+              value={value}
+              size="small"
+              id="standard-basic"
+              // disabled={disabled}
+            />
+          )}
         </FormControl>
       </InputWrapper>
       {slider && (
@@ -63,7 +78,7 @@ export default function CalcInput({
           value={typeof value === 'number' ? value : 0}
           onChange={handleSliderChange}
           aria-labelledby="input-slider"
-          step={500}
+          step={1000}
           min={0}
           max={maxValue}
           size="small"

@@ -1,17 +1,23 @@
 import CategoryLayout from '@/components/CategoryLayout';
 import CalcInput from '@/components/ui/InputComponents/CalcInput';
-import { useContext } from 'react';
 import { CalcContext } from '@/core/contexts/Calc.context';
-import { CalculatorData } from '@/core/models/СalculatorData.model';
+import { Typography } from '@mui/material';
+import { useContext, useEffect, useState } from 'react';
 
 export default function FormFields() {
-  const inputFields: CalculatorData | null = useContext(CalcContext);
+  const calcContext = useContext(CalcContext);
 
-  const fieldKeys = inputFields ? Object.keys(inputFields) : [];
+  if (!calcContext) {
+    return <Typography title="Щось пішло не так..." />;
+  }
+
+  const { data } = calcContext;
 
   return (
     <CategoryLayout title="Загальна інформація (обов'язково)">
-      {inputFields && fieldKeys.map((key) => <CalcInput key={key} {...inputFields[key]} />)}
+      {Object.keys(data).map((key) => (
+        <CalcInput key={key} {...data[key]} />
+      ))}
     </CategoryLayout>
   );
 }
