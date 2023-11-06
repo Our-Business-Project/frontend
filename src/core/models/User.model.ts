@@ -4,4 +4,5 @@ export interface User {
   lastName: string;
   phone: string;
   email: string;
+  isEmailVerified: string;
 }

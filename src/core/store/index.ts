@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from './reducers/auth.reducer';
 import profileReducer from './reducers/profile.reducer';
+import mailVerificationReducer from './reducers/mailVerification.reducer';
 
 const store = configureStore({
   reducer: {
     auth: authReducer,
+    mailVerification: mailVerificationReducer,
     profile: profileReducer,
   },
 });
