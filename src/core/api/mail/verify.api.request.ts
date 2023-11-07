@@ -21,7 +21,7 @@ export const mailVerifyRequest = async (token: string, mailToken: string): Promi
     } else if (data.error === 'Email already verified') {
       throw new Error('Пошта вже підтверджена');
     } else {
-      throw new Error('Шось пішло не по плану :(');
+      throw new Error('Щось пішло не по плану :(');
     }
   }
 };

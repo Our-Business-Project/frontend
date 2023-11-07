@@ -16,7 +16,7 @@ export default function ProfilePage() {
   }, [isAuthenticated, loadProfile, userId]);
 
   useEffect(() => {
-    if (profile.error !== 'Шось пішло не по плану :(') {
+    if (profile.error && profile.error !== 'Щось пішло не по плану :(') {
       logout();
     }
   }, [logout, profile.error]);

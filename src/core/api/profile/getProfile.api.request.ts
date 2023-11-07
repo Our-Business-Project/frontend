@@ -17,7 +17,7 @@ export const getProfileRequest = async (token: string, id: string): Promise<User
     } else if (err.response?.status === 401) {
       throw new Error('Не авторизоавний!');
     } else {
-      throw new Error('Шось пішло не по плану :(');
+      throw new Error('Щось пішло не по плану :(');
     }
   }
 };

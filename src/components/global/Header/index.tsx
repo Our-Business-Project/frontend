@@ -100,10 +100,13 @@ const RightMenu = () => {
     setAnchorEl(null);
   };
 
-  const menu = [
-    { name: 'Профіль', url: '/profile' },
-    { name: 'Вихід', onClick: () => logout() },
-  ];
+  const menu = React.useMemo(
+    () => [
+      { name: 'Профіль', url: '/profile' },
+      { name: 'Вихід', onClick: logout },
+    ],
+    [logout]
+  );
 
   return (
     <Box sx={{ flexGrow: 0 }}>
