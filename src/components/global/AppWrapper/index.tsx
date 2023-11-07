@@ -2,6 +2,7 @@
 import type { ReactNode } from 'react';
 import { ToastContainer } from 'react-toastify';
 import { Provider } from 'react-redux';
+import { Box } from '@mui/material';
 import store from '@/core/store';
 import ThemeRegistry from '@/core/theme/ThemeRegistry';
 import Header from '@/components/global/Header';
@@ -13,9 +14,13 @@ export default function AppWrapper({ children }: { children: ReactNode }) {
     <Provider store={store}>
       <CalcProvider>
         <ThemeRegistry options={{ key: 'mui' }}>
-          <Header />
-          <div id="content">{children}</div>
-          <Footer />
+          <Box sx={{ minHeight: '100%', display: 'flex', flexDirection: 'column' }}>
+            <Header />
+            <Box component={'main'} sx={{ flex: '1' }}>
+              {children}
+            </Box>
+            <Footer />
+          </Box>
         </ThemeRegistry>
         <ToastContainer />
       </CalcProvider>

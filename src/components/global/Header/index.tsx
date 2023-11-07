@@ -16,7 +16,7 @@ import { useAuth } from '@/core/hooks/useAuth';
 
 export default function Header() {
   return (
-    <AppBar position="fixed" sx={{ padding: '0!important' }}>
+    <AppBar position="sticky" sx={{ top: 0, padding: '0!important' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <SiteName />
