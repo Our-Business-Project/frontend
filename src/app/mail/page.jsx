@@ -22,16 +22,18 @@ export default function EmailVerificationPage() {
   }, []);
 
   useEffect(() => {
-    if (!verifyToken || !isAuthenticated || profile.data?.isEmailVerified) {
-      redirect('/');
-    } else if (!profile.data?.isEmailVerified === false) {
+    if (!verifyToken || !isAuthenticated) {
+      redirect('/sign-in');
+    } else if (profile.data?.isEmailVerified) {
+      redirect('/profile');
+    } else if (profile.data?.isEmailVerified === false) {
       verifyMail(verifyToken);
     }
   }, [isAuthenticated, profile.data?.isEmailVerified, verifyMail, verifyToken]);
 
   useEffect(() => {
     if (mailVerification.data || mailVerification.error) {
-      redirect('/');
+      redirect('/profile');
     }
   }, [mailVerification.data, mailVerification.error]);
 
