@@ -13,7 +13,7 @@ export default function HomePage() {
     <BackgroundBox imageUrl={bgImage}>
       <Intro />
       <Box sx={{ p: '50px 0', bgcolor: 'background.default' }}>
-        <Container>
+        <Container id="calculatorTabs">
           <CalcTabs />
         </Container>
       </Box>

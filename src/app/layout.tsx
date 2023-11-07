@@ -9,7 +9,13 @@ export const metadata: Metadata = {
     'Отримайте професійні бізнес-консультації та скористайтеся унікальним калькулятором бізнесу для підвищення ефективності вашої компанії',
 };
 
-const style = { height: '100%', margin: 0, padding: '0!important' };
+const style = {
+  height: '100%',
+  margin: 0,
+  padding: '0!important',
+  scrollBehavior: 'smooth',
+  scrollPaddingTop: '5rem',
+};
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

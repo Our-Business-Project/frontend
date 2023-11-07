@@ -20,16 +20,31 @@ export default function SignUpPage() {
   }, [isAuthenticated]);
 
   return (
-    <BackgroundBox imageUrl={bgImage} sx={{ padding: '2rem' }}>
-      <FormBox>
+    <StyledBgBox imageUrl={bgImage} sx={{ padding: '2rem' }}>
+      <StyledFormBox>
         <Typography variant="h3">Реєстрація</Typography>
         <Container>
           <StyledSignUpForm register={register} />
         </Container>
-      </FormBox>
-    </BackgroundBox>
+      </StyledFormBox>
+    </StyledBgBox>
   );
 }
+
+const StyledBgBox = styled(BackgroundBox)(({ theme }) => ({
+  padding: '6rem 2rem 2rem',
+  [theme.breakpoints.down('sm')]: {
+    width: '100%',
+    padding: 0,
+  },
+}));
+
+const StyledFormBox = styled(FormBox)(({ theme }) => ({
+  [theme.breakpoints.down('sm')]: {
+    marginBottom: 0,
+    borderRadius: 0,
+  },
+}));
 
 const Container = styled(Box)(() => ({ maxWidth: 800, margin: 'auto' }));
 

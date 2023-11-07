@@ -16,7 +16,7 @@ import { useAuth } from '@/core/hooks/useAuth';
 
 export default function Header() {
   return (
-    <AppBar position="sticky" sx={{ top: 0, padding: '0!important' }}>
+    <AppBar position="fixed" sx={{ top: 0, padding: '0!important' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <SiteName />
@@ -70,7 +70,7 @@ const MainMenu = () => {
 
   const menu = [
     { name: 'Головна', url: '/' },
-    { name: 'Калькулятор', url: '/calculator' },
+    { name: 'Калькулятор', url: '/#calculatorTabs' },
   ];
 
   return (
@@ -134,19 +134,20 @@ type ItemType = {
   onClick?: () => void;
 };
 const MyMenuItem = ({ item, handleClose }: { item: ItemType; handleClose: () => void }) => (
-  <MenuItem onClick={handleClose}>
+  <MenuItemLi onClick={handleClose}>
     {item.url ? (
-      <MenuItemLink href={item.url}>{item.name}</MenuItemLink>
+      <MenuItemLink href={item.url} scroll={true}>
+        {item.name}
+      </MenuItemLink>
     ) : (
       <MenuItemButton onClick={item.onClick}>{item.name}</MenuItemButton>
     )}
-  </MenuItem>
+  </MenuItemLi>
 );
 
-const MenuBox = styled(Box)(() => ({
+const MenuBox = styled(Box)(({ theme }) => ({
   flexGrow: 1,
-  display: 'none',
-  '@media(min-width: 900px)': {
+  [theme.breakpoints.up('md')]: {
     display: 'flex',
   },
 }));
@@ -160,9 +161,15 @@ const MenuButton = styled(Button)(({ theme }) => ({
   color: theme.palette.text.primary,
 }));
 
+const MenuItemLi = styled(MenuItem)(() => ({
+  padding: 0,
+}));
+
 const MenuItemLink = styled(Link)(({ theme }) => ({
   color: theme.palette.primary.main,
   textDecoration: 'none',
+  padding: '6px 16px',
+  width: '100%',
 }));
 
 const MenuItemButton = styled(Button)(({ theme }) => ({
