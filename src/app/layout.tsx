@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { Box } from '@mui/material';
 import AppWrapper from '@/components/global/AppWrapper';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -8,12 +9,20 @@ export const metadata: Metadata = {
     'Отримайте професійні бізнес-консультації та скористайтеся унікальним калькулятором бізнесу для підвищення ефективності вашої компанії',
 };
 
+const style = {
+  height: '100%',
+  margin: 0,
+  padding: '0!important',
+  scrollBehavior: 'smooth',
+  scrollPaddingTop: '5rem',
+};
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body>
+    <Box lang="en" component={'html'} sx={style}>
+      <Box component={'body'} sx={style}>
         <AppWrapper>{children}</AppWrapper>
-      </body>
-    </html>
+      </Box>
+    </Box>
   );
 }

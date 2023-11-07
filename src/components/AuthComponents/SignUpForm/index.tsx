@@ -31,19 +31,19 @@ const defaultValues = {
 };
 
 const GridItemText = forwardRef(({ ...props }: TextInputProps, ref: InputRef) => (
-  <Grid item sm={5}>
+  <StyledGridItem item sm={5}>
     <TextInput {...props} ref={ref} />
-  </Grid>
+  </StyledGridItem>
 ));
 const GridItemPhone = forwardRef(({ ...props }: TextInputProps, ref: InputRef) => (
-  <Grid item sm={5}>
+  <StyledGridItem item sm={5}>
     <PhoneInput {...props} ref={ref} />
-  </Grid>
+  </StyledGridItem>
 ));
 const GridItemPasswd = forwardRef(({ ...props }: TextInputProps, ref: InputRef) => (
-  <Grid item sm={5}>
+  <StyledGridItem item sm={5}>
     <PasswordInput {...props} ref={ref} />
-  </Grid>
+  </StyledGridItem>
 ));
 
 export default function SignUpForm({ register, ...props }: Props) {
@@ -68,7 +68,7 @@ export default function SignUpForm({ register, ...props }: Props) {
   return (
     <Box {...props}>
       <form onSubmit={handleSubmit(onSubmit as SubmitHandler<FieldValues>)}>
-        <Grid container rowGap="3.25rem" columnGap="6.25rem" columns={12}>
+        <StyledGrid container columns={12}>
           <GridItemText control={control} label="Ім'я" {...formRegister('firstName')} />
           <GridItemText control={control} label="Прізвище" {...formRegister('lastName')} />
           <GridItemText control={control} label="Пошта" {...formRegister('email')} />
@@ -76,7 +76,7 @@ export default function SignUpForm({ register, ...props }: Props) {
           <GridItemPasswd control={control} label="Пароль" {...formRegister('password')} />
           <GridItemPasswd control={control} label="Підтвердити Пароль" {...formRegister('repeatPassword')} />
           <FormButton type="submit">Зареєструватись</FormButton>
-        </Grid>
+        </StyledGrid>
       </form>
       <TextContainer>
         <Typography fontSize="1rem">Вже маєш акаунт?</Typography>
@@ -86,11 +86,33 @@ export default function SignUpForm({ register, ...props }: Props) {
   );
 }
 
-const TextContainer = styled(Box)(() => ({
+const StyledGrid = styled(Grid)(({ theme }) => ({
+  alignItems: 'center',
+  gap: '3.25rem 6.25rem',
+  [theme.breakpoints.down('md')]: {
+    flexDirection: 'column',
+  },
+  [theme.breakpoints.down('sm')]: {
+    gap: '1.25rem 3.25rem',
+  },
+}));
+
+const StyledGridItem = styled(Grid)(({ theme }) => ({
+  [theme.breakpoints.down('md')]: {
+    width: '100%',
+    maxWidth: '350px',
+  },
+}));
+
+const TextContainer = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
   paddingTop: '1.875rem',
-  width: '15.625rem',
   margin: 'auto',
+  gap: '1rem',
+  maxWidth: 'fit-content',
+  [theme.breakpoints.down('sm')]: {
+    flexDirection: 'column',
+  },
 }));

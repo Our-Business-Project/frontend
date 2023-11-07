@@ -13,7 +13,6 @@ export default function Footer() {
       component="footer"
       sx={{
         backgroundColor: 'primary.main',
-        position: 'absolute',
         width: '100%',
         p: 6,
       }}

@@ -53,15 +53,22 @@ export default function SignInForm({ login, ...props }: Props) {
   );
 }
 
-const FormContainer = styled(Box)(() => ({
+const FormContainer = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   rowGap: '3.25rem',
+  [theme.breakpoints.down('sm')]: {
+    rowGap: '1.25rem',
+  },
 }));
 
-const TextContainer = styled(Box)(() => ({
+const TextContainer = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
   paddingTop: '1.875rem',
+  gap: '1rem',
+  [theme.breakpoints.down('sm')]: {
+    flexDirection: 'column',
+  },
 }));

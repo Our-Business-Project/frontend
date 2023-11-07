@@ -1,4 +1,4 @@
-import { PROFILE_REQUEST, PROFILE_SUCCESS, PROFILE_FAILED } from '../constants/profile.constants';
+import { PROFILE_REQUEST, PROFILE_SUCCESS, PROFILE_FAILED, PROFILE_RESET } from '../constants/profile.constants';
 import { ProfileActions } from '../actions/profile.action';
 import { UserResponse } from '@/core/models/UserResponse.model';
 
@@ -40,6 +40,12 @@ export default function profileReducer(state = initialState, action: ProfileActi
         data: null,
         error: action.message,
         pending: false,
+      };
+    }
+
+    case PROFILE_RESET: {
+      return {
+        ...initialState,
       };
     }
 

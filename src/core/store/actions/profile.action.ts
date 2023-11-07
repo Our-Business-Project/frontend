@@ -1,5 +1,5 @@
 import { UserResponse } from '@/core/models/UserResponse.model';
-import { PROFILE_REQUEST, PROFILE_SUCCESS, PROFILE_FAILED } from '../constants/profile.constants';
+import { PROFILE_REQUEST, PROFILE_SUCCESS, PROFILE_FAILED, PROFILE_RESET } from '../constants/profile.constants';
 
 interface ProfileRequestAction {
   type: typeof PROFILE_REQUEST;
@@ -15,7 +15,11 @@ interface ProfileFailedAction {
   message: string;
 }
 
-type ProfileActions = ProfileRequestAction | ProfileSuccessAction | ProfileFailedAction;
+interface ProfileResetAction {
+  type: typeof PROFILE_RESET;
+}
+
+type ProfileActions = ProfileRequestAction | ProfileSuccessAction | ProfileFailedAction | ProfileResetAction;
 
 const profileRequest = (): ProfileRequestAction => ({
   type: PROFILE_REQUEST,
@@ -31,5 +35,9 @@ const profileFailed = (message: string): ProfileFailedAction => ({
   message,
 });
 
+const profileReset = (): ProfileResetAction => ({
+  type: PROFILE_RESET,
+});
+
 export type { ProfileActions };
-export { profileRequest, profileSuccess, profileFailed };
+export { profileRequest, profileSuccess, profileFailed, profileReset };

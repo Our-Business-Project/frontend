@@ -1,7 +1,7 @@
 import { Box, BoxProps, styled } from '@mui/material';
 
 export default function FormBox({ children, ...props }: BoxProps) {
-  return <CustomBox>{children}</CustomBox>;
+  return <CustomBox {...props}>{children}</CustomBox>;
 }
 
 const CustomBox = styled(Box)(({ theme }) => ({

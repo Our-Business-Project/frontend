@@ -24,4 +24,9 @@ const CustomButton = styled(Button)(({ theme }) => ({
     border: 1,
     borderColor: theme.palette.primary.light,
   },
+  [theme.breakpoints.down('sm')]: {
+    margin: '0 auto',
+    padding: '0.6875rem 1.25rem',
+    fontSize: '1rem',
+  },
 }));
