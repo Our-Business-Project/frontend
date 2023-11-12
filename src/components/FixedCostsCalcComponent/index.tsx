@@ -67,14 +67,13 @@ function Row(props: { row: FixedCostsData }) {
 }
 
 export default function FixedCostsCalaTable() {
-	const fixedCostsContext = React.useContext(FixedCostsContext);
+  const fixedCostsContext = React.useContext(FixedCostsContext);
 
-	  if (!fixedCostsContext) {
-      return <Typography title="Щось пішло не так..." />;
-    }
+  if (!fixedCostsContext) {
+    return <Typography title="Щось пішло не так..." />;
+  }
 
-    const { data } = fixedCostsContext;
-
+  const { data } = fixedCostsContext;
 
   return (
     <TableContainer sx={{ bgcolor: 'secondary.main', padding: '50px' }} component={Paper}>
@@ -84,7 +83,6 @@ export default function FixedCostsCalaTable() {
     </TableContainer>
   );
 }
-
 
 const TableCellHead = styled(TableCell)`
   border-bottom: 14px;
