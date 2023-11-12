@@ -1,4 +1,4 @@
-import React, { createContext, PropsWithChildren, useContext, useEffect, useState } from 'react';
+import React, { createContext, PropsWithChildren, useState } from 'react';
 import { CalculatorData } from '../models/СalculatorData.model';
 
 export type CalcContextType = {
@@ -12,7 +12,7 @@ export function CalcProvider({ children }: PropsWithChildren<{}>) {
   const contextValues: CalculatorData = {
     ProductionPlan: {
       name: 'ProductionPlan',
-      value: 2800,
+      value: 0,
       label: 'План виробництва',
       borderRadius: '0 0 15px 0',
       disabled: false,
@@ -21,7 +21,7 @@ export function CalcProvider({ children }: PropsWithChildren<{}>) {
     },
     CostPrice: {
       name: 'CostPrice',
-      value: 80,
+      value: 0,
       label: 'Собівартість',
       borderRadius: '0 0 15px 15px',
       disabled: false,
@@ -30,7 +30,7 @@ export function CalcProvider({ children }: PropsWithChildren<{}>) {
     },
     PricePerUnit: {
       name: 'PricePerUnit',
-      value: 140,
+      value: 0,
       label: 'Ціна за одиницю товару',
       borderRadius: '0 0 0 15px',
       disabled: false,
@@ -75,8 +75,6 @@ export function CalcProvider({ children }: PropsWithChildren<{}>) {
       setData(updatedData);
     }
   };
-
-  useEffect(() => {}, [data]);
 
   return <CalcContext.Provider value={{ data, updateContext }}>{children}</CalcContext.Provider>;
 }

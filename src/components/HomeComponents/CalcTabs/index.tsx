@@ -9,7 +9,7 @@ import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
-import FixedCostsCaclLayout from '@/components/FixedCostsCalcLayout';
+import FixedCostsCalaTable from '@/components/FixedCostsCalcComponent';
 
 export default function CalcTabs() {
   const [value, setValue] = React.useState('1');
@@ -43,7 +43,7 @@ export default function CalcTabs() {
           </MainCalcLayout>
         </TabPanel>
         <TabPanel value="2">
-          <FixedCostsCaclLayout />
+          <FixedCostsCalaTable />
         </TabPanel>
       </TabContext>
     </Box>
