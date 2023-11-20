@@ -1,9 +1,9 @@
-import React, { createContext, PropsWithChildren, useEffect, useState } from 'react';
+import React, { createContext, PropsWithChildren, useState } from 'react';
 import { FixedCostsData } from '../models/FixedCosts.model';
 
 export type FixedCostsContextType = {
-  data: { [key: string]: FixedCostsData };
-  updateContext: (fieldName: string, newValue: number) => void;
+  data: FixedCostsData[];
+  updateContext: (id: number, newValue: number, element?: string) => void;
 };
 
 export const FixedCostsContext = createContext<FixedCostsContextType | null>(null);
@@ -11,167 +11,214 @@ export const FixedCostsContext = createContext<FixedCostsContextType | null>(nul
 export function FixedCostsProvider({ children }: PropsWithChildren<{}>) {
   const contextValues: FixedCostsData[] = [
     {
+      id: 1,
       name: 'Оренда будівель та приміщень, обладнання',
       value: 0,
       columnNames: ['Посада', 'Од. вим', 'Кількість', 'Ціна, грн/од змін', 'Сума грн.'],
       data: [
         {
+          id: 101,
           Посада: 'Виробниче приміщення',
           'Од. вим': 'м кв',
-          Кількість: 300,
-          'Ціна, грн/од змін': 250,
-          'Сума грн.': 75000,
+          Кількість: 0,
+          'Ціна, грн/од змін': 0,
+          'Сума грн.': 0,
         },
         {
+          id: 102,
           Посада: 'Офісне приміщення',
           'Од. вим': 'м кв',
-          Кількість: 50,
-          'Ціна, грн/од змін': 350,
-          'Сума грн.': 17500,
+          Кількість: 0,
+          'Ціна, грн/од змін': 0,
+          'Сума грн.': 0,
         },
         {
+          id: 103,
           Посада: 'Торгова точка 1',
           'Од. вим': 'м кв',
-          Кількість: 10,
-          'Ціна, грн/од змін': 200,
-          'Сума грн.': 20000,
+          Кількість: 0,
+          'Ціна, грн/од змін': 0,
+          'Сума грн.': 0,
         },
       ],
     },
     {
+      id: 2,
       name: 'Енергоресурси, Комунальні Витрати',
       value: 0,
       columnNames: ['Посада', 'Од. вим', 'Кількість', 'Ціна, грн/од змін', 'Сума грн.'],
       data: [
         {
+          id: 201,
           Посада: 'Електроенергія',
           'Од. вим': 'кВт/год',
-          Кількість: null,
-          'Ціна, грн/од змін': null,
-          'Сума грн.': 1,
+          Кількість: 0,
+          'Ціна, грн/од змін': 0,
+          'Сума грн.': 0,
         },
         {
+          id: 202,
           Посада: 'Газ',
           'Од. вим': 'м3',
-          Кількість: null,
-          'Ціна, грн/од змін': null,
-          'Сума грн.': null,
+          Кількість: 0,
+          'Ціна, грн/од змін': 0,
+          'Сума грн.': 0,
         },
         {
+          id: 203,
           Посада: 'Опалення',
           'Од. вим': 'ГКл',
-          Кількість: null,
-          'Ціна, грн/од змін': null,
-          'Сума грн.': null,
+          Кількість: 0,
+          'Ціна, грн/од змін': 0,
+          'Сума грн.': 0,
         },
         {
+          id: 204,
           Посада: 'Паливо',
           'Од. вим': 'літр',
-          Кількість: null,
-          'Ціна, грн/од змін': null,
-          'Сума грн.': null,
+          Кількість: 0,
+          'Ціна, грн/од змін': 0,
+          'Сума грн.': 0,
         },
         {
+          id: 205,
           Посада: 'Комунальні витрати',
           'Од. вим': 'грн',
-          Кількість: null,
-          'Ціна, грн/од змін': null,
-          'Сума грн.': null,
+          Кількість: 0,
+          'Ціна, грн/од змін': 0,
+          'Сума грн.': 0,
         },
       ],
     },
     {
+      id: 3,
       name: 'Адміністративно Управлінський Персонал',
       value: 0,
       columnNames: ['Посада', 'Число, людина', 'Оклад грн./міс', 'Сума грн.'],
       data: [
         {
+          id: 301,
           Посада: 'Директор',
-          'Число, людина': null,
-          'Оклад грн./міс': null,
-          'Сума грн.': null,
+          'Число, людина': 0,
+          'Оклад грн./міс': 0,
+          'Сума грн.': 0,
         },
         {
+          id: 302,
           Посада: 'Головний технолог',
-          'Число, людина': null,
-          'Оклад грн./міс': null,
-          'Сума грн.': null,
+          'Число, людина': 0,
+          'Оклад грн./міс': 0,
+          'Сума грн.': 0,
         },
         {
+          id: 303,
           Посада: 'Охоронець',
-          'Число, людина': null,
-          'Оклад грн./міс': null,
-          'Сума грн.': null,
+          'Число, людина': 0,
+          'Оклад грн./міс': 0,
+          'Сума грн.': 0,
         },
         {
+          id: 304,
           Посада: 'Прибиральниця',
-          'Число, людина': null,
-          'Оклад грн./міс': null,
-          'Сума грн.': null,
+          'Число, людина': 0,
+          'Оклад грн./міс': 0,
+          'Сума грн.': 0,
         },
         {
+          id: 305,
           Посада: 'Водій',
-          'Число, людина': null,
-          'Оклад грн./міс': null,
-          'Сума грн.': null,
+          'Число, людина': 0,
+          'Оклад грн./міс': 0,
+          'Сума грн.': 0,
         },
         {
+          id: 306,
           Посада: 'Бухгалтер',
-          'Число, людина': null,
-          'Оклад грн./міс': null,
-          'Сума грн.': null,
+          'Число, людина': 0,
+          'Оклад грн./міс': 0,
+          'Сума грн.': 0,
         },
       ],
     },
     {
+      id: 4,
       name: "Зв'язок, Інше",
       value: 0,
       columnNames: ['Посада', 'Сума грн.'],
       data: [
         {
+          id: 401,
           Посада: "Мобільний зв'язок",
-          'Сума грн.': null,
+          'Сума грн.': 0,
         },
         {
+          id: 402,
           Посада: 'Інтернет',
-          'Сума грн.': null,
+          'Сума грн.': 0,
         },
         {
+          id: 403,
           Посада: 'Хостинг',
-          'Сума грн.': null,
+          'Сума грн.': 0,
         },
         {
+          id: 404,
           Посада: 'Поштові витрати',
-          'Сума грн.': null,
+          'Сума грн.': 0,
         },
         {
+          id: 405,
           Посада: 'Реклама',
-          'Сума грн.': null,
+          'Сума грн.': 0,
         },
         {
+          id: 406,
           Посада: 'Подяки…',
-          'Сума грн.': null,
+          'Сума грн.': 0,
         },
       ],
     },
   ];
 
-  const [data, setData] = useState<{ [key: string]: FixedCostsData }>({});
+  const [data, setData] = useState(contextValues);
 
-  useEffect(() => {
-    const initData: { [key: string]: FixedCostsData } = {};
-    contextValues.forEach((item) => {
-      initData[item.name] = item;
+  const updateContext = (id: number, newValue: number, element?: string) => {
+    const updatedData = [...data];
+
+    const foundContextValue = updatedData.find((contextValue) => {
+      return contextValue.data.some((item) => item.id === id);
     });
-    setData(initData);
-  }, []);
 
-  const updateContext = (fieldName: string, newValue: number) => {
-    if (fieldName in data) {
-      const updatedData = { ...data };
-      updatedData[fieldName] = { ...updatedData[fieldName], value: newValue };
-      setData(updatedData);
+    if (foundContextValue) {
+      if (element) {
+        const foundItemInData = foundContextValue.data.find((item) => item.id === id);
+        if (foundItemInData) {
+          foundItemInData[element] = +newValue;
+
+          const numericValues = Object.entries(foundItemInData)
+            .filter(([key, value]) => typeof value === 'number' && key !== 'id' && key !== 'Сума грн.')
+            .map(([key, value]) => value);
+
+          foundItemInData['Сума грн.'] = numericValues.reduce((acc, value) => +acc * +value, 1);
+          const totalSum = foundContextValue.data.reduce((sum, item) => {
+            return sum + (+item['Сума грн.'] || 0);
+          }, 0);
+
+          foundContextValue.value = totalSum;
+        }
+      }
+    } else {
+      const index = updatedData.findIndex((item) => item.id === id);
+
+      if (index !== -1) {
+        updatedData[index].value = +newValue;
+        console.log(updatedData[index]);
+      } else {
+        console.log('Элемент с идентификатором', id, 'не найден.');
+      }
     }
+
+    setData(updatedData);
   };
 
   return <FixedCostsContext.Provider value={{ data, updateContext }}>{children}</FixedCostsContext.Provider>;

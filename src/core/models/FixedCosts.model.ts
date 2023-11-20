@@ -1,10 +1,12 @@
 export interface FixedCostsData {
+  id: number;
   name: string;
   value: number;
   columnNames: string[];
   data: FixedCostsEntry[];
 }
 
-interface FixedCostsEntry {
-  [key: string]: string | number | null;
+export interface FixedCostsEntry {
+  id: number;
+  [key: string]: string | number;
 }

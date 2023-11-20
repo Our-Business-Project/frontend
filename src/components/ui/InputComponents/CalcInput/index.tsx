@@ -30,14 +30,6 @@ export default function CalcInput({
     updateContext(`${name}`, newValue);
   };
 
-  const handleBlur = () => {
-    if (value < 0) {
-      updateContext(`${name}`, 0);
-    } else if (value > maxValue) {
-      updateContext(`${name}`, maxValue);
-    }
-  };
-
   return (
     <TotalWrapper>
       <InputWrapper
@@ -50,9 +42,9 @@ export default function CalcInput({
           {label}
         </Typography>
         <Divider sx={{ borderColor: 'text.primary' }} />
-        <FormControl sx={{ m: '8px auto 0 auto', width: '100px' }} fullWidth variant="filled">
+        <FormControl sx={{ m: '5px auto 0 auto', width: '120px' }} fullWidth variant="filled">
           <Input
-            onBlur={handleBlur}
+            // onBlur={handleBlur}
             value={value}
             size="small"
             onChange={handleInputChange}
@@ -60,7 +52,7 @@ export default function CalcInput({
             type="number"
             id="standard-basic"
             inputProps={{
-              step: 1000,
+              step: maxValue / 100,
               min: 0,
               max: maxValue,
               type: 'number',
@@ -107,5 +99,11 @@ const TotalWrapper = styled(Box)`
 const Input = styled(MuiInput)`
   font-size: 14px;
   text-align: center;
-  padding-left: 10px;
+
+  &.MuiInput-root::after {
+    border-bottom: 2px solid ${(props) => props.theme.palette.primary.light};
+  }
+  &.MuiInputBase-input.Mui-disabled {
+    color: #fff;
+  }
 `;
