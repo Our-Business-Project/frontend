@@ -11,6 +11,7 @@ import FormButton from '@/components/ui/ButtonComponents/FormButton';
 import DefaultLink from '@/components/ui/LinkComponents/DefaultLink';
 import PhoneInput from '@/components/ui/InputComponents/FormInput/PhoneInput';
 import { Props } from './props';
+import PrivacyPolicyCheckbox from '../global/PrivacyPolicyCheckbox';
 
 interface IFormInput {
   firstName: string;
@@ -75,8 +76,11 @@ export default function SignUpForm({ register, ...props }: Props) {
           <GridItemPhone control={control} label="Номер телефону" {...formRegister('phone')} />
           <GridItemPasswd control={control} label="Пароль" {...formRegister('password')} />
           <GridItemPasswd control={control} label="Підтвердити Пароль" {...formRegister('repeatPassword')} />
-          <FormButton type="submit">Зареєструватись</FormButton>
         </StyledGrid>
+        <PrivacyPolicyCheckbox />
+        <StyledBoxButton>
+          <FormButton type="submit">Зареєструватись</FormButton>
+        </StyledBoxButton>
       </form>
       <TextContainer>
         <Typography fontSize="1rem">Вже маєш акаунт?</Typography>
@@ -115,4 +119,9 @@ const TextContainer = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down('sm')]: {
     flexDirection: 'column',
   },
+}));
+
+const StyledBoxButton = styled(Box)(() => ({
+  display: 'flex',
+  justifyContent: 'center',
 }));
