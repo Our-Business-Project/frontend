@@ -2,8 +2,11 @@
 
 import { useEffect } from 'react';
 import { redirect } from 'next/navigation';
+import { Container } from '@mui/material';
 import { useAuth } from '@/core/hooks/useAuth';
 import { useProfile } from '@/core/hooks/useProfile';
+
+import ProfileInfo from '@/components/Profile/ProfileInfo';
 
 export default function ProfilePage() {
   const { userId, isAuthenticated, token, logout } = useAuth();
@@ -22,16 +25,8 @@ export default function ProfilePage() {
   }, [logout, profile.error]);
 
   return (
-    <div>
-      {isAuthenticated && profile.data ? (
-        <ul>
-          <li>{profile.data._id}</li>
-          <li>{profile.data.email}</li>
-          <li>{profile.data.firstName}</li>
-          <li>{profile.data.lastName}</li>
-          <li>{profile.data.phone}</li>
-        </ul>
-      ) : null}
-    </div>
+    <Container maxWidth="lg" sx={{ marginTop: 10, color: '#000' }}>
+      {isAuthenticated && profile.data && <ProfileInfo profile={profile} />}
+    </Container>
   );
 }
