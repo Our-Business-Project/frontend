@@ -108,8 +108,6 @@ export function Row(props: { row: FixedCostsData }) {
   );
 }
 
-
-
 const TableCellHead = styled(TableCell)`
   border-bottom: 14px;
   opacity: 50%;
