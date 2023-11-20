@@ -3,7 +3,7 @@ import { useForm, SubmitHandler, FieldValues } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { profileUpdateSchema } from '@/core/validation/profileUpdate.validation';
 import { formatPhone } from '@/core/validation/helpers/format.helpers';
-import { StyledInputWithController, StyledPhoneInput } from '@/core/styles/profileInputStyle';
+import { StyledInputWithController, StyledPhoneInput } from '@/core/styles/ProfileInputStyle';
 
 import { Props as InputFieldProps } from '@/components/ui/InputComponents/FormInput/global/CustomTextField/props';
 import { Props } from './props';
