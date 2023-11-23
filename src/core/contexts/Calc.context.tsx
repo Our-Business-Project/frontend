@@ -37,18 +37,30 @@ export function CalcProvider({ children }: PropsWithChildren<{}>) {
       slider: true,
       maxValue: 10000,
     },
-    GrossProfit: { name: 'GrossProfit', value: 4, label: 'Маржинальний дохід' },
+    GrossProfit: { name: 'GrossProfit', value: 0, label: 'Маржинальний дохід', },
     ProductionCost: {
       name: 'ProductionCost',
       value: 0,
       label: 'Виробнича собівартість',
       borderRadius: '0 15px 15px 0',
     },
-    FixedCosts: { name: 'FixedCosts', value: 168000, label: 'Постійні витрати', disabled: false },
-    Revenue: { name: 'Revenue', value: 0, label: 'Виторг від реалізації', borderRadius: '15px 0 0 15px' },
+    FixedCosts: { name: 'FixedCosts', value: 0, label: 'Постійні витрати', disabled: false },
+    Revenue: {
+      name: 'Revenue',
+      value: 0,
+      label: 'Виторг від реалізації',
+      borderRadius: '15px 0 0 15px',
+    },
     BreakEvenPoint: { name: 'BreakEvenPoint', value: 0, label: 'Точка беззбитковості' },
     Profit: { name: 'Profit', value: 0, label: 'Прибуток' },
-    Want: { name: 'Want', value: 0, label: 'Хочу...' },
+    Want: { name: 'Want', value: 0, label: 'Бажаю заробити', slider: true, maxValue: 100000, disabled: false },
+    DesiredProductionPlan: {
+      name: 'desiredProductionPlan',
+      value: 0,
+      label: 'План виробництва повинен бути',
+    },
+    DesiredCostPrice: { name: 'desiredCostPrice', value: 0, label: 'Собівартість повинна бути ' },
+    DesiredPricePerUnit: { name: 'Profit', value: 0, label: 'Ціна повинна бути' },
   };
 
   const [data, setData] = useState(contextValues);
@@ -66,7 +78,9 @@ export function CalcProvider({ children }: PropsWithChildren<{}>) {
       updatedData.GrossProfit.value = +(updatedData.PricePerUnit.value - updatedData.CostPrice.value).toFixed(2);
       updatedData.ProductionCost.value = +(updatedData.ProductionPlan.value * updatedData.CostPrice.value).toFixed(2);
       updatedData.Revenue.value = +(updatedData.ProductionPlan.value * updatedData.PricePerUnit.value).toFixed(2);
-      updatedData.BreakEvenPoint.value = Math.round(+(updatedData.FixedCosts.value / updatedData.GrossProfit.value));
+      updatedData.BreakEvenPoint.value = updatedData.GrossProfit.value
+        ? Math.round(+(updatedData.FixedCosts.value / updatedData.GrossProfit.value))
+        : 0;
       updatedData.Profit.value = +(
         updatedData.ProductionPlan.value * updatedData.GrossProfit.value -
         updatedData.FixedCosts.value

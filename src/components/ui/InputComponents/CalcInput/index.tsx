@@ -14,7 +14,7 @@ export default function CalcInput({
   maxValue = 100000,
 }: CalculatorDataUnit) {
   const calcContext = React.useContext(CalcContext);
-
+  const bgcolor = disabled ? 'secondary.main' : 'primary.dark';
   if (!calcContext) {
     return <Typography title="Щось пішло не так..." />;
   }
@@ -30,22 +30,26 @@ export default function CalcInput({
     updateContext(`${name}`, newValue);
   };
 
+  const deleteZeros = (value: number | string) => {
+    return value !== 0 ? ('' + value).replace(/^0+/, '') : value;
+  };
+
   return (
     <TotalWrapper>
       <InputWrapper
         sx={{
           borderRadius: borderRadius,
-          bgcolor: 'secondary.main',
+          bgcolor: `${bgcolor}`,
         }}
       >
         <Typography textAlign="center" mb="8px" variant="body2">
           {label}
         </Typography>
         <Divider sx={{ borderColor: 'text.primary' }} />
-        <FormControl sx={{ m: '5px auto 0 auto', width: '120px' }} fullWidth variant="filled">
+        <FormControl sx={{ m: '5px auto 0 auto', width: '130px' }} fullWidth variant="filled">
           <Input
             // onBlur={handleBlur}
-            value={value}
+            value={deleteZeros(value)}
             size="small"
             onChange={handleInputChange}
             aria-label="Always visible"
@@ -88,17 +92,25 @@ const InputWrapper = styled(Box)`
   flex-direction: column;
   padding: 15px 0;
   width: 250px;
+  z-index: 2;
 `;
 
 const TotalWrapper = styled(Box)`
-  margin: 16px 0;
+  margin: 10px 0;
   display: flex;
   flex-direction: column;
 `;
 
 const Input = styled(MuiInput)`
-  font-size: 14px;
+  font-size: 13px;
   text-align: center;
+  margin: 8px 0;
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 
   &.MuiInput-root::after {
     border-bottom: 2px solid ${(props) => props.theme.palette.primary.light};

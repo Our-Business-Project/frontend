@@ -22,19 +22,11 @@ export default function AppWrapper({ children }: { children: ReactNode }) {
               <Header />
               <Main>{children}</Main>
               <Footer />
+              <GlobalStyles />
             </ContentContainer>
+            <ToastContainer />
           </ThemeRegistry>
-          <ToastContainer />
         </FixedCostsProvider>
-        <ThemeRegistry options={{ key: 'mui' }}>
-          <ContentContainer>
-            <Header />
-            <Main>{children}</Main>
-            <Footer />
-            <GlobalStyles />
-          </ContentContainer>
-        </ThemeRegistry>
-        <ToastContainer />
       </CalcProvider>
     </Provider>
   );

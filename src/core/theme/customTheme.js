@@ -20,7 +20,8 @@ export const customTheme = createTheme({
       // textTransform: 'none',
     },
     body2: {
-      fontSize: '14px',
+      fontSize: '13px',
+      fontWeight: 300,
     },
   },
   palette: {
@@ -30,10 +31,12 @@ export const customTheme = createTheme({
     primary: {
       main: '#217793',
       light: 'rgba(86, 173, 193, 0.8)',
+      dark: '#2A5B7E',
     },
     secondary: {
-      main: '#416E8E',
+      main: '#4682AE',
       light: 'rgba(69, 127, 141, 0.3)',
+      dark: '#416E8E',
     },
     background: {
       default: '#FFFFFF',

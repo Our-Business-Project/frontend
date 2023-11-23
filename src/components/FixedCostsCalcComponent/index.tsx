@@ -13,7 +13,7 @@ export default function FixedCostsCalcTable() {
   const { data } = fixedCostsContext;
 
   return (
-    <TableContainer sx={{ bgcolor: 'secondary.main', padding: '50px' }} component={Paper}>
+    <TableContainer sx={{ bgcolor: 'secondary.dark', padding: '50px' }} component={Paper}>
       <Table aria-label="collapsible table">
         <TableBody>{data && Object.values(data).map((row, index) => <Row key={index} row={row} />)}</TableBody>
       </Table>
