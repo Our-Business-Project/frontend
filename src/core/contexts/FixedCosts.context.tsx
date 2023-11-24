@@ -212,7 +212,6 @@ export function FixedCostsProvider({ children }: PropsWithChildren<{}>) {
 
       if (index !== -1) {
         updatedData[index].value = +newValue;
-        console.log(updatedData[index]);
       } else {
         console.log('Элемент с идентификатором', id, 'не найден.');
       }

@@ -48,7 +48,6 @@ export default function CalcInput({
         <Divider sx={{ borderColor: 'text.primary' }} />
         <FormControl sx={{ m: '5px auto 0 auto', width: '130px' }} fullWidth variant="filled">
           <Input
-            // onBlur={handleBlur}
             value={deleteZeros(value)}
             size="small"
             onChange={handleInputChange}
