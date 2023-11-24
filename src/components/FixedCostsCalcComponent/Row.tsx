@@ -17,6 +17,7 @@ import { FixedCostsContext } from '@/core/contexts/FixedCosts.context';
 import { FixedCostsData } from '@/core/models/FixedCosts.model';
 import MuiInput from '@mui/material/Input';
 import { useContext } from 'react';
+import { redirect } from 'next/navigation';
 
 export function Row(props: { row: FixedCostsData }) {
   const { row } = props;
@@ -25,7 +26,7 @@ export function Row(props: { row: FixedCostsData }) {
   const fixedCostsContext = useContext(FixedCostsContext);
 
   if (!fixedCostsContext) {
-    return <Typography title="Щось пішло не так..." />;
+     redirect('/404');
   }
 
   const { updateContext } = fixedCostsContext;

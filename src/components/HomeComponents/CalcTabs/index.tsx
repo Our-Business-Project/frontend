@@ -6,6 +6,7 @@ import CalcInput from '@/components/ui/InputComponents/CalcInput';
 import { CalcContext } from '@/core/contexts/Calc.context';
 import FixedCostsCalcTable from '@/components/FixedCostsCalcComponent';
 import GreenCustomButton from '@/components/ui/GreenCustomButton';
+import { redirect } from 'next/navigation'
 
 export default function CalcTabs() {
   const [value, setValue] = React.useState('1');
@@ -17,7 +18,7 @@ export default function CalcTabs() {
   const calcContext = React.useContext(CalcContext);
 
   if (!calcContext) {
-    return <Typography title="Щось пішло не так..." />;
+    redirect('/404');
   }
 
   const { data } = calcContext;

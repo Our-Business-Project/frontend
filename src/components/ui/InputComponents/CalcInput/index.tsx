@@ -3,6 +3,7 @@ import MuiInput from '@mui/material/Input';
 import * as React from 'react';
 import { CalculatorDataUnit } from '@/core/models/СalculatorData.model';
 import { CalcContext } from '@/core/contexts/Calc.context';
+import { redirect } from 'next/navigation';
 
 export default function CalcInput({
   name,
@@ -16,7 +17,7 @@ export default function CalcInput({
   const calcContext = React.useContext(CalcContext);
   const bgcolor = disabled ? 'secondary.main' : 'primary.dark';
   if (!calcContext) {
-    return <Typography title="Щось пішло не так..." />;
+     redirect('/404');
   }
   const { updateContext } = calcContext;
 

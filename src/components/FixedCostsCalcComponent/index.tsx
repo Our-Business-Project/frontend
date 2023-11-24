@@ -15,6 +15,7 @@ import { FixedCostsContext } from '@/core/contexts/FixedCosts.context';
 import { Row } from './Row';
 import { CalcContext } from '@/core/contexts/Calc.context';
 import GreenCustomButton from '../ui/GreenCustomButton';
+import { redirect } from 'next/navigation';
 
 export default function FixedCostsCalcTable() {
   const fixedCostsContext = React.useContext(FixedCostsContext);
@@ -22,7 +23,7 @@ export default function FixedCostsCalcTable() {
   const [fixedCostsSumm, setFixedCostsSumm] = React.useState(0);
 
   if (!fixedCostsContext || !calcContext) {
-    return <Typography title="Щось пішло не так..." />;
+    redirect('/404');
   }
 
   const { data } = fixedCostsContext;
