@@ -42,7 +42,7 @@ const SiteName = () => (
       color: 'text.primary',
     }}
   >
-    YBS
+    <img src="/images/logo.svg" width='40px' />
     <Divider
       orientation="horizontal"
       variant="middle"

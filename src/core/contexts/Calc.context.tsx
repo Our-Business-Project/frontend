@@ -37,7 +37,7 @@ export function CalcProvider({ children }: PropsWithChildren<{}>) {
       slider: true,
       maxValue: 10000,
     },
-    GrossProfit: { name: 'GrossProfit', value: 0, label: 'Маржинальний дохід', },
+    GrossProfit: { name: 'GrossProfit', value: 0, label: 'Маржинальний дохід' },
     ProductionCost: {
       name: 'ProductionCost',
       value: 0,
@@ -85,6 +85,17 @@ export function CalcProvider({ children }: PropsWithChildren<{}>) {
         updatedData.ProductionPlan.value * updatedData.GrossProfit.value -
         updatedData.FixedCosts.value
       ).toFixed(2);
+
+      if (updatedData.Want.value) {
+        const DesiredGrossProfit =
+          +(updatedData.FixedCosts.value + updatedData.Want.value) / updatedData.ProductionPlan.value;
+
+        updatedData.DesiredProductionPlan.value = Math.round(
+          +(updatedData.Want.value / updatedData.GrossProfit.value + updatedData.BreakEvenPoint.value)
+        );
+        updatedData.DesiredPricePerUnit.value = +(DesiredGrossProfit + updatedData.CostPrice.value).toFixed(2);
+        updatedData.DesiredCostPrice.value = +(updatedData.PricePerUnit.value - DesiredGrossProfit).toFixed(2);
+      }
 
       setData(updatedData);
     }

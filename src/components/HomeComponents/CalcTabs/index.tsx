@@ -1,16 +1,12 @@
+import * as React from 'react';
+import { Box, Tab, Typography } from '@mui/material';
+import { TabContext, TabList, TabPanel } from '@mui/lab';
 import MainCalcLayout from '@/components/MainCalcLayout';
 import CalcInput from '@/components/ui/InputComponents/CalcInput';
 import { CalcContext } from '@/core/contexts/Calc.context';
-import { Typography } from '@mui/material';
-import { useContext } from 'react';
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Tab from '@mui/material/Tab';
-import TabContext from '@mui/lab/TabContext';
-import TabList from '@mui/lab/TabList';
-import TabPanel from '@mui/lab/TabPanel';
-import FixedCostsCalaTable from '@/components/FixedCostsCalcComponent';
-import Link from 'next/link';
+import FixedCostsCalcTable from '@/components/FixedCostsCalcComponent';
+import GreenCustomButton from '@/components/ui/GreenCustomButton';
+import { redirect } from 'next/navigation'
 
 export default function CalcTabs() {
   const [value, setValue] = React.useState('1');
@@ -19,13 +15,18 @@ export default function CalcTabs() {
     setValue(newValue);
   };
 
-  const calcContext = useContext(CalcContext);
+  const calcContext = React.useContext(CalcContext);
 
   if (!calcContext) {
-    return <Typography title="Щось пішло не так..." />;
+    redirect('/404');
   }
 
   const { data } = calcContext;
+
+  const handleSaveCalcInfo = () => {
+    // функционал отправки на бек
+    console.log(calcContext);
+  };
 
   return (
     <Box sx={{ width: '100%', typography: 'body1' }}>
@@ -42,9 +43,12 @@ export default function CalcTabs() {
               <CalcInput key={key} {...data[key]} />
             ))}
           </MainCalcLayout>
+          <Box sx={{ display: 'flex', justifyContent: 'center', mt: '20px' }}>
+            <GreenCustomButton handleClick={handleSaveCalcInfo} buttonText={'Зберегти дані'} />
+          </Box>
         </TabPanel>
         <TabPanel value="2">
-          <FixedCostsCalaTable />
+          <FixedCostsCalcTable />
         </TabPanel>
       </TabContext>
     </Box>

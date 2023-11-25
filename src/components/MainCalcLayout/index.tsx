@@ -7,13 +7,13 @@ export default function MainCalcLayout({ children }: { children: React.ReactNode
   return (
     <Box sx={{ borderRadius: '15px 100px 15px 100px', maxWidth: '1021px', margin: '0 auto', position: 'relative' }}>
       <DecorBox sx={{ top: '-16px', right: '-170px' }}>
-        <img src="/images/mainCalc/bigSpot.svg" alt="картинка" />
+        <img src="/images/mainCalc/bigSpot.svg" />
       </DecorBox>
       <DecorBox sx={{ bottom: '0px', right: '-170px' }}>
-        <img src="/images/mainCalc/smallSpot.svg" alt="картинка" />
+        <img src="/images/mainCalc/smallSpot.svg" />
       </DecorBox>
-      <DecorBox sx={{ top: '45%', left: '-100px', transform:'rotate(90deg)' }}>
-        <img src="/images/mainCalc/smallSpot.svg" alt="картинка" />
+      <DecorBox sx={{ top: '45%', left: '-100px', transform: 'rotate(90deg)' }}>
+        <img src="/images/mainCalc/smallSpot.svg" />
       </DecorBox>
       <TripleBox
         sx={{
@@ -21,7 +21,7 @@ export default function MainCalcLayout({ children }: { children: React.ReactNode
         }}
       >
         <DecorBox sx={{ top: '40px', left: '50%', transform: 'translate(-50%)' }}>
-          <img src="/images/mainCalc/fourLine.svg" alt="картинка" />
+          <img src="/images/mainCalc/fourLine.svg" />
         </DecorBox>
         {childrenArray[0]}
         {childrenArray[1]}
@@ -29,10 +29,10 @@ export default function MainCalcLayout({ children }: { children: React.ReactNode
       </TripleBox>
       <SingleBox>
         <DecorBox sx={{ top: '35px', left: '130px' }}>
-          <img src="/images/mainCalc/leftLine.svg" alt="картинка" />
+          <img src="/images/mainCalc/leftLine.svg" />
         </DecorBox>
         <DecorBox sx={{ top: '35px', right: '130px' }}>
-          <img src="/images/mainCalc/rightLine.svg" alt="картинка" />
+          <img src="/images/mainCalc/rightLine.svg" />
         </DecorBox>
         <Box sx={{ zIndex: '2' }}>{childrenArray[3]}</Box>
       </SingleBox>
@@ -49,7 +49,7 @@ export default function MainCalcLayout({ children }: { children: React.ReactNode
         }}
       >
         <DecorBox sx={{ top: '152px', left: '50%', transform: 'translate(-50%)' }}>
-          <img src="/images/mainCalc/tripleLine.svg" alt="картинка" />
+          <img src="/images/mainCalc/tripleLine.svg" />
         </DecorBox>
         {childrenArray[9]}
       </SingleBox>

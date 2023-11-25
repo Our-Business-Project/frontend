@@ -28,6 +28,12 @@ export const customTheme = createTheme({
     common: {
       black: '#031A20',
     },
+    success: {
+      main: '#24af7a',
+      dark: '#21966A',
+      light: '#46C292',
+      contrastText: '#FFFFFF',
+    },
     primary: {
       main: '#217793',
       light: 'rgba(86, 173, 193, 0.8)',
