@@ -17,7 +17,7 @@ export default function CalcInput({
   const calcContext = React.useContext(CalcContext);
   const bgcolor = disabled ? 'secondary.main' : 'primary.dark';
   if (!calcContext) {
-     redirect('/404');
+    redirect('/404');
   }
   const { updateContext } = calcContext;
 

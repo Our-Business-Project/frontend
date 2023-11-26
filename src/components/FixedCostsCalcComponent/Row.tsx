@@ -26,7 +26,7 @@ export function Row(props: { row: FixedCostsData }) {
   const fixedCostsContext = useContext(FixedCostsContext);
 
   if (!fixedCostsContext) {
-     redirect('/404');
+    redirect('/404');
   }
 
   const { updateContext } = fixedCostsContext;
