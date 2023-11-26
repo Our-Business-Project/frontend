@@ -2,14 +2,16 @@ import { configureStore } from '@reduxjs/toolkit';
 import authReducer from './reducers/auth.reducer';
 import profileReducer from './reducers/profile.reducer';
 import mailVerificationReducer from './reducers/mailVerification.reducer';
-import calculatorReducer from './reducers/calculator.reducer';
+import calculatorReducer from './reducers/calcFolders.reducer';
+
+console.log(profileReducer);
 
 const store = configureStore({
   reducer: {
     auth: authReducer,
     mailVerification: mailVerificationReducer,
     profile: profileReducer,
-    calc: calculatorReducer,
+    calcFolders: calculatorReducer,
   },
 });
 

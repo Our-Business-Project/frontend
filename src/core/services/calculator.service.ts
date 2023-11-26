@@ -1,29 +1,16 @@
-import { CalculatorData } from '../models/СalculatorData.model';
 import { AppDispatch } from '../store';
-import { getAllCaclFoldersRequest } from '../api/calc/getFolders.api';
-import { calcRequest, calcSuccess, calcFailed } from '../store/actions/calculator.action';
+import { getAllCaclFoldersRequest } from '../api/calc/getCalcFolders.api';
+import { calcFoldersRequest, calcFoldersSuccess, calcFoldersFailed } from '../store/actions/calcFolders.action';
 
-// export const updateDataService = (data: CalculatorData) => {
-//   return (dispatch: AppDispatch) => {
-//     dispatch(updateData(data));
-//   };
-// };
-
-// export const resetDataService = () => {
-//   return (dispatch: AppDispatch) => {
-//     dispatch(resetData());
-//   };
-// };
-
-export const getAllCaclFoldersService = (token: string, id: string) => {
+export const getAllCaclFoldersService = (token: string) => {
   return async (dispatch: AppDispatch) => {
-    dispatch(calcRequest());
+    dispatch(calcFoldersRequest());
     try {
-      const data = await getAllCaclFoldersRequest(token, id);
-      dispatch(calcSuccess(data));
+      const data = await getAllCaclFoldersRequest(token);
+      dispatch(calcFoldersSuccess(data));
     } catch (err) {
       const error = err as Error;
-      dispatch(calcFailed(error.message));
+      dispatch(calcFoldersFailed(error.message));
       // errorNotify(error.message);
     }
   };

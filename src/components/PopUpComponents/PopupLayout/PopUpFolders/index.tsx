@@ -1,19 +1,29 @@
+'use client';
 import * as React from 'react';
 import { List, ListItem, ListItemText, Box, styled, IconButton, TextField } from '@mui/material';
 import FolderIcon from '@mui/icons-material/Folder';
 import CreateNewFolderIcon from '@mui/icons-material/CreateNewFolder';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import DoneIcon from '@mui/icons-material/Done';
+import { CalcFoldersUnit } from '@/core/models/CalcFolders.model';
 
-function generate(element: React.ReactElement) {
-  return [0, 1, 2].map((value) =>
-    React.cloneElement(element, {
-      key: value,
-    })
-  );
-}
+import { useEffect } from 'react';
+import { redirect } from 'next/navigation';
+import { useAuth } from '@/core/hooks/useAuth';
+import { useCalcFolders } from '@/core/hooks/useCalcFolders';
+
 export default function PopUpFolders() {
   const [creatingNewFolder, setCreatingNewFolder] = React.useState(false);
+  const { isAuthenticated, token } = useAuth();
+  const { calcFolders, loadCalcFolders } = useCalcFolders(token);
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      redirect('/sign-in');
+    } else {
+      loadCalcFolders();
+    }
+  }, [isAuthenticated, loadCalcFolders]);
 
   return (
     <Box position="relative">
@@ -29,12 +39,14 @@ export default function PopUpFolders() {
             </StyledListItemText>
           </ListItem>
         )}
-        {generate(
-          <ListItem>
-            <FolderIcon color="primary" sx={{ mr: '10px' }} />
-            <StyledListItemText primary="Магазин постільної білизни" />
-          </ListItem>
-        )}
+        {Array.isArray(calcFolders.data) &&
+          calcFolders.data.map((folder: CalcFoldersUnit, index: number) => (
+            <ListItem key={index}>
+              <FolderIcon color="primary" sx={{ mr: '10px' }} />
+              <StyledListItemText primary={folder.name || 'Unnamed Folder'} />
+            </ListItem>
+          ))}
+
         <AbsoluteBox>
           <IconButton onClick={() => setCreatingNewFolder(true)}>
             <AddCircleIcon fontSize="large" color="primary" />
