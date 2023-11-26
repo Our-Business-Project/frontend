@@ -11,7 +11,6 @@ import {
   Typography,
   Box,
 } from '@mui/material';
-import ExpensesFields from '../ExpensesFields';
 
 export default function PopupLayout({
   handleClose,
@@ -33,7 +32,7 @@ export default function PopupLayout({
       </DialogTitle>
       <DialogContent dividers>
         <DialogContentText>
-          <ExpensesFields />
+          {/* <ExpensesFields /> */}
         </DialogContentText>
       </DialogContent>
       <DialogActions>
