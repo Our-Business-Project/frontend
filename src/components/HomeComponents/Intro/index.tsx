@@ -37,13 +37,7 @@ export default function Intro() {
           maxWidth: '700px',
         }}
       >
-        <Typography
-          variant="h1"
-          noWrap
-          sx={{
-            display: { xs: 'none', md: 'flex' },
-          }}
-        >
+        <Typography variant="h1" display="flex" fontSize="2.2rem">
           <img src="/images/logo.svg" width="40px" />
           <Divider
             orientation="horizontal"

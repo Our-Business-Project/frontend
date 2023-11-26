@@ -199,7 +199,9 @@ export function FixedCostsProvider({ children }: PropsWithChildren<{}>) {
             .filter(([key, value]) => typeof value === 'number' && key !== 'id' && key !== 'Сума грн.')
             .map(([key, value]) => value);
 
-          foundItemInData['Сума грн.'] = numericValues.reduce((acc, value) => +acc * +value, 1);
+          if (numericValues.length > 1) {
+            foundItemInData['Сума грн.'] = numericValues.reduce((acc, value) => +acc * +value, 1);
+          }
           const totalSum = foundContextValue.data.reduce((sum, item) => {
             return sum + (+item['Сума грн.'] || 0);
           }, 0);

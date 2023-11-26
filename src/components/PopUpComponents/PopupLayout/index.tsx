@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 import {
   Button,
@@ -6,72 +7,45 @@ import {
   DialogTitle,
   DialogContent,
   DialogContentText,
-  FormControlLabel,
-  Checkbox,
-  Typography,
+  IconButton,
   Box,
+  LinearProgress,
 } from '@mui/material';
-import ExpensesFields from '../ExpensesFields';
+import CloseIcon from '@mui/icons-material/Close';
 
 export default function PopupLayout({
   handleClose,
   open,
   title,
   successBtnText,
-  checkbox,
+  children,
+  isPending,
 }: {
   handleClose: () => void;
   open: boolean;
   title: string;
   successBtnText: string;
-  checkbox?: boolean | false;
+  children: React.ReactNode;
+  isPending: boolean;
 }) {
   return (
     <Dialog maxWidth="md" open={open} onClose={handleClose} aria-labelledby="responsive-dialog-title">
-      <DialogTitle color={'text.secondary'} id="responsive-dialog-title">
-        {title}
-      </DialogTitle>
+      {isPending && <LinearProgress />}
+      <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+        <DialogTitle color={'text.secondary'} id="responsive-dialog-title">
+          {title}
+        </DialogTitle>
+        <IconButton onClick={handleClose} sx={{ padding: '16px 24px' }}>
+          <CloseIcon color="primary" />
+        </IconButton>
+      </Box>
+
       <DialogContent dividers>
-        <DialogContentText>
-          <ExpensesFields />
-        </DialogContentText>
+        <DialogContentText>{children}</DialogContentText>
       </DialogContent>
       <DialogActions>
-        {checkbox ? (
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              flexDirection: 'row',
-              width: '100%',
-              margin: '0 10px',
-            }}
-          >
-            <FormControlLabel
-              control={<Checkbox />}
-              label={
-                <Typography color="text.secondary" variant="body2">
-                  Більше не запитувати
-                </Typography>
-              }
-            />
-            <Box>
-              <ActionButtons handleClose={handleClose} successBtnText={successBtnText} />
-            </Box>
-          </Box>
-        ) : (
-          <ActionButtons handleClose={handleClose} successBtnText={successBtnText} />
-        )}
+        <Button onClick={handleClose}>{successBtnText}</Button>
       </DialogActions>
     </Dialog>
-  );
-}
-
-function ActionButtons({ handleClose, successBtnText }: { handleClose: () => void; successBtnText: string }) {
-  return (
-    <>
-      <Button onClick={handleClose}>Закрити</Button>
-      <Button onClick={handleClose}>{successBtnText}</Button>
-    </>
   );
 }

@@ -6,3 +6,5 @@ export const signUpUrl = authUrl + '/sign-up';
 
 export const usersUrl = apiRoot + '/users';
 export const mailVerifyUrl = apiRoot + '/mail/verify';
+
+export const calcFoldersUrl = apiRoot + '/calc/folders';

@@ -1,19 +1,35 @@
 import * as React from 'react';
-import { Box, Tab, Typography } from '@mui/material';
-import { TabContext, TabList, TabPanel } from '@mui/lab';
+import { Box, ListItemIcon, Tab, Tabs, styled, tabsClasses } from '@mui/material';
+import { TabContext, TabPanel } from '@mui/lab';
 import MainCalcLayout from '@/components/MainCalcLayout';
 import CalcInput from '@/components/ui/InputComponents/CalcInput';
 import { CalcContext } from '@/core/contexts/Calc.context';
 import FixedCostsCalcTable from '@/components/FixedCostsCalcComponent';
 import GreenCustomButton from '@/components/ui/GreenCustomButton';
-import { redirect } from 'next/navigation'
+import { redirect } from 'next/navigation';
+import PopupLayout from '@/components/PopUpComponents/PopupLayout';
+import PopUpFolders from '@/components/PopUpComponents/PopupLayout/PopUpFolders';
+import { useCalcFolders } from '@/core/hooks/useCalcFolders';
+import { useAuth } from '@/core/hooks/useAuth';
 
 export default function CalcTabs() {
   const [value, setValue] = React.useState('1');
+  const [openPopUp, setOpenPopUp] = React.useState(false);
+  const [isPending, setIsPending] = React.useState(false);
+  const { token } = useAuth();
+  const { calcFolders } = useCalcFolders(token);
+
+  const handleClosePopUp = () => {
+    setOpenPopUp(false);
+  };
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
   };
+
+  React.useEffect(() => {
+    setIsPending(calcFolders.pending);
+  }, [calcFolders]);
 
   const calcContext = React.useContext(CalcContext);
 
@@ -24,18 +40,18 @@ export default function CalcTabs() {
   const { data } = calcContext;
 
   const handleSaveCalcInfo = () => {
+    setOpenPopUp(true);
     // функционал отправки на бек
-    console.log(calcContext);
   };
 
   return (
     <Box sx={{ width: '100%', typography: 'body1' }}>
       <TabContext value={value}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <TabList onChange={handleChange} aria-label="lab API tabs example">
+          <CustomTabs onChange={handleChange} value={value} variant="scrollable" allowScrollButtonsMobile>
             <Tab label="Калькулятор бізнесу" value="1" />
             <Tab label="Калькулятор постійних витрат" value="2" />
-          </TabList>
+          </CustomTabs>
         </Box>
         <TabPanel value="1">
           <MainCalcLayout>
@@ -51,6 +67,22 @@ export default function CalcTabs() {
           <FixedCostsCalcTable />
         </TabPanel>
       </TabContext>
+      <PopupLayout
+        handleClose={handleClosePopUp}
+        open={openPopUp}
+        title="Збереження розрахунків"
+        successBtnText="Зберегти"
+        isPending={isPending}
+      >
+        <PopUpFolders />
+      </PopupLayout>
     </Box>
   );
 }
+
+const CustomTabs = styled(Tabs)(({ theme }) => ({
+  color: theme.palette.text.secondary,
+  [`& .${tabsClasses.scrollButtons}`]: {
+    '&.Mui-disabled': { opacity: 0.3 },
+  },
+}));

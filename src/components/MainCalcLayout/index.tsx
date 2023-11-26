@@ -1,4 +1,4 @@
-import React from 'react'; // Добавьте этот импорт
+import React from 'react';
 import { Box, styled } from '@mui/material';
 
 export default function MainCalcLayout({ children }: { children: React.ReactNode }) {

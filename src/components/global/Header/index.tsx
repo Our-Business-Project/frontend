@@ -35,14 +35,14 @@ const SiteName = () => (
     component="a"
     href="/"
     sx={{
-      display: { xs: 'none', md: 'flex' },
+      display: 'flex',
       fontWeight: 800,
       letterSpacing: '.3rem',
       textDecoration: 'none',
       color: 'text.primary',
     }}
   >
-    <img src="/images/logo.svg" width='40px' />
+    <img src="/images/logo.svg" width="40px" />
     <Divider
       orientation="horizontal"
       variant="middle"

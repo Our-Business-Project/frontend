@@ -17,7 +17,7 @@ export default function CalcInput({
   const calcContext = React.useContext(CalcContext);
   const bgcolor = disabled ? 'secondary.main' : 'primary.dark';
   if (!calcContext) {
-     redirect('/404');
+    redirect('/404');
   }
   const { updateContext } = calcContext;
 
@@ -55,13 +55,6 @@ export default function CalcInput({
             aria-label="Always visible"
             type="number"
             id="standard-basic"
-            inputProps={{
-              step: maxValue / 100,
-              min: 0,
-              max: maxValue,
-              type: 'number',
-              'aria-labelledby': 'input-slider',
-            }}
             disabled={disabled}
             sx={{
               '& .MuiInputBase-input.Mui-disabled': {

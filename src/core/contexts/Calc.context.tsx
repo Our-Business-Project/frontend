@@ -86,7 +86,12 @@ export function CalcProvider({ children }: PropsWithChildren<{}>) {
         updatedData.FixedCosts.value
       ).toFixed(2);
 
-      if (updatedData.Want.value) {
+      if (
+        updatedData.Want.value &&
+        updatedData.PricePerUnit.value &&
+        updatedData.CostPrice.value &&
+        updatedData.ProductionPlan.value
+      ) {
         const DesiredGrossProfit =
           +(updatedData.FixedCosts.value + updatedData.Want.value) / updatedData.ProductionPlan.value;
 
