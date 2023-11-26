@@ -1,6 +1,6 @@
-// import { RootState } from '../';
-// import { CalculatorState } from '../reducers/calculator.reducer';
+import { RootState } from '../';
+import { CalculatorState } from '../reducers/calculator.reducer';
 
-// const selectCalculator = (state: RootState): CalculatorState => state.calculatorData;
+const selectCalculator = (state: RootState): CalculatorState => state.calc;
 
-// export { selectCalculator };
+export { selectCalculator };

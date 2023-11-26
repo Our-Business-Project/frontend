@@ -1,48 +1,51 @@
-// import { RESET_DATA, UPDATE_DATA } from '../constants/calculator.constants';
-// import { CalculatorActions } from '../actions/calculator.action';
-// import { CalculatorData } from '@/core/models/СalculatorData.model';
+import { CALC_REQUEST, CALC_SUCCESS, CALC_FAILED } from '../constants/calculator.constants';
+import { CalculatorActions } from '../actions/calculator.action';
+import { CalculatorData } from '@/core/models/СalculatorData.model';
 
-// interface CalculatorInterface {
-//   data: CalculatorData;
-// }
+interface CalculatorInterface {
+  data: CalculatorData | null;
+  error: string | null;
+  pending: boolean;
+}
 
-// type CalculatorState = CalculatorInterface;
+type CalculatorState = CalculatorInterface;
 
-// const initialState: CalculatorState = {
-//   data: {
-//     productionPlan: null,
-//     costPrice: null,
-//     unitPrice: null,
-//     desiredEarnings: null,
-//     fixedCosts: null,
-//     additionalInfo: {
-//       taxGroup: null,
-//       rentPrice: null,
-//       squareFootage: null,
-//       averageSalary: null,
-//       numberOfEmployees: null,
-//       advertisingCosts: null,
-//       additionalCosts: null,
-//     },
-//   },
-// };
+const initialState: CalculatorState = {
+  data: null,
+  error: null,
+  pending: false,
+};
 
-// export default function calculatorReducer(state = initialState, action: CalculatorActions): CalculatorState {
-//   switch (action.type) {
-//     case UPDATE_DATA: {
-//       return {
-//         ...state,
-//         data: action.data,
-//       };
-//     }
-//     case RESET_DATA: {
-//       return {
-//         ...initialState,
-//       };
-//     }
-//     default:
-//       return { ...state };
-//   }
-// }
+export default function calculatorReducer(state = initialState, action: CalculatorActions): CalculatorState {
+  switch (action.type) {
+    case CALC_REQUEST: {
+      return {
+        ...state,
+        data: null,
+        error: null,
+        pending: true,
+      };
+    }
+    case CALC_SUCCESS: {
+      return {
+        ...state,
+        data: action.data,
+        error: null,
+        pending: false,
+      };
+    }
+    case CALC_FAILED: {
+      return {
+        ...state,
+        data: null,
+        error: action.message,
+        pending: false,
+      };
+    }
 
-// export type { CalculatorState };
+    default:
+      return { ...state };
+  }
+}
+
+export type { CalculatorState };
