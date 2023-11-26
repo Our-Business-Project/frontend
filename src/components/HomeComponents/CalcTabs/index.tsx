@@ -32,12 +32,7 @@ export default function CalcTabs() {
     <Box sx={{ width: '100%', typography: 'body1' }}>
       <TabContext value={value}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <CustomTabs
-            onChange={handleChange}
-            value={value}
-            variant="scrollable"
-            allowScrollButtonsMobile
-          >
+          <CustomTabs onChange={handleChange} value={value} variant="scrollable" allowScrollButtonsMobile>
             <Tab label="Калькулятор бізнесу" value="1" />
             <Tab label="Калькулятор постійних витрат" value="2" />
           </CustomTabs>

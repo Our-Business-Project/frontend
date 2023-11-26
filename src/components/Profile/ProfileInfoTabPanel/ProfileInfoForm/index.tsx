@@ -50,7 +50,7 @@ export default function ProfileInfoForm() {
   };
 
   return (
-    <>
+    <Box>
       <StyledGrid container columns={12}>
         <StyledGrid container item sm={8} columns={12}>
           <ProfileInfoTextFields control={control} InputProps={{ readOnly }} />
@@ -62,7 +62,7 @@ export default function ProfileInfoForm() {
       <StyledBoxButton>
         {readOnly ? <ChangeButton onClick={editBtnOnClick} /> : <SaveButton onClick={handleSubmit(onSubmit)} />}
       </StyledBoxButton>
-    </>
+    </Box>
   );
 }
 
