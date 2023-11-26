@@ -39,10 +39,8 @@ export default function Intro() {
       >
         <Typography
           variant="h1"
-          noWrap
-          sx={{
-            display: { xs: 'none', md: 'flex' },
-          }}
+          display='flex'
+          fontSize='2.2rem'
         >
           <img src="/images/logo.svg" width="40px" />
           <Divider

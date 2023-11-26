@@ -4,11 +4,8 @@ import {
   TableBody,
   TableContainer,
   Paper,
-  Typography,
   TableRow,
   TableCell,
-  styled,
-  Button,
   Box,
 } from '@mui/material';
 import { FixedCostsContext } from '@/core/contexts/FixedCosts.context';
