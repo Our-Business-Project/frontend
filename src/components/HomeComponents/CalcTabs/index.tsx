@@ -9,10 +9,15 @@ import GreenCustomButton from '@/components/ui/GreenCustomButton';
 import { redirect } from 'next/navigation';
 import PopupLayout from '@/components/PopUpComponents/PopupLayout';
 import PopUpFolders from '@/components/PopUpComponents/PopupLayout/PopUpFolders';
+import { useCalcFolders } from '@/core/hooks/useCalcFolders';
+import { useAuth } from '@/core/hooks/useAuth';
 
 export default function CalcTabs() {
   const [value, setValue] = React.useState('1');
   const [openPopUp, setOpenPopUp] = React.useState(false);
+  const [isPending, setIsPending] = React.useState(false);
+  const { token } = useAuth();
+  const { calcFolders } = useCalcFolders(token);
 
   const handleClosePopUp = () => {
     setOpenPopUp(false);
@@ -21,6 +26,10 @@ export default function CalcTabs() {
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
   };
+
+  React.useEffect(() => {
+    setIsPending(calcFolders.pending);
+  }, [calcFolders]);
 
   const calcContext = React.useContext(CalcContext);
 
@@ -33,7 +42,6 @@ export default function CalcTabs() {
   const handleSaveCalcInfo = () => {
     setOpenPopUp(true);
     // функционал отправки на бек
-    
   };
 
   return (
@@ -64,6 +72,7 @@ export default function CalcTabs() {
         open={openPopUp}
         title="Збереження розрахунків"
         successBtnText="Зберегти"
+        isPending={isPending}
       >
         <PopUpFolders />
       </PopupLayout>

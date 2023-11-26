@@ -1,9 +1,9 @@
 'use client';
 import * as React from 'react';
-import { List, ListItem, ListItemText, Box, styled, IconButton, TextField } from '@mui/material';
+import { List, ListItem, ListItemText, Box, styled, IconButton, TextField, LinearProgress } from '@mui/material';
 import FolderIcon from '@mui/icons-material/Folder';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import { CalcFoldersUnit } from '@/core/models/CalcFolders.model';
+import { CalcFolders, CalcFoldersUnit } from '@/core/models/CalcFolders.model';
 import { PopUpCreateFolder } from './PopUpCreateFolder';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { useEffect } from 'react';
@@ -15,6 +15,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 export default function PopUpFolders() {
   const [creatingNewFolder, setCreatingNewFolder] = React.useState(false);
+  const [calcFoldersData, setCalcFoldersData] = React.useState<CalcFolders | null>(null);
   const { isAuthenticated, token, userId } = useAuth();
   const { profile, loadProfile } = useProfile(token);
   const { calcFolders, getAllCaclFolders, deleteFolder } = useCalcFolders(token);
@@ -32,12 +33,16 @@ export default function PopUpFolders() {
     deleteFolder(id);
   };
 
+  useEffect(() => {
+    if (calcFolders.data) setCalcFoldersData(calcFolders.data);
+  }, [calcFolders]);
+
   return (
     <Box position="relative">
       <List>
         {creatingNewFolder && <PopUpCreateFolder setActive={setCreatingNewFolder} />}
-        {Array.isArray(calcFolders.data) &&
-          calcFolders.data.map((folder: CalcFoldersUnit, index: number) => (
+        {Array.isArray(calcFoldersData) &&
+          calcFoldersData.map((folder: CalcFoldersUnit, index: number) => (
             <StyledListItem key={index}>
               <FolderIcon color="primary" sx={{ mr: '10px' }} />
               <StyledListItemText primary={folder.name || profile.data?.firstName} />
