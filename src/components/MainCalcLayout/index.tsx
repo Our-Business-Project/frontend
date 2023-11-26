@@ -1,4 +1,4 @@
-import React from 'react'; 
+import React from 'react';
 import { Box, styled } from '@mui/material';
 
 export default function MainCalcLayout({ children }: { children: React.ReactNode }) {
