@@ -1,13 +1,5 @@
 import * as React from 'react';
-import {
-  Table,
-  TableBody,
-  TableContainer,
-  Paper,
-  TableRow,
-  TableCell,
-  Box,
-} from '@mui/material';
+import { Table, TableBody, TableContainer, Paper, TableRow, TableCell, Box } from '@mui/material';
 import { FixedCostsContext } from '@/core/contexts/FixedCosts.context';
 import { Row } from './Row';
 import { CalcContext } from '@/core/contexts/Calc.context';

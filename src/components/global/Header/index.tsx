@@ -42,7 +42,7 @@ const SiteName = () => (
       color: 'text.primary',
     }}
   >
-    <img src="/images/logo.svg" width='40px' />
+    <img src="/images/logo.svg" width="40px" />
     <Divider
       orientation="horizontal"
       variant="middle"

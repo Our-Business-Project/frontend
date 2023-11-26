@@ -10,15 +10,11 @@ import { redirect } from 'next/navigation';
 
 export default function CalcTabs() {
   const [value, setValue] = React.useState('1');
-const [openPopUp, setOpenPopUp] = React.useState(false);
+  const [openPopUp, setOpenPopUp] = React.useState(false);
 
-const handleClickOpen = () => {
-  setOpenPopUp(true);
-};
-
-const handleClose = () => {
-  setOpenPopUp(false);
-};
+  const handleClosePopUp = () => {
+    setOpenPopUp(false);
+  };
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
@@ -33,6 +29,7 @@ const handleClose = () => {
   const { data } = calcContext;
 
   const handleSaveCalcInfo = () => {
+      setOpenPopUp(true);
     // функционал отправки на бек
     console.log(calcContext);
   };
@@ -41,12 +38,7 @@ const handleClose = () => {
     <Box sx={{ width: '100%', typography: 'body1' }}>
       <TabContext value={value}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <CustomTabs
-            onChange={handleChange}
-            value={value}
-            variant="scrollable"
-            allowScrollButtonsMobile
-          >
+          <CustomTabs onChange={handleChange} value={value} variant="scrollable" allowScrollButtonsMobile>
             <Tab label="Калькулятор бізнесу" value="1" />
             <Tab label="Калькулятор постійних витрат" value="2" />
           </CustomTabs>

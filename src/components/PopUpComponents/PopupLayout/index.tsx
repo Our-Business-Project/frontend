@@ -31,9 +31,7 @@ export default function PopupLayout({
         {title}
       </DialogTitle>
       <DialogContent dividers>
-        <DialogContentText>
-          {/* <ExpensesFields /> */}
-        </DialogContentText>
+        <DialogContentText>{/* <ExpensesFields /> */}</DialogContentText>
       </DialogContent>
       <DialogActions>
         {checkbox ? (
