@@ -27,6 +27,20 @@ export const post = async (url: string, token: string, payload: object) => {
   return await axios(config);
 };
 
+export const patch = async (url: string, token: string, payload: object) => {
+  const config = {
+    method: 'patch',
+    url,
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    data: payload,
+  };
+
+  return await axios(config);
+};
+
 export const guestPost = async (url: string, payload: object) => {
   const config = {
     method: 'post',

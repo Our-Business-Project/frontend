@@ -8,4 +8,4 @@ export default function Main({ children, ...props }: BoxProps) {
   );
 }
 
-const StyledBox = styled(Box)(() => ({ flex: '1' }));
+const StyledBox = styled(Box)(() => ({ flex: '1', flexDirection: 'column', display: 'flex' }));

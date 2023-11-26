@@ -8,19 +8,21 @@ interface StyledProps {
 
 const withCustomStyles = <P extends object>(Component: React.ComponentType<P & StyledProps>) =>
   styled(Component)(({ theme }) => ({
+    maxWidth: '17.5rem',
+
     '& .MuiInputBase-root.MuiInput-root': {
       '& input': {
-        background: theme.palette.primary.light,
+        color: theme.palette.common.black,
         padding: '10px',
       },
       '&.Mui-error input': {
-        color: theme.palette.text.primary,
+        color: theme.palette.common.black,
       },
     },
 
     '& label': {
       padding: 0,
-      color: theme.palette.common.black,
+      color: 'rgba(0, 0, 0, 0.5)',
       transform: 'translate(0, -10px) scale(1)',
       zIndex: 1,
       '&.Mui-focused': {
@@ -30,7 +32,7 @@ const withCustomStyles = <P extends object>(Component: React.ComponentType<P & S
 
     '& .MuiInputBase-root.MuiInput-root:before': {
       borderBottom: '1px solid',
-      borderColor: theme.palette.common.black,
+      borderColor: 'rgba(0, 0, 0, 0.5)',
     },
     '& .MuiInputBase-root.MuiInput-root:hover:before': {
       borderBottom: '1px solid',

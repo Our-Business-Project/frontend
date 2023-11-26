@@ -1,102 +1,67 @@
-import { Box, Typography, Grid, styled, useTheme, Theme, Button } from '@mui/material';
-import { useForm, SubmitHandler, FieldValues } from 'react-hook-form';
-import { joiResolver } from '@hookform/resolvers/joi';
-import { profileUpdateSchema } from '@/core/validation/profileUpdate.validation';
-import { formatPhone } from '@/core/validation/helpers/format.helpers';
-import { StyledInputWithController, StyledPhoneInput } from '@/core/styles/ProfileInputStyle';
+import { useState } from 'react';
+import { Box, Typography, styled, Tabs, Tab } from '@mui/material';
+import TabContext from '@mui/lab/TabContext';
+import ProfileInfoTabPanel from '../ProfileInfoTabPanel';
+import SavedDataTabPanel from '../SavedDataTabPanel';
 
-import { Props as InputFieldProps } from '@/components/ui/InputComponents/FormInput/global/CustomTextField/props';
-import { Props } from './props';
+const tabs = [
+  { label: 'Особиста інформація', value: '0' },
+  { label: 'Збережені данні', value: '1' },
+];
 
-export default function ProfileInfo({ profile }: Props) {
-  const { _id, email, firstName, lastName, phone } = profile?.data ?? {};
-  const theme = useTheme();
+export default function ProfileInfo() {
+  const [value, setValue] = useState<string>('0');
 
-  const formattedPhone = formatPhone('' + phone);
-
-  const defaultValues = {
-    email,
-    firstName,
-    lastName,
-    phone: formattedPhone,
-  };
-
-  const { control, handleSubmit, formState } = useForm({
-    defaultValues,
-    resolver: joiResolver(profileUpdateSchema),
-    mode: 'onChange',
-  } as FieldValues);
-
-  const { isDirty } = formState;
-
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log(data);
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    setValue('' + newValue);
   };
 
   return (
     <BoxStyled>
-      <Typography variant="h4" gutterBottom>
-        Мій профіль
-      </Typography>
-      <IdTypography gutterBottom>id: {_id}</IdTypography>
-      <StyledGrid container columns={12}>
-        <GridItem name={'firstName'} control={control} label={"Ім'я"} theme={theme} />
-        <GridItem name={'lastName'} control={control} label={'Прізвище'} theme={theme} />
-        <GridItem name={'email'} control={control} label={'Пошта'} theme={theme} />
-        <PhoneGridItem name={'phone'} control={control} label={'Телефон'} theme={theme} />
-      </StyledGrid>
-      <StyledBoxButton>
-        <Button type="button" onClick={handleSubmit(onSubmit)} disabled={!isDirty}>
-          Оновити
-        </Button>
-      </StyledBoxButton>
+      <StyledTitle variant="h4">Ваш профіль</StyledTitle>
+      <TabContext value={value}>
+        <StyledTabs
+          variant="scrollable"
+          scrollButtons="auto"
+          aria-label="scrollable auto tabs"
+          value={+value}
+          onChange={handleChange}
+        >
+          {tabs.map(({ label, value }) => (
+            <StyledTab key={value} label={label} />
+          ))}
+        </StyledTabs>
+        <ProfileInfoTabPanel value={'0'} />
+        <SavedDataTabPanel value={'1'} />
+      </TabContext>
     </BoxStyled>
   );
 }
 
-const GridItem = ({ name, control, label, theme }: InputFieldProps & { theme: Theme }) => (
-  <StyledGridItem item sm={5}>
-    <StyledInputWithController name={name} control={control} label={label} theme={theme} />
-  </StyledGridItem>
-);
-
-const PhoneGridItem = ({ name, control, label, theme }: InputFieldProps & { theme: Theme }) => (
-  <StyledGridItem item sm={5}>
-    <StyledPhoneInput name={name} control={control} label={label} theme={theme} />
-  </StyledGridItem>
-);
-
 const BoxStyled = styled(Box)(() => ({
-  marginBottom: '50px',
+  paddingTop: '64px',
 }));
 
-const IdTypography = styled(Typography)(() => ({
-  color: '#DFDFDF',
-  display: 'flex',
-  justifyContent: 'center',
-  marginBottom: '30px',
+const StyledTitle = styled(Typography)(({ theme }) => ({
+  color: theme.palette.common.black,
+  margin: '4.375rem 3.125rem 3.125rem',
 }));
 
-const StyledGrid = styled(Grid)(({ theme }) => ({
-  alignItems: 'center',
-  justifyContent: 'center',
-  gap: '3.25rem 6.25rem',
-  [theme.breakpoints.down('md')]: {
-    flexDirection: 'column',
+const StyledTabs = styled(Tabs)(() => ({
+  '&.MuiTabs-root': {
+    boxShadow: 'inset 0px -2px 0px 0px rgb(65 110 142 / 30%)',
+    maxWidth: '935px',
+    paddingLeft: '4.375rem',
+    marginBottom: '4.375rem',
   },
-  [theme.breakpoints.down('sm')]: {
-    gap: '1.25rem 3.25rem',
+  '& .MuiTabs-indicator': {
+    backgroundColor: 'rgb(65 110 142 / 100%)',
   },
 }));
 
-const StyledGridItem = styled(Grid)(({ theme }) => ({
-  [theme.breakpoints.down('md')]: {
-    width: '100%',
-    maxWidth: '350px',
+const StyledTab = styled(Tab)(() => ({
+  color: '#2E2C34',
+  '&.Mui-selected': {
+    color: '#2E2C34',
   },
-}));
-
-const StyledBoxButton = styled(Box)(() => ({
-  display: 'flex',
-  justifyContent: 'center',
 }));
