@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { Box } from '@mui/material';
 import AppWrapper from '@/components/global/AppWrapper';
 import 'react-toastify/dist/ReactToastify.css';
+import Head from 'next/head';
+
 
 export const metadata: Metadata = {
   title: 'Your Business Adviser | Калькулятор для Вашого Успішного Бізнесу',
@@ -19,10 +21,15 @@ const style = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <Box lang="en" component={'html'} sx={style}>
-      <Box component={'body'} sx={style}>
-        <AppWrapper>{children}</AppWrapper>
+    <>
+      <Head>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+      </Head>
+      <Box lang="en" component={'html'} sx={style}>
+        <Box component={'body'} sx={style}>
+          <AppWrapper>{children}</AppWrapper>
+        </Box>
       </Box>
-    </Box>
+    </>
   );
 }
