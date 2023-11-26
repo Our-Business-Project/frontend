@@ -49,7 +49,7 @@ export const customTheme = createTheme({
     },
     text: {
       primary: '#FFFFFF',
-      secondary: '#00452B',
+      secondary: '#0F4462',
     },
     action: {
       active: 'rgba(255, 255, 255, 0.8)',
