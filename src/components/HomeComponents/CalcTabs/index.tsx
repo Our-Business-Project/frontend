@@ -33,7 +33,7 @@ export default function CalcTabs() {
   const handleSaveCalcInfo = () => {
     setOpenPopUp(true);
     // функционал отправки на бек
-    console.log(calcContext);
+    
   };
 
   return (

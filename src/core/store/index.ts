@@ -4,8 +4,6 @@ import profileReducer from './reducers/profile.reducer';
 import mailVerificationReducer from './reducers/mailVerification.reducer';
 import calculatorReducer from './reducers/calcFolders.reducer';
 
-console.log(profileReducer);
-
 const store = configureStore({
   reducer: {
     auth: authReducer,
