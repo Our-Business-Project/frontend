@@ -1,16 +1,5 @@
 import * as React from 'react';
-import {
-  Box,
-  Collapse,
-  IconButton,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  Typography,
-  styled,
-} from '@mui/material';
+import { Box, Collapse, IconButton, Table, TableBody, TableCell, TableHead, TableRow, styled } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { FixedCostsContext } from '@/core/contexts/FixedCosts.context';
