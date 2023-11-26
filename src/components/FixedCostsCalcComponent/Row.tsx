@@ -82,7 +82,8 @@ export function Row(props: { row: FixedCostsData }) {
                     <TableRow key={index}>
                       {row.columnNames.map((columnName, colIndex) => (
                         <TableCell align="left" key={colIndex}>
-                          {typeof historyRow[columnName] === 'string' || columnName === 'Сума грн.' ? (
+                          {typeof historyRow[columnName] === 'string' ||
+                          (columnName === 'Сума грн.' && row.columnNames.length > 3) ? (
                             historyRow[columnName]
                           ) : (
                             <Input

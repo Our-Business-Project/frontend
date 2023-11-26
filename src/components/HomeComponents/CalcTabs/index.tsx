@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { Box, Tab, Typography } from '@mui/material';
-import { TabContext, TabList, TabPanel } from '@mui/lab';
+import { Box, Tab, Tabs, styled, tabsClasses } from '@mui/material';
+import { TabContext, TabPanel } from '@mui/lab';
 import MainCalcLayout from '@/components/MainCalcLayout';
 import CalcInput from '@/components/ui/InputComponents/CalcInput';
 import { CalcContext } from '@/core/contexts/Calc.context';
@@ -32,10 +32,15 @@ export default function CalcTabs() {
     <Box sx={{ width: '100%', typography: 'body1' }}>
       <TabContext value={value}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <TabList onChange={handleChange} aria-label="lab API tabs example">
+          <CustomTabs
+            onChange={handleChange}
+            value={value}
+            variant="scrollable"
+            allowScrollButtonsMobile
+          >
             <Tab label="Калькулятор бізнесу" value="1" />
             <Tab label="Калькулятор постійних витрат" value="2" />
-          </TabList>
+          </CustomTabs>
         </Box>
         <TabPanel value="1">
           <MainCalcLayout>
@@ -54,3 +59,10 @@ export default function CalcTabs() {
     </Box>
   );
 }
+
+const CustomTabs = styled(Tabs)(({ theme }) => ({
+  color: theme.palette.text.secondary,
+  [`& .${tabsClasses.scrollButtons}`]: {
+    '&.Mui-disabled': { opacity: 0.3 },
+  },
+}));
