@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Box, Tab, Tabs, styled, tabsClasses } from '@mui/material';
+import { Box, ListItemIcon, Tab, Tabs, styled, tabsClasses } from '@mui/material';
 import { TabContext, TabPanel } from '@mui/lab';
 import MainCalcLayout from '@/components/MainCalcLayout';
 import CalcInput from '@/components/ui/InputComponents/CalcInput';
@@ -7,6 +7,8 @@ import { CalcContext } from '@/core/contexts/Calc.context';
 import FixedCostsCalcTable from '@/components/FixedCostsCalcComponent';
 import GreenCustomButton from '@/components/ui/GreenCustomButton';
 import { redirect } from 'next/navigation';
+import PopupLayout from '@/components/PopUpComponents/PopupLayout';
+import PopUpFolders from '@/components/PopUpComponents/PopupLayout/PopUpFolders';
 
 export default function CalcTabs() {
   const [value, setValue] = React.useState('1');
@@ -29,7 +31,7 @@ export default function CalcTabs() {
   const { data } = calcContext;
 
   const handleSaveCalcInfo = () => {
-      setOpenPopUp(true);
+    setOpenPopUp(true);
     // функционал отправки на бек
     console.log(calcContext);
   };
@@ -57,6 +59,14 @@ export default function CalcTabs() {
           <FixedCostsCalcTable />
         </TabPanel>
       </TabContext>
+      <PopupLayout
+        handleClose={handleClosePopUp}
+        open={openPopUp}
+        title="Збереження розрахунків"
+        successBtnText="Зберегти"
+      >
+        <PopUpFolders />
+      </PopupLayout>
     </Box>
   );
 }
