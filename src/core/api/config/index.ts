@@ -8,3 +8,6 @@ export const usersUrl = apiRoot + '/users';
 export const mailVerifyUrl = apiRoot + '/mail/verify';
 
 export const calcFoldersUrl = apiRoot + '/calc/folders';
+
+const imagesUrl = apiRoot + '/images';
+export const profileImagesUrl = imagesUrl + '/profile';

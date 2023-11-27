@@ -3,10 +3,14 @@ import { useState } from 'react';
 import { Box, Typography, styled } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import ImageUploadPopup from '@/components/global/ImageUploadPopup';
-import { Props } from './props';
+import { useProfile } from '@/core/hooks/useProfile';
+import { useAuth } from '@/core/hooks/useAuth';
 
-export default function ProfilePhotoUpload({ src }: Props) {
+export default function ProfilePhotoUpload() {
   const [isOpenUploadImage, setOpenUploadImage] = useState(false);
+
+  const { token } = useAuth();
+  const { profile, uploadProfileImage } = useProfile(token);
 
   const onClose = () => {
     setOpenUploadImage(false);
@@ -17,14 +21,21 @@ export default function ProfilePhotoUpload({ src }: Props) {
   };
 
   const onSave = (file: File) => {
-    console.log(file);
+    const formData = new FormData();
+    formData.append('image', file);
+    console.log(formData, file);
+    uploadProfileImage(formData);
   };
 
   return (
     <StyledContainer>
       <StyledBox onClick={openPopup}>
         <EditIcon className="edit-icon" />
-        {src ? <Image src={src} alt="Фото профіля" /> : <StyledTypography>Фото</StyledTypography>}
+        {profile.data?.image?.thumbnailUrl ? (
+          <Image src={profile.data.image.thumbnailUrl} alt="Фото профіля" width={350} height={350} />
+        ) : (
+          <StyledTypography>Фото</StyledTypography>
+        )}
       </StyledBox>
       <ImageUploadPopup open={isOpenUploadImage} onClose={onClose} onSave={onSave} />
     </StyledContainer>

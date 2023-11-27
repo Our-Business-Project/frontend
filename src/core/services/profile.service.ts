@@ -1,8 +1,16 @@
 import { getProfileRequest } from '../api/profile/getProfile.api.request';
 import { updateProfileRequest, UpdateProfileDataProps } from '../api/profile/updateProfile.api.request';
+import { uploadProfileImageRequest } from '../api/images/uploadProfileImage.api.request';
 import { errorNotify, successNotify } from '../helpers/notifications';
 import { AppDispatch } from '../store';
-import { profileFailed, profileRequest, profileSuccess } from '../store/actions/profile.action';
+import {
+  profileFailed,
+  profileImageUploadFailed,
+  profileImageUploadRequest,
+  profileImageUploadSuccess,
+  profileRequest,
+  profileSuccess,
+} from '../store/actions/profile.action';
 
 export const getProfileInfoService = (token: string, id: string) => {
   return async (dispatch: AppDispatch) => {
@@ -28,6 +36,21 @@ export const updateProfileInfoService = (token: string, updatedData: UpdateProfi
     } catch (err) {
       const error = err as Error;
       dispatch(profileFailed(error.message));
+      errorNotify(error.message);
+    }
+  };
+};
+
+export const uploadProfileImageService = (token: string, image: FormData) => {
+  return async (dispatch: AppDispatch) => {
+    dispatch(profileImageUploadRequest());
+    try {
+      const data = await uploadProfileImageRequest(token, image);
+      dispatch(profileImageUploadSuccess(data));
+      successNotify('Фото оновлено');
+    } catch (err) {
+      const error = err as Error;
+      dispatch(profileImageUploadFailed(error.message));
       errorNotify(error.message);
     }
   };

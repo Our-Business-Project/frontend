@@ -2,7 +2,12 @@ import { useCallback } from 'react';
 import { ProfileState } from '../store/reducers/profile.reducer';
 import { useAppDispatch, useAppSelector } from './useRedux';
 import { selectProfile } from '../store/selectors/profile.selector';
-import { UpdateProfileDataProps, getProfileInfoService, updateProfileInfoService } from '../services/profile.service';
+import {
+  UpdateProfileDataProps,
+  getProfileInfoService,
+  updateProfileInfoService,
+  uploadProfileImageService,
+} from '../services/profile.service';
 import { FieldValues } from 'react-hook-form';
 
 export const useProfile = (token?: string) => {
@@ -23,10 +28,18 @@ export const useProfile = (token?: string) => {
     [dispatch, token]
   );
 
+  const uploadProfileImage = useCallback(
+    (image: FormData) => {
+      if (token) dispatch(uploadProfileImageService(token, image));
+    },
+    [dispatch, token]
+  );
+
   return {
     profile,
     loadProfile,
     updateProfile,
+    uploadProfileImage,
   };
 };
 
@@ -34,4 +47,5 @@ export type UseAuthReturn = {
   profile: ProfileState;
   loadProfile: (id: string) => void;
   updateProfile: (data: FieldValues) => void;
+  uploadProfileImage: (data: FormData) => void;
 };

@@ -27,6 +27,19 @@ export const post = async (url: string, token: string, payload: object) => {
   return await axios(config);
 };
 
+export const upload = async (url: string, token: string, formData: FormData) => {
+  const config = {
+    method: 'post',
+    url,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    data: formData,
+  };
+
+  return await axios(config);
+};
+
 export const patch = async (url: string, token: string, payload: object) => {
   const config = {
     method: 'patch',

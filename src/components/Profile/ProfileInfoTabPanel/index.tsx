@@ -1,4 +1,4 @@
-import { Box, styled } from '@mui/material';
+import { styled } from '@mui/material';
 import { TabPanel, TabPanelProps } from '@mui/lab';
 import ProfileInfoForm from './ProfileInfoForm';
 import ProfilePhotoUpload from './ProfilePhotoUpload';

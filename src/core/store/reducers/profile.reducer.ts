@@ -1,4 +1,12 @@
-import { PROFILE_REQUEST, PROFILE_SUCCESS, PROFILE_FAILED, PROFILE_RESET } from '../constants/profile.constants';
+import {
+  PROFILE_REQUEST,
+  PROFILE_SUCCESS,
+  PROFILE_FAILED,
+  PROFILE_IMAGE_UPLOAD_REQUEST,
+  PROFILE_IMAGE_UPLOAD_SUCCESS,
+  PROFILE_IMAGE_UPLOAD_FAILED,
+  PROFILE_RESET,
+} from '../constants/profile.constants';
 import { ProfileActions } from '../actions/profile.action';
 import { UserResponse } from '@/core/models/UserResponse.model';
 
@@ -21,7 +29,6 @@ export default function profileReducer(state = initialState, action: ProfileActi
     case PROFILE_REQUEST: {
       return {
         ...state,
-        data: null,
         error: null,
         pending: true,
       };
@@ -30,14 +37,37 @@ export default function profileReducer(state = initialState, action: ProfileActi
       return {
         ...state,
         data: action.data,
-        error: null,
         pending: false,
       };
     }
     case PROFILE_FAILED: {
       return {
         ...state,
-        data: null,
+        error: action.message,
+        pending: false,
+      };
+    }
+
+    case PROFILE_IMAGE_UPLOAD_REQUEST: {
+      return {
+        ...state,
+        error: null,
+        pending: true,
+      };
+    }
+
+    case PROFILE_IMAGE_UPLOAD_SUCCESS: {
+      return {
+        ...state,
+        data: state.data ? { ...state.data, image: action.image } : null,
+        error: null,
+        pending: false,
+      };
+    }
+
+    case PROFILE_IMAGE_UPLOAD_FAILED: {
+      return {
+        ...state,
         error: action.message,
         pending: false,
       };
