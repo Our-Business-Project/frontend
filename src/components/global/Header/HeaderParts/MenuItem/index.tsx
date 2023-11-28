@@ -33,4 +33,7 @@ const MenuItemButton = styled(Button)(({ theme }) => ({
   lineHeight: 'inherit',
   color: theme.palette.primary.main,
   textTransform: 'none',
+  width: '100%',
+  justifyContent: 'left',
+  padding: '6px 16px',
 }));

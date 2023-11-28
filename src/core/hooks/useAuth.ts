@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { redirect } from 'next/navigation';
 import {
   SignInUserProps,
@@ -16,18 +16,10 @@ export const useAuth = () => {
   const { storedValue: token, setValue: setLocalToken, removeValue: removeLocalToken } = useLocalStorage('token');
   const { storedValue: userId, setValue: setLocalUserId, removeValue: removeLocalUserId } = useLocalStorage('id');
 
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(!!token && !!userId);
+
   const dispatch = useAppDispatch();
   const auth = useAppSelector(selectAuth);
-
-  useEffect(() => {
-    if (auth.data) {
-      setLocalToken(auth.data.accessToken);
-      setLocalUserId(auth.data.user.id);
-    } else if (!token) {
-      removeLocalToken();
-      removeLocalUserId();
-    }
-  });
 
   const login = useCallback(
     (payload: SignInUserProps) => {
@@ -47,10 +39,27 @@ export const useAuth = () => {
     dispatch(logoutService());
     removeLocalToken();
     removeLocalUserId();
-    redirect('/');
+    setIsAuthenticated(false);
   }, [dispatch, removeLocalToken, removeLocalUserId]);
 
-  const isAuthenticated = useMemo(() => !!token, [token]);
+  useEffect(() => {
+    if (auth.data) {
+      setLocalToken(auth.data.accessToken);
+      setLocalUserId(auth.data.user.id);
+      setIsAuthenticated(true);
+    } else if (isAuthenticated && (!token || !userId)) {
+      logout();
+    }
+  }, [auth.data, dispatch, isAuthenticated, logout, setLocalToken, setLocalUserId, token, userId]);
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      const currentPathname = window.location.pathname;
+      if (currentPathname !== '/sign-in') {
+        redirect('/sign-in');
+      }
+    }
+  }, [isAuthenticated]);
 
   return {
     auth,

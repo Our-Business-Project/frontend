@@ -1,4 +1,4 @@
-import { AuthResponse } from '@/core/models/AuthResponse.model';
+import { AuthData } from '@/core/models/AuthResponse.model';
 import { AUTH_REQUEST, AUTH_SUCCESS, AUTH_FAILED, AUTH_RESET } from '../constants/auth.constants';
 
 interface AuthRequestAction {
@@ -7,7 +7,7 @@ interface AuthRequestAction {
 
 interface AuthSuccessAction {
   type: typeof AUTH_SUCCESS;
-  data: AuthResponse;
+  data: AuthData;
 }
 
 interface AuthFailedAction {
@@ -25,7 +25,7 @@ const authRequest = (): AuthRequestAction => ({
   type: AUTH_REQUEST,
 });
 
-const authSuccess = (data: AuthResponse): AuthSuccessAction => ({
+const authSuccess = (data: AuthData): AuthSuccessAction => ({
   type: AUTH_SUCCESS,
   data,
 });

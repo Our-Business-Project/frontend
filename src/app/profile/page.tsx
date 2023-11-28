@@ -13,10 +13,8 @@ export default function ProfilePage() {
   const { profile, loadProfile } = useProfile(token);
 
   useEffect(() => {
-    if (!isAuthenticated) {
-      redirect('/sign-in');
-    } else if (userId) loadProfile(userId);
-  }, [isAuthenticated, loadProfile, userId]);
+    if (!profile && userId) loadProfile(userId);
+  }, [isAuthenticated, loadProfile, profile, userId]);
 
   useEffect(() => {
     if (profile.error && profile.error !== 'Щось пішло не по плану :(') {

@@ -2,7 +2,7 @@ import { useAuth } from '@/core/hooks/useAuth';
 import { Box, IconButton, Menu, styled } from '@mui/material';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import Link from 'next/link';
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import MyMenuItem from '../MenuItem';
 
 export default function RightMenu() {
@@ -18,12 +18,16 @@ export default function RightMenu() {
     setAnchorEl(null);
   };
 
+  const logoutOnClick = useCallback(() => {
+    logout();
+  }, [logout]);
+
   const menu = useMemo(
     () => [
       { name: 'Профіль', url: '/profile' },
-      { name: 'Вихід', onClick: logout },
+      { name: 'Вихід', onClick: logoutOnClick },
     ],
-    [logout]
+    [logoutOnClick]
   );
 
   return (
