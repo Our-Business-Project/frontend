@@ -7,19 +7,23 @@ export const signUpSchema = Joi.object({
   firstName: Joi.string()
     .min(2)
     .max(255)
+    .pattern(/^[a-zA-Zа-яА-Я\-]+$/)
     .messages({
       'string.empty': "Обов'язкове поле",
       'string.min': 'Мінімум 2 символа',
       'string.max': 'Максимум 255 символів',
+      'string.pattern.base': 'Повинно містити тільки літери',
     })
     .required(),
   lastName: Joi.string()
     .min(2)
     .max(255)
+    .pattern(/^[a-zA-Zа-яА-Я\-]+$/)
     .messages({
       'string.empty': "Обов'язкове поле",
       'string.min': 'Мінімум 2 символа',
       'string.max': 'Максимум 255 символів',
+      'string.pattern.base': 'Повинно містити тільки літери',
     })
     .required(),
   email: Joi.string()

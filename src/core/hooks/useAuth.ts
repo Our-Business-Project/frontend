@@ -22,7 +22,7 @@ export const useAuth = () => {
   useEffect(() => {
     if (auth.data) {
       setLocalToken(auth.data.accessToken);
-      setLocalUserId(auth.data.user._id);
+      setLocalUserId(auth.data.user.id);
     } else if (!token) {
       removeLocalToken();
       removeLocalUserId();

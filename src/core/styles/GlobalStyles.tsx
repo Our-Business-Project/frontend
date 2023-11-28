@@ -7,6 +7,9 @@ const GlobalStyles = () => {
         a: {
           color: '#FFFFFF',
         },
+        'label.MuiFormLabel-root': {
+          color: 'rgba(0, 0, 0, 0.5)',
+        },
       }}
     />
   );

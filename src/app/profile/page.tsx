@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { redirect } from 'next/navigation';
-import { Container } from '@mui/material';
+import { Box } from '@mui/material';
 import { useAuth } from '@/core/hooks/useAuth';
 import { useProfile } from '@/core/hooks/useProfile';
 
@@ -24,9 +24,5 @@ export default function ProfilePage() {
     }
   }, [logout, profile.error]);
 
-  return (
-    <Container maxWidth="lg" sx={{ marginTop: 10, color: '#000' }}>
-      {isAuthenticated && profile.data && <ProfileInfo profile={profile} />}
-    </Container>
-  );
+  return <Box sx={{ backgroundColor: 'background.primary' }}>{isAuthenticated && profile.data && <ProfileInfo />}</Box>;
 }

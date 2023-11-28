@@ -46,6 +46,7 @@ export const customTheme = createTheme({
     },
     background: {
       default: '#FFFFFF',
+      primary: '#E8EBF2',
     },
     text: {
       primary: '#FFFFFF',
@@ -58,7 +59,34 @@ export const customTheme = createTheme({
       main: '#e41749',
     },
   },
-  shadows: ['0 0 5px #457F8D', '0 0 15px 0 #457F8D', 'none', 'none', 'none', 'none', 'none', 'none', 'none'],
+  shadows: [
+    '0 0 5px #457F8D',
+    '0 0 15px 0 #457F8D',
+    'none',
+    'none',
+    'none',
+    'none',
+    'none',
+    'none',
+    'none',
+    'none',
+    'none',
+    'none',
+    'none',
+    'none',
+    'none',
+    'none',
+    'none',
+    'none',
+    'none',
+    'none',
+    'none',
+    'none',
+    'none',
+    'none',
+    'none',
+    'none',
+  ],
   components: {
     MuiCssBaseline: {
       styleOverrides: {
