@@ -7,7 +7,6 @@ import DefaultLink from '@/components/ui/LinkComponents/DefaultLink';
 import PasswordInput from '@/components/ui/InputComponents/FormInput/PasswordInput';
 import EmailOrPhoneInput from '@/components/ui/InputComponents/FormInput/EmailOrPhoneInput';
 import { Props } from './props';
-import PrivacyPolicyCheckbox from '../global/PrivacyPolicyCheckbox';
 
 interface IFormInput {
   emailOrPhone: string;
@@ -45,7 +44,6 @@ export default function SignInForm({ login, ...props }: Props) {
             />
             <PasswordInput control={control} label="Пароль" {...register('password')} />
           </FieldsContainer>
-          <PrivacyPolicyCheckbox />
           <FormButton type="submit">Увійти</FormButton>
         </FormContainer>
       </form>
@@ -70,6 +68,7 @@ const FieldsContainer = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down('sm')]: {
     rowGap: '1.25rem',
   },
+  marginBottom: '1rem',
 }));
 
 const TextContainer = styled(Box)(({ theme }) => ({
