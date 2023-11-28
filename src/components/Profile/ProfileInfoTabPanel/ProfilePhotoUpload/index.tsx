@@ -21,9 +21,10 @@ export default function ProfilePhotoUpload() {
   };
 
   const onSave = (file: File) => {
+    onClose();
     const formData = new FormData();
     formData.append('image', file);
-    console.log(formData, file);
+
     uploadProfileImage(formData);
   };
 
