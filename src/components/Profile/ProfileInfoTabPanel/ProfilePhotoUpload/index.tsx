@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { useState } from 'react';
-import { Box, Typography, styled } from '@mui/material';
+import { Box, CircularProgress, Typography, styled } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import ImageUploadPopup from '@/components/global/ImageUploadPopup';
 import { useProfile } from '@/core/hooks/useProfile';
@@ -17,6 +17,7 @@ export default function ProfilePhotoUpload() {
   };
 
   const openPopup = () => {
+    if (profile.imagePending) return;
     setOpenUploadImage(true);
   };
 
@@ -28,12 +29,20 @@ export default function ProfilePhotoUpload() {
     uploadProfileImage(formData);
   };
 
+  const loader = profile.imagePending ? (
+    <LoaderContainer>
+      <StyledCircularProgress />
+    </LoaderContainer>
+  ) : (
+    <EditIcon className="edit-icon" />
+  );
+
   return (
     <StyledContainer>
       <StyledBox onClick={openPopup}>
-        <EditIcon className="edit-icon" />
+        {loader}
         {profile.data?.image?.thumbnailUrl ? (
-          <Image src={profile.data.image.thumbnailUrl} alt="Фото профіля" width={350} height={350} />
+          <Image src={profile.data.image.thumbnailUrl} alt="Фото профіля" width={350} height={350} priority={true} />
         ) : (
           <StyledTypography>Фото</StyledTypography>
         )}
@@ -82,4 +91,19 @@ const StyledTypography = styled(Typography)(({ theme }) => ({
   justifyContent: 'center',
   alignItems: 'center',
   color: theme.palette.common.black,
+}));
+
+const LoaderContainer = styled(Box)(() => ({
+  height: '100%',
+  width: '100%',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  position: 'absolute',
+  backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  cursor: 'default',
+}));
+
+const StyledCircularProgress = styled(CircularProgress)(({ theme }) => ({
+  color: theme.palette.success.light,
 }));

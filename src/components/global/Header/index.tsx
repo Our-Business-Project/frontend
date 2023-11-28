@@ -1,6 +1,7 @@
 'use client';
-import * as React from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -15,13 +16,19 @@ import { Divider, styled } from '@mui/material';
 import { useAuth } from '@/core/hooks/useAuth';
 
 export default function Header() {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   return (
     <AppBar position="fixed" sx={{ top: 0, padding: '0!important' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <SiteName />
           <MainMenu />
-          <RightMenu />
+          {isClient && <RightMenu />}
         </Toolbar>
       </Container>
     </AppBar>
@@ -42,7 +49,7 @@ const SiteName = () => (
       color: 'text.primary',
     }}
   >
-    <img src="/images/logo.svg" width="40px" />
+    <Image src="/images/logo.svg" width={40} height={40} alt="YBA Logo" />
     <Divider
       orientation="horizontal"
       variant="middle"
@@ -58,7 +65,7 @@ const SiteName = () => (
 );
 
 const MainMenu = () => {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -88,7 +95,7 @@ const MainMenu = () => {
 };
 
 const RightMenu = () => {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const { isAuthenticated, logout } = useAuth();
 
@@ -100,7 +107,7 @@ const RightMenu = () => {
     setAnchorEl(null);
   };
 
-  const menu = React.useMemo(
+  const menu = useMemo(
     () => [
       { name: 'Профіль', url: '/profile' },
       { name: 'Вихід', onClick: logout },
@@ -178,4 +185,7 @@ const MenuItemButton = styled(Button)(({ theme }) => ({
   lineHeight: 'inherit',
   color: theme.palette.primary.main,
   textTransform: 'none',
+  width: '100%',
+  justifyContent: 'left',
+  padding: '6px 16px',
 }));
