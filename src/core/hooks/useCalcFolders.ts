@@ -1,14 +1,14 @@
 import { useCallback } from 'react';
 import { useAppDispatch, useAppSelector } from './useRedux';
 import { selectCalcFolders } from '../store/selectors/calcFolders.selector';
-import { createFolderService, getAllCaclFoldersService, deleteFolderService } from '../services/calcFolders.service';
+import { createFolderService, getAllFoldersService, deleteFolderService } from '../services/calcFolders.service';
 
 export const useCalcFolders = (token?: string) => {
   const dispatch = useAppDispatch();
   const calcFolders = useAppSelector(selectCalcFolders);
 
-  const getAllCaclFolders = useCallback(() => {
-    if (token) dispatch(getAllCaclFoldersService(token));
+  const getAllFolders = useCallback(() => {
+    if (token) dispatch(getAllFoldersService(token));
   }, [dispatch, token]);
 
   const createFolder = useCallback(
@@ -27,7 +27,7 @@ export const useCalcFolders = (token?: string) => {
 
   return {
     calcFolders,
-    getAllCaclFolders,
+    getAllFolders,
     createFolder,
     deleteFolder,
   };

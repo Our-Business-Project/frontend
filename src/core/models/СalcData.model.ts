@@ -10,3 +10,8 @@ export interface CalculatorDataUnit {
 export interface CalculatorData {
   [key: string]: CalculatorDataUnit;
 }
+export interface CalculatorDataIncome {
+  name: string;
+  data: CalculatorDataUnit;
+  id: string;
+}

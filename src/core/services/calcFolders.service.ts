@@ -1,9 +1,9 @@
 import { AppDispatch } from '../store';
-import { getAllCaclFoldersRequest, createFolderRequest, deleteFolderRequest } from '../api/calc/getCalcFolders.api';
+import { getAllCaclFoldersRequest, createFolderRequest, deleteFolderRequest } from '../api/calc/calcFolders.api';
 import { calcFoldersRequest, calcFoldersSuccess, calcFoldersFailed } from '../store/actions/calcFolders.action';
 import { errorNotify } from '../helpers/notifications';
 
-export const getAllCaclFoldersService = (token: string) => {
+export const getAllFoldersService = (token: string) => {
   return async (dispatch: AppDispatch) => {
     dispatch(calcFoldersRequest());
     try {
