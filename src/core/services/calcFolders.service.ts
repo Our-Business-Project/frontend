@@ -1,9 +1,14 @@
 import { AppDispatch } from '../store';
-import { getAllCaclFoldersRequest, createFolderRequest, deleteFolderRequest } from '../api/calc/getCalcFolders.api';
+import {
+  getAllCaclFoldersRequest,
+  createFolderRequest,
+  deleteFolderRequest,
+  getOneFolderRequest,
+} from '../api/calc/calcFolders.api';
 import { calcFoldersRequest, calcFoldersSuccess, calcFoldersFailed } from '../store/actions/calcFolders.action';
 import { errorNotify } from '../helpers/notifications';
 
-export const getAllCaclFoldersService = (token: string) => {
+export const getAllFoldersService = (token: string) => {
   return async (dispatch: AppDispatch) => {
     dispatch(calcFoldersRequest());
     try {
@@ -38,6 +43,20 @@ export const deleteFolderService = (token: string, folderId: string) => {
     try {
       await deleteFolderRequest(token, folderId);
       const data = await getAllCaclFoldersRequest(token);
+      dispatch(calcFoldersSuccess(data));
+    } catch (err) {
+      const error = err as Error;
+      dispatch(calcFoldersFailed(error.message));
+      errorNotify(error.message);
+    }
+  };
+};
+
+export const getOneFolderFolderService = (token: string, folderId: string) => {
+  return async (dispatch: AppDispatch) => {
+    dispatch(calcFoldersRequest());
+    try {
+      const data = await getOneFolderRequest(token, folderId);
       dispatch(calcFoldersSuccess(data));
     } catch (err) {
       const error = err as Error;
