@@ -52,7 +52,7 @@ export const deleteFolderService = (token: string, folderId: string) => {
   };
 };
 
-export const getOneFolderFolderService = (token: string, folderId: string) => {
+export const getOneFolderService = (token: string, folderId: string) => {
   return async (dispatch: AppDispatch) => {
     dispatch(calcFoldersRequest());
     try {

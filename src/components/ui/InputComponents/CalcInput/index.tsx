@@ -1,7 +1,7 @@
 import { Divider, FormControl, Typography, Box, styled, Slider } from '@mui/material';
 import MuiInput from '@mui/material/Input';
 import * as React from 'react';
-import { CalculatorDataUnit } from '@/core/models/СalculatorData.model';
+import { CalculatorDataUnit } from '@/core/models/СalcData.model';
 import { CalcContext } from '@/core/contexts/Calc.context';
 import { redirect } from 'next/navigation';
 

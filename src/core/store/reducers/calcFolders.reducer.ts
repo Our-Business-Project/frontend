@@ -1,6 +1,6 @@
 import { CALC_FOLDERS_REQUEST, CALC_FOLDERS_SUCCESS, CALC_FOLDERS_FAILED } from '../constants/calcFolders.constants';
 import { CalcFoldersActions } from '../actions/calcFolders.action';
-import { CalcFolders, OneCalcFolder } from '@/core/models/CalcFolders.model';
+import { CalcFolders } from '@/core/models/CalcFolders.model';
 
 interface CalcFoldersInterface {
   data: CalcFolders | null;
