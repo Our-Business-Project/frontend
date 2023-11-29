@@ -15,7 +15,7 @@ import {
 import FolderIcon from '@mui/icons-material/Folder';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { CalcFolders, CalcFoldersUnit } from '@/core/models/CalcFolders.model';
-import { PopUpCreateFolder } from './PopUpCreateFolder';
+import { PopUpCreateFolder } from '../PopUpCreateFolder';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { useEffect } from 'react';
 import { redirect } from 'next/navigation';
