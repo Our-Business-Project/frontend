@@ -15,7 +15,7 @@ export default function EmailVerificationPage() {
   const { mailVerification, verifyMail } = useMail(token);
 
   useEffect(() => {
-    if (!profile.data) {
+    if (!profile.data && userId) {
       loadProfile(userId);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

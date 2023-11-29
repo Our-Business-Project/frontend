@@ -13,7 +13,8 @@ import { UserResponse } from '@/core/models/UserResponse.model';
 interface ProfileInterface {
   data: UserResponse | null;
   error: string | null;
-  pending: boolean;
+  infoPending: boolean;
+  imagePending: boolean;
 }
 
 type ProfileState = ProfileInterface;
@@ -21,7 +22,8 @@ type ProfileState = ProfileInterface;
 const initialState: ProfileState = {
   data: null,
   error: null,
-  pending: false,
+  infoPending: false,
+  imagePending: false,
 };
 
 export default function profileReducer(state = initialState, action: ProfileActions): ProfileState {
@@ -30,21 +32,21 @@ export default function profileReducer(state = initialState, action: ProfileActi
       return {
         ...state,
         error: null,
-        pending: true,
+        infoPending: true,
       };
     }
     case PROFILE_SUCCESS: {
       return {
         ...state,
         data: action.data,
-        pending: false,
+        infoPending: false,
       };
     }
     case PROFILE_FAILED: {
       return {
         ...state,
         error: action.message,
-        pending: false,
+        infoPending: false,
       };
     }
 
@@ -52,7 +54,7 @@ export default function profileReducer(state = initialState, action: ProfileActi
       return {
         ...state,
         error: null,
-        pending: true,
+        imagePending: true,
       };
     }
 
@@ -61,7 +63,7 @@ export default function profileReducer(state = initialState, action: ProfileActi
         ...state,
         data: state.data ? { ...state.data, image: action.image } : null,
         error: null,
-        pending: false,
+        imagePending: false,
       };
     }
 
@@ -69,7 +71,7 @@ export default function profileReducer(state = initialState, action: ProfileActi
       return {
         ...state,
         error: action.message,
-        pending: false,
+        imagePending: false,
       };
     }
 

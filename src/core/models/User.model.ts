@@ -7,6 +7,6 @@ export interface User {
   phone: string;
   email: string;
   image: Image | null;
-  isEmailVerified: string;
-  taxation: 'NaturalPerson' | 'Yurosoba';
+  isEmailVerified: boolean;
+  taxation: 'FOP' | 'TOV';
 }

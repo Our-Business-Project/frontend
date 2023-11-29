@@ -5,7 +5,7 @@ import { AxiosError } from 'axios';
 import { del, get, post } from '../../helpers/apiRequests';
 import { calcFoldersUrl } from '../config';
 
-export const getAllCaclFoldersRequest = async (token: string): Promise<CalcFolders> => {
+export const getAllCaclFoldersRequest = async (token: string) => {
   try {
     const response = await get(calcFoldersUrl, token);
 
@@ -25,7 +25,6 @@ export const getAllCaclFoldersRequest = async (token: string): Promise<CalcFolde
 export const createFolderRequest = async (token: string, folderName: string) => {
   try {
     const response = await post(calcFoldersUrl, token, { name: folderName });
-
     return response.data;
   } catch (error) {
     const err = error as unknown as AxiosError;
@@ -40,7 +39,6 @@ export const createFolderRequest = async (token: string, folderName: string) => 
 export const deleteFolderRequest = async (token: string, folderId: string) => {
   try {
     const response = await del(`${calcFoldersUrl}/${folderId}`, token);
-
     return response.data;
   } catch (error) {
     const err = error as unknown as AxiosError;

@@ -6,25 +6,25 @@ import DoneIcon from '@mui/icons-material/Done';
 import { useAuth } from '@/core/hooks/useAuth';
 import { useCalcFolders } from '@/core/hooks/useCalcFolders';
 
-interface PopUpCreateFolderProps {
+interface PopUpCreateItemProps {
   setActive: React.Dispatch<React.SetStateAction<boolean>>;
+  createItemFunction: (name: string) => void;
 }
 
-export function PopUpCreateFolder({ setActive }: PopUpCreateFolderProps) {
+export function PopUpCreateItem({ setActive, createItemFunction }: PopUpCreateItemProps) {
   const [isAcceptActive, setIsAcceptActive] = React.useState(false);
-  const [folderName, setFolderName] = React.useState('');
+  const [itemName, setItemName] = React.useState('');
   const { token } = useAuth();
-  const { createFolder } = useCalcFolders(token);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.value.length > 0) {
       setIsAcceptActive(true);
-      setFolderName(event.target.value);
+      setItemName(event.target.value);
     }
   };
 
-  const handleClickCreateFolder = () => {
-    createFolder(folderName);
+  const handleClickCreateItem = () => {
+    createItemFunction(itemName);
     setActive(false);
   };
 
@@ -33,7 +33,7 @@ export function PopUpCreateFolder({ setActive }: PopUpCreateFolderProps) {
       <CreateNewFolderIcon color="primary" sx={{ mr: '10px' }} />
       <StyledListItemText>
         <TextField onChange={handleInputChange} sx={{ input: { color: 'text.secondary' } }} variant="standard" />{' '}
-        <IconButton onClick={handleClickCreateFolder} disabled={!isAcceptActive} color="primary">
+        <IconButton onClick={handleClickCreateItem} disabled={!isAcceptActive} color="primary">
           <DoneIcon />
         </IconButton>
       </StyledListItemText>

@@ -3,14 +3,23 @@ import { SignUpUserProps, signUpApiRequest } from '../api/auth/signUp.api.reques
 import { errorNotify, successNotify } from '../helpers/notifications';
 import { AppDispatch } from '../store';
 import { authFailed, authRequest, authSuccess, authReset } from '../store/actions/auth.action';
-import { profileReset } from '../store/actions/profile.action';
+import { profileReset, profileSuccess } from '../store/actions/profile.action';
 
 export const signInService = (payload: SignInUserProps) => {
   return async (dispatch: AppDispatch) => {
     dispatch(authRequest());
     try {
       const data = await signInApiRequest(payload);
-      dispatch(authSuccess(data));
+      const { accessToken, user } = data;
+      dispatch(profileSuccess(data.user));
+      dispatch(
+        authSuccess({
+          accessToken,
+          user: {
+            id: user.id,
+          },
+        })
+      );
       successNotify('Успішна авторизація');
     } catch (err) {
       const error = err as Error;
@@ -39,7 +48,6 @@ export const logoutService = () => {
   return async (dispatch: AppDispatch) => {
     dispatch(authReset());
     dispatch(profileReset());
-    successNotify('Ви вийшли з аккаунта');
   };
 };
 

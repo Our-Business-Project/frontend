@@ -2,6 +2,11 @@ import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, styled } f
 import { Props } from './props';
 import { Controller } from 'react-hook-form';
 
+const radioList = [
+  { label: 'ФОП', value: 'FOP' },
+  { label: 'ТОВ', value: 'TOV' },
+];
+
 export default function ProfileRadioGroup({ control, readOnly }: Props) {
   return (
     <StyledFormControl>
@@ -11,12 +16,9 @@ export default function ProfileRadioGroup({ control, readOnly }: Props) {
         control={control}
         render={({ field }) => (
           <RadioGroup aria-labelledby="taxation-label" {...field}>
-            <StyledFormControlLabel
-              value="NaturalPerson"
-              control={<Radio disabled={readOnly} />}
-              label="Фізична особа"
-            />
-            <StyledFormControlLabel value="Yurosoba" control={<Radio disabled={readOnly} />} label="Юрособа" />
+            {radioList.map(({ label, value }) => (
+              <StyledFormControlLabel key={value} label={label} value={value} control={<Radio disabled={readOnly} />} />
+            ))}
           </RadioGroup>
         )}
       />

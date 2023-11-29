@@ -10,7 +10,7 @@ export type UpdateProfileDataProps = {
   lastName: string;
   phone: string;
   email: string;
-  taxation: 'NaturalPerson' | 'Yurosoba';
+  taxation: 'FOP' | 'TOV';
 };
 
 export const updateProfileRequest = async (token: string, data: UpdateProfileDataProps): Promise<UserResponse> => {

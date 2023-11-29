@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Box, Grid, styled, Button, ButtonProps } from '@mui/material';
+import { useEffect, useMemo, useState } from 'react';
+import { Box, Grid, styled, Button, ButtonProps, CircularProgress } from '@mui/material';
 import TaskAltRoundedIcon from '@mui/icons-material/TaskAltRounded';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import { useForm, SubmitHandler, FieldValues } from 'react-hook-form';
@@ -21,15 +21,18 @@ export default function ProfileInfoForm() {
 
   const formattedPhone = formatPhone('' + phone);
 
-  const defaultValues = {
-    email,
-    firstName,
-    lastName,
-    phone: formattedPhone,
-    taxation,
-  };
+  const defaultValues = useMemo(
+    () => ({
+      email,
+      firstName,
+      lastName,
+      phone: formattedPhone,
+      taxation,
+    }),
+    [email, firstName, formattedPhone, lastName, taxation]
+  );
 
-  const { control, handleSubmit, formState } = useForm({
+  const { control, handleSubmit, formState, reset } = useForm({
     defaultValues,
     resolver: joiResolver(profileUpdateSchema),
     mode: 'onChange',
@@ -49,6 +52,12 @@ export default function ProfileInfoForm() {
     setReadOnly(true);
   };
 
+  useEffect(() => {
+    reset(defaultValues);
+  }, [defaultValues, reset]);
+
+  const loader = profile.infoPending && <StyledCircularProgress size="1.625rem" />;
+
   return (
     <Box>
       <StyledGrid container columns={12}>
@@ -60,7 +69,12 @@ export default function ProfileInfoForm() {
         </StyledGrid>
       </StyledGrid>
       <StyledBoxButton>
-        {readOnly ? <ChangeButton onClick={editBtnOnClick} /> : <SaveButton onClick={handleSubmit(onSubmit)} />}
+        {readOnly ? (
+          <ChangeButton onClick={editBtnOnClick} disabled={profile.infoPending} />
+        ) : (
+          <SaveButton onClick={handleSubmit(onSubmit)} disabled={profile.infoPending} />
+        )}
+        {loader}
       </StyledBoxButton>
     </Box>
   );
@@ -91,6 +105,8 @@ const StyledGrid = styled(Grid)(({ theme }) => ({
 
 const StyledBoxButton = styled(Box)(() => ({
   display: 'flex',
+  alignItems: 'center',
+  gap: '1rem',
   margin: '77px 0 0 5px',
 }));
 
@@ -132,4 +148,8 @@ const StyledEditRoundedIcon = styled(EditRoundedIcon)(() => ({
 const StyledTaskAltRoundedIcon = styled(TaskAltRoundedIcon)(() => ({
   width: '17px',
   height: '17px',
+}));
+
+const StyledCircularProgress = styled(CircularProgress)(({ theme }) => ({
+  color: theme.palette.success.light,
 }));

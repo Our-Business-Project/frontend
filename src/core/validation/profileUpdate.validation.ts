@@ -28,5 +28,5 @@ export const profileUpdateSchema = Joi.object({
   phone: Joi.string().pattern(phoneRegex).messages({
     'string.pattern.base': 'Невірний телефон',
   }),
-  taxation: Joi.string().valid('NaturalPerson', 'Yurosoba').required(),
+  taxation: Joi.string().valid('FOP', 'TOV').required(),
 });
