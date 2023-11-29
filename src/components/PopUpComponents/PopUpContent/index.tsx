@@ -9,13 +9,16 @@ import { useCalcFolders } from '@/core/hooks/useCalcFolders';
 import { useProfile } from '@/core/hooks/useProfile';
 import FolderContent from './FoldersContent';
 import FilesContent from './FilesContent';
+import { useCalcData } from '@/core/hooks/useCalcData';
+import { CalculatorDataIncome } from '@/core/models/СalcData.model';
 
 export default function PopUpContent() {
-  const [calcFoldersData, setCalcFoldersData] = React.useState<CalcFolders | null>(null);
+  const [calcFoldersData, setCalcFoldersData] = React.useState<CalcFolders | CalculatorDataIncome | null>(null);
   const [isFolderOpened, setIsFolderOpened] = React.useState(false);
   const { isAuthenticated, token, userId } = useAuth();
   const { loadProfile } = useProfile(token);
-  const { calcFolders, getAllFolders, getOneFolder } = useCalcFolders(token);
+  const { calcFolders, getAllFolders, deleteFolder } = useCalcFolders(token);
+  const { calcData, getOneFolderData } = useCalcData(token);
 
   useEffect(() => {
     if (userId) {
@@ -27,18 +30,20 @@ export default function PopUpContent() {
   }, [isAuthenticated, getAllFolders]);
 
   const handleClickdOpenFolder = (id: string) => {
-    getOneFolder(id);
+    getOneFolderData(id);
     setIsFolderOpened(true);
   };
 
   useEffect(() => {
-    if (calcFolders.data) {
-      setCalcFoldersData(calcFolders.data);
-    }
-  }, [calcFolders]);
+    if (calcFolders.data && !isFolderOpened) setCalcFoldersData(calcFolders.data);
+    if (calcData.data && isFolderOpened) setCalcFoldersData(calcData.data);
+
+    if (calcFolders.data && !isFolderOpened) console.log('calcFolders.data && !isFolderOpened:', calcFolders.data);
+    if (calcData.data && isFolderOpened) console.log('calcData.data:', calcData.data);
+  }, [calcFolders, calcData]);
 
   return (
-    <Box position="relative">
+    <>
       {isFolderOpened ? (
         <FilesContent calcFoldersData={calcFoldersData} />
       ) : (
@@ -47,6 +52,6 @@ export default function PopUpContent() {
           calcFoldersData={calcFoldersData}
         ></FolderContent>
       )}
-    </Box>
+    </>
   );
 }

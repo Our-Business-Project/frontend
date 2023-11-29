@@ -4,50 +4,66 @@ import { List, ListItem, ListItemText, Box, styled, IconButton } from '@mui/mate
 import FolderIcon from '@mui/icons-material/Folder';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { CalcFolders, CalcFoldersUnit } from '@/core/models/CalcFolders.model';
-import { PopUpCreateFolder } from '../../PopUpCreateFolder';
+import { PopUpCreateItem } from '../../PopUpCreateItem';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { useAuth } from '@/core/hooks/useAuth';
-import { useCalcFolders } from '@/core/hooks/useCalcFolders';
+import { useCalcData } from '@/core/hooks/useCalcData';
 import { useProfile } from '@/core/hooks/useProfile';
+import { CalculatorDataIncome } from '@/core/models/СalcData.model';
 import DeleteIcon from '@mui/icons-material/Delete';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
+import { errorNotify } from '@/core/helpers/notifications';
 
 interface FilesContentProps {
   //   handleClickdOpenFolder: (id: string) => void;
-  calcFoldersData: CalcFolders | null;
+  calcFoldersData: CalcFolders | CalculatorDataIncome | null;
 }
 
 export default function FilesContent({ calcFoldersData }: FilesContentProps) {
-  const [creatingNewFolder, setCreatingNewFolder] = React.useState(false);
+  const [creatingNewFile, setCreatingNewFile] = React.useState(false);
   const { token } = useAuth();
   const { profile } = useProfile(token);
-  const { deleteFolder } = useCalcFolders(token);
+  const { deleteData } = useCalcData(token);
 
-  const handleClickedDeleteFolder = (id: string) => {
-    deleteFolder(id);
+  const handleClickedDeleteData = (dataId: string) => {
+    if (calcFoldersData) {
+      const folderId = calcFoldersData.id;
+      if (typeof folderId === 'string') {
+        deleteData(folderId, dataId);
+      } else {
+        errorNotify('щось пішло не так');
+      }
+    } else {
+      errorNotify('щось пішло не так');
+    }
   };
+
+  // const createFileFunction = (name: string) => {
+  //   createFolder(name);
+  // };
 
   return (
     <List>
-      {creatingNewFolder && <PopUpCreateFolder setActive={setCreatingNewFolder} />}
-      {Array.isArray(calcFoldersData) &&
-        calcFoldersData.map((folder: CalcFoldersUnit, index: number) => (
+      {/* {creatingNewFile && <PopUpCreateItem setActive={setCreatingNewFile} />} */}
+      {calcFoldersData &&
+        Array.isArray(calcFoldersData.data) &&
+        calcFoldersData.data.map((file: CalcFoldersUnit, index: number) => (
           <StyledListItem
-            // onClick={() => handleClickdOpenFolder(folder.id)}
+            // onClick={() => handleClickedDeleteData(folder.id)}
             key={index}
             className="mui-1q896iv-MuiButtonBase-root-MuiButton-root"
           >
             <InsertDriveFileIcon color="primary" sx={{ mr: '10px' }} />
-            <StyledListItemText primary={folder.name || profile.data?.firstName} />
-            <IconButton onClick={() => handleClickedDeleteFolder(folder.id)}>
+            <StyledListItemText primary={file.name} />
+            <IconButton onClick={() => handleClickedDeleteData(file.id)}>
               <DeleteIcon fontSize="medium" color="error" />
             </IconButton>
           </StyledListItem>
         ))}
 
       <AbsoluteBox>
-        <IconButton onClick={() => setCreatingNewFolder((prev) => !prev)}>
-          {creatingNewFolder ? (
+        <IconButton onClick={() => setCreatingNewFile((prev) => !prev)}>
+          {creatingNewFile ? (
             <CancelIcon fontSize="large" color="primary" />
           ) : (
             <AddCircleIcon fontSize="large" color="primary" />

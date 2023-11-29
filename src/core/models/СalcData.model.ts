@@ -13,4 +13,5 @@ export interface CalculatorData {
 export interface CalculatorDataIncome {
   name: string;
   data: CalculatorDataUnit;
+  id: string;
 }

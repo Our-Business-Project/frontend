@@ -20,3 +20,18 @@ export const deleteDataRequest = async (token: string, folderId: string, dataID:
     }
   }
 };
+
+export const getOneFolderDataRequest = async (token: string, folderId: string) => {
+  try {
+    const response = await get(`${calcFoldersUrl}/${folderId}`, token);
+
+    return response.data;
+  } catch (error) {
+    const err = error as unknown as AxiosError;
+    if (err.response?.status === 401) {
+      throw new Error('Не авторизоавний!');
+    } else {
+      throw new Error('Щось пішло не по плану :(');
+    }
+  }
+};
