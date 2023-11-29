@@ -11,7 +11,6 @@ export const CalcContext = createContext<CalcContextType | null>(null);
 export function CalcProvider({ children }: PropsWithChildren<{}>) {
   const contextValues: CalculatorData = {
     ProductionPlan: {
-      name: 'ProductionPlan',
       value: 0,
       label: 'План виробництва',
       borderRadius: '0 0 15px 0',
@@ -20,7 +19,6 @@ export function CalcProvider({ children }: PropsWithChildren<{}>) {
       maxValue: 10000,
     },
     CostPrice: {
-      name: 'CostPrice',
       value: 0,
       label: 'Собівартість',
       borderRadius: '0 0 15px 15px',
@@ -29,7 +27,6 @@ export function CalcProvider({ children }: PropsWithChildren<{}>) {
       maxValue: 10000,
     },
     PricePerUnit: {
-      name: 'PricePerUnit',
       value: 0,
       label: 'Ціна за одиницю товару',
       borderRadius: '0 0 0 15px',
@@ -37,30 +34,27 @@ export function CalcProvider({ children }: PropsWithChildren<{}>) {
       slider: true,
       maxValue: 10000,
     },
-    GrossProfit: { name: 'GrossProfit', value: 0, label: 'Маржинальний дохід' },
+    GrossProfit: { value: 0, label: 'Маржинальний дохід' },
     ProductionCost: {
-      name: 'ProductionCost',
       value: 0,
       label: 'Виробнича собівартість',
       borderRadius: '0 15px 15px 0',
     },
-    FixedCosts: { name: 'FixedCosts', value: 0, label: 'Постійні витрати', disabled: false },
+    FixedCosts: { value: 0, label: 'Постійні витрати', disabled: false },
     Revenue: {
-      name: 'Revenue',
       value: 0,
       label: 'Виторг від реалізації',
       borderRadius: '15px 0 0 15px',
     },
-    BreakEvenPoint: { name: 'BreakEvenPoint', value: 0, label: 'Точка беззбитковості' },
-    Profit: { name: 'Profit', value: 0, label: 'Прибуток' },
-    Want: { name: 'Want', value: 0, label: 'Бажаю заробити', slider: true, maxValue: 100000, disabled: false },
+    BreakEvenPoint: { value: 0, label: 'Точка беззбитковості' },
+    Profit: { value: 0, label: 'Прибуток' },
+    Want: { value: 0, label: 'Бажаю заробити', slider: true, maxValue: 100000, disabled: false },
     DesiredProductionPlan: {
-      name: 'desiredProductionPlan',
       value: 0,
       label: 'План виробництва повинен бути',
     },
-    DesiredCostPrice: { name: 'desiredCostPrice', value: 0, label: 'Собівартість повинна бути ' },
-    DesiredPricePerUnit: { name: 'Profit', value: 0, label: 'Ціна повинна бути' },
+    DesiredCostPrice: { value: 0, label: 'Собівартість повинна бути ' },
+    DesiredPricePerUnit: { value: 0, label: 'Ціна повинна бути' },
   };
 
   const [data, setData] = useState(contextValues);

@@ -1,5 +1,4 @@
 export interface CalculatorDataUnit {
-  name?: string;
   value: number;
   label?: string;
   borderRadius?: string;

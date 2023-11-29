@@ -33,8 +33,8 @@ export default function FolderContent({ handleClickdOpenFolder, calcFoldersData 
   };
 
   return (
-    <Box sx={{ position: 'relative' }}>
-      <List sx={{ height: '400px', scrollBehavior: 'auto', position: 'static' }}>
+    <>
+      <Box sx={{minHeight:'350px'}}>
         {creatingNewFolder && (
           <PopUpCreateItem setActive={setCreatingNewFolder} createItemFunction={createFolderFunction} />
         )}
@@ -52,25 +52,25 @@ export default function FolderContent({ handleClickdOpenFolder, calcFoldersData 
               </IconButton>
             </StyledListItem>
           ))}
+      </Box>
 
-        <AbsoluteBox >
-          <IconButton onClick={() => setCreatingNewFolder((prev) => !prev)}>
-            {creatingNewFolder ? (
-              <CancelIcon fontSize="large" color="primary" />
-            ) : (
-              <AddCircleIcon fontSize="large" color="primary" />
-            )}
-          </IconButton>
-        </AbsoluteBox>
-      </List>
-    </Box>
+      <AbsoluteBox>
+        <IconButton onClick={() => setCreatingNewFolder((prev) => !prev)}>
+          {creatingNewFolder ? (
+            <CancelIcon fontSize="large" color="primary" />
+          ) : (
+            <AddCircleIcon fontSize="large" color="primary" />
+          )}
+        </IconButton>
+      </AbsoluteBox>
+    </>
   );
 }
 
 const AbsoluteBox = styled(Box)`
-  display: inline-block;
   position: sticky;
   bottom: 0;
+  right: 0;
   margin-left: 90%;
 `;
 

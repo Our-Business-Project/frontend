@@ -56,7 +56,7 @@ export default function CalcTabs() {
         <TabPanel value="1">
           <MainCalcLayout>
             {Object.keys(data).map((key) => (
-              <CalcInput key={key} {...data[key]} />
+              <CalcInput key={key} {...data[key]} name={key} />
             ))}
           </MainCalcLayout>
           <Box sx={{ display: 'flex', justifyContent: 'center', mt: '20px' }}>

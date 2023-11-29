@@ -12,6 +12,7 @@ import {
   LinearProgress,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+import { styled } from '@mui/system';
 
 export default function PopupLayout({
   handleClose,
@@ -29,7 +30,7 @@ export default function PopupLayout({
   isPending: boolean;
 }) {
   return (
-    <Dialog maxWidth="md" open={open} onClose={handleClose} aria-labelledby="responsive-dialog-title">
+    <StiledDialog maxWidth="md" open={open} onClose={handleClose}>
       {isPending && <LinearProgress />}
       <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
         <DialogTitle color={'text.secondary'} id="responsive-dialog-title">
@@ -46,6 +47,15 @@ export default function PopupLayout({
       <DialogActions>
         <Button onClick={handleClose}>{successBtnText}</Button>
       </DialogActions>
-    </Dialog>
+    </StiledDialog>
   );
 }
+
+const StiledDialog = styled(Dialog)(({ theme }) => ({
+  margin: '0 auto',
+  height: '800px',
+  width: '600px',
+  [theme.breakpoints.down('md')]: {
+    width: '430px',
+  },
+}));

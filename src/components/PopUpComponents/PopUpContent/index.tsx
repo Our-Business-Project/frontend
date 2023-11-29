@@ -1,6 +1,6 @@
 'use client';
 import * as React from 'react';
-import { Box } from '@mui/material';
+import { Box, List, styled } from '@mui/material';
 import { CalcFolders } from '@/core/models/CalcFolders.model';
 import { useEffect } from 'react';
 import { redirect } from 'next/navigation';
@@ -37,13 +37,10 @@ export default function PopUpContent() {
   useEffect(() => {
     if (calcFolders.data && !isFolderOpened) setCalcFoldersData(calcFolders.data);
     if (calcData.data && isFolderOpened) setCalcFoldersData(calcData.data);
-
-    if (calcFolders.data && !isFolderOpened) console.log('calcFolders.data && !isFolderOpened:', calcFolders.data);
-    if (calcData.data && isFolderOpened) console.log('calcData.data:', calcData.data);
   }, [calcFolders, calcData]);
 
   return (
-    <>
+    <List sx={{ scrollBehavior: 'auto', position: 'relative' }}>
       {isFolderOpened ? (
         <FilesContent calcFoldersData={calcFoldersData} />
       ) : (
@@ -52,6 +49,6 @@ export default function PopUpContent() {
           calcFoldersData={calcFoldersData}
         ></FolderContent>
       )}
-    </>
+    </List>
   );
 }

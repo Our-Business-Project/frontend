@@ -13,7 +13,15 @@ export default function CalcInput({
   disabled = true,
   slider = false,
   maxValue = 100000,
-}: CalculatorDataUnit) {
+}: {
+  name: string;
+  value: number;
+  label?: string;
+  borderRadius?: string;
+  disabled?: boolean;
+  slider?: boolean;
+  maxValue?: number;
+}) {
   const calcContext = React.useContext(CalcContext);
   const bgcolor = disabled ? 'secondary.main' : 'primary.dark';
   if (!calcContext) {

@@ -1,18 +1,18 @@
 'use client';
 import * as React from 'react';
-import { List, ListItem, ListItemText, Box, styled, IconButton } from '@mui/material';
-import FolderIcon from '@mui/icons-material/Folder';
+import { ListItem, ListItemText, Box, styled, IconButton } from '@mui/material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { CalcFolders, CalcFoldersUnit } from '@/core/models/CalcFolders.model';
 import { PopUpCreateItem } from '../../PopUpCreateItem';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { useAuth } from '@/core/hooks/useAuth';
 import { useCalcData } from '@/core/hooks/useCalcData';
-import { useProfile } from '@/core/hooks/useProfile';
 import { CalculatorDataIncome } from '@/core/models/СalcData.model';
 import DeleteIcon from '@mui/icons-material/Delete';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import { errorNotify } from '@/core/helpers/notifications';
+import { CalcContext } from '@/core/contexts/Calc.context';
+import { redirect } from 'next/navigation';
 
 interface FilesContentProps {
   //   handleClickdOpenFolder: (id: string) => void;
@@ -21,9 +21,14 @@ interface FilesContentProps {
 
 export default function FilesContent({ calcFoldersData }: FilesContentProps) {
   const [creatingNewFile, setCreatingNewFile] = React.useState(false);
+  const calcContext = React.useContext(CalcContext);
+  if (!calcContext) {
+    redirect('/404');
+  }
+
+  const { data } = calcContext;
   const { token } = useAuth();
-  const { profile } = useProfile(token);
-  const { deleteData } = useCalcData(token);
+  const { deleteData, createData } = useCalcData(token);
 
   const handleClickedDeleteData = (dataId: string) => {
     if (calcFoldersData) {
@@ -38,28 +43,30 @@ export default function FilesContent({ calcFoldersData }: FilesContentProps) {
     }
   };
 
-  // const createFileFunction = (name: string) => {
-  //   createFolder(name);
-  // };
-
+  const createFileFunction = (name: string) => {
+    console.log(data)
+    if (calcFoldersData && typeof calcFoldersData.id === 'string') createData(calcFoldersData.id, name, data);
+  };
   return (
-    <List>
-      {/* {creatingNewFile && <PopUpCreateItem setActive={setCreatingNewFile} />} */}
-      {calcFoldersData &&
-        Array.isArray(calcFoldersData.data) &&
-        calcFoldersData.data.map((file: CalcFoldersUnit, index: number) => (
-          <StyledListItem
-            // onClick={() => handleClickedDeleteData(folder.id)}
-            key={index}
-            className="mui-1q896iv-MuiButtonBase-root-MuiButton-root"
-          >
-            <InsertDriveFileIcon color="primary" sx={{ mr: '10px' }} />
-            <StyledListItemText primary={file.name} />
-            <IconButton onClick={() => handleClickedDeleteData(file.id)}>
-              <DeleteIcon fontSize="medium" color="error" />
-            </IconButton>
-          </StyledListItem>
-        ))}
+    <>
+      <Box sx={{ minHeight: '350px' }}>
+        {creatingNewFile && <PopUpCreateItem setActive={setCreatingNewFile} createItemFunction={createFileFunction} />}
+        {calcFoldersData && Array.isArray(calcFoldersData.data) && calcFoldersData.data.length > 0
+          ? calcFoldersData.data.map((file: CalcFoldersUnit, index: number) => (
+              <StyledListItem
+                // onClick={() => handleClickedDeleteData(folder.id)}
+                key={index}
+                className="mui-1q896iv-MuiButtonBase-root-MuiButton-root"
+              >
+                <InsertDriveFileIcon color="primary" sx={{ mr: '10px' }} />
+                <StyledListItemText primary={file.name} />
+                <IconButton onClick={() => handleClickedDeleteData(file.id)}>
+                  <DeleteIcon fontSize="medium" color="error" />
+                </IconButton>
+              </StyledListItem>
+            ))
+          : !creatingNewFile && <Box>У вас ще немає збережених файлів(</Box>}
+      </Box>
 
       <AbsoluteBox>
         <IconButton onClick={() => setCreatingNewFile((prev) => !prev)}>
@@ -70,14 +77,15 @@ export default function FilesContent({ calcFoldersData }: FilesContentProps) {
           )}
         </IconButton>
       </AbsoluteBox>
-    </List>
+    </>
   );
 }
 
 const AbsoluteBox = styled(Box)`
-  position: absolute;
-  bottom: -15px;
-  right: -15px;
+  position: sticky;
+  bottom: 0;
+  right: 0;
+  margin-left: 90%;
 `;
 
 const StyledListItemText = styled(ListItemText)`
