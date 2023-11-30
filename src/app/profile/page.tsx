@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect } from 'react';
-import { redirect } from 'next/navigation';
 import { Box } from '@mui/material';
 import { useAuth } from '@/core/hooks/useAuth';
 import { useProfile } from '@/core/hooks/useProfile';
