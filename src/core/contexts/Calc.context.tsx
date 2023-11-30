@@ -1,5 +1,5 @@
 import React, { createContext, PropsWithChildren, useState } from 'react';
-import { CalculatorData } from '../models/СalculatorData.model';
+import { CalculatorData } from '../models/СalcData.model';
 
 export type CalcContextType = {
   data: CalculatorData;

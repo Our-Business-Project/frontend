@@ -7,8 +7,8 @@ import { CalcContext } from '@/core/contexts/Calc.context';
 import FixedCostsCalcTable from '@/components/FixedCostsCalcComponent';
 import GreenCustomButton from '@/components/ui/GreenCustomButton';
 import { redirect } from 'next/navigation';
-import PopupLayout from '@/components/PopUpComponents/PopupLayout';
-import PopUpFolders from '@/components/PopUpComponents/PopupLayout/PopUpFolders';
+import PopupLayout from '@/components/ui/PopUpLayout';
+import PopUpFolders from '@/components/PopUpComponents/PopUpContent';
 import { useCalcFolders } from '@/core/hooks/useCalcFolders';
 import { useAuth } from '@/core/hooks/useAuth';
 

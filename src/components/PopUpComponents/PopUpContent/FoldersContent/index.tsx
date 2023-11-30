@@ -1,58 +1,59 @@
 'use client';
 import * as React from 'react';
-import { List, ListItem, ListItemText, Box, styled, IconButton, TextField, LinearProgress } from '@mui/material';
+import { List, ListItem, ListItemText, Box, styled, IconButton } from '@mui/material';
 import FolderIcon from '@mui/icons-material/Folder';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { CalcFolders, CalcFoldersUnit } from '@/core/models/CalcFolders.model';
-import { PopUpCreateFolder } from './PopUpCreateFolder';
+import { PopUpCreateItem } from '../../PopUpCreateItem';
 import CancelIcon from '@mui/icons-material/Cancel';
-import { useEffect } from 'react';
-import { redirect } from 'next/navigation';
 import { useAuth } from '@/core/hooks/useAuth';
 import { useCalcFolders } from '@/core/hooks/useCalcFolders';
 import { useProfile } from '@/core/hooks/useProfile';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { CalculatorDataIncome } from '@/core/models/СalcData.model';
 
-export default function PopUpFolders() {
+interface FolderContentProps {
+  handleClickdOpenFolder: (id: string) => void;
+  calcFoldersData: CalcFolders | CalculatorDataIncome | null;
+}
+
+export default function FolderContent({ handleClickdOpenFolder, calcFoldersData }: FolderContentProps) {
   const [creatingNewFolder, setCreatingNewFolder] = React.useState(false);
-  const [calcFoldersData, setCalcFoldersData] = React.useState<CalcFolders | null>(null);
-  const { isAuthenticated, token, userId } = useAuth();
-  const { profile, loadProfile } = useProfile(token);
-  const { calcFolders, getAllCaclFolders, deleteFolder } = useCalcFolders(token);
+  const { token } = useAuth();
+  const { profile } = useProfile(token);
+  const { deleteFolder, createFolder } = useCalcFolders(token);
 
-  useEffect(() => {
-    if (userId) {
-      getAllCaclFolders();
-      loadProfile(userId);
-    } else {
-      redirect('/sign-in');
-    }
-  }, [isAuthenticated, getAllCaclFolders]);
-
-  const handleClickdDeleteFolder = (id: string) => {
+  const handleClickedDeleteFolder = (e: React.MouseEvent<HTMLButtonElement>, id: string) => {
+    e.stopPropagation();
     deleteFolder(id);
   };
 
-  useEffect(() => {
-    if (calcFolders.data) setCalcFoldersData(calcFolders.data);
-  }, [calcFolders]);
+  const createFolderFunction = (name: string) => {
+    createFolder(name);
+  };
 
   return (
-    <Box position="relative">
-      <List>
-        {creatingNewFolder && <PopUpCreateFolder setActive={setCreatingNewFolder} />}
+    <Box sx={{ position: 'relative' }}>
+      <List sx={{ height: '400px', scrollBehavior: 'auto', position: 'static' }}>
+        {creatingNewFolder && (
+          <PopUpCreateItem setActive={setCreatingNewFolder} createItemFunction={createFolderFunction} />
+        )}
         {Array.isArray(calcFoldersData) &&
           calcFoldersData.map((folder: CalcFoldersUnit, index: number) => (
-            <StyledListItem key={index}>
+            <StyledListItem
+              onClick={(e) => handleClickdOpenFolder(folder.id)}
+              key={index}
+              className="mui-1q896iv-MuiButtonBase-root-MuiButton-root"
+            >
               <FolderIcon color="primary" sx={{ mr: '10px' }} />
               <StyledListItemText primary={folder.name || profile.data?.firstName} />
-              <IconButton onClick={() => handleClickdDeleteFolder(folder.id)}>
+              <IconButton onClick={(e) => handleClickedDeleteFolder(e, folder.id)}>
                 <DeleteIcon fontSize="medium" color="error" />
               </IconButton>
             </StyledListItem>
           ))}
 
-        <AbsoluteBox>
+        <AbsoluteBox >
           <IconButton onClick={() => setCreatingNewFolder((prev) => !prev)}>
             {creatingNewFolder ? (
               <CancelIcon fontSize="large" color="primary" />
@@ -67,9 +68,10 @@ export default function PopUpFolders() {
 }
 
 const AbsoluteBox = styled(Box)`
-  position: absolute;
-  bottom: -15px;
-  right: -15px;
+  display: inline-block;
+  position: sticky;
+  bottom: 0;
+  margin-left: 90%;
 `;
 
 const StyledListItemText = styled(ListItemText)`
@@ -77,6 +79,7 @@ const StyledListItemText = styled(ListItemText)`
 `;
 
 const StyledListItem = styled(ListItem)`
+  text-transform: none;
   button {
     opacity: 0;
   }
