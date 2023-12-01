@@ -2,7 +2,7 @@ import React, { createContext, PropsWithChildren, useState } from 'react';
 import { CalculatorData } from '../models/СalcData.model';
 
 export type CalcContextType = {
-  data: CalculatorData;
+  calcData: CalculatorData;
   updateContext: (fieldName: string, newValue: number) => void;
 };
 
@@ -57,14 +57,14 @@ export function CalcProvider({ children }: PropsWithChildren<{}>) {
     DesiredPricePerUnit: { value: 0, label: 'Ціна повинна бути' },
   };
 
-  const [data, setData] = useState(contextValues);
+  const [calcData, setData] = useState(contextValues);
 
   const updateContext = (fieldName: string, newValue: number) => {
     if (fieldName in contextValues) {
       const updatedData = {
-        ...data,
+        ...calcData,
         [fieldName]: {
-          ...data[fieldName],
+          ...calcData[fieldName],
           value: newValue,
         },
       };
@@ -100,5 +100,5 @@ export function CalcProvider({ children }: PropsWithChildren<{}>) {
     }
   };
 
-  return <CalcContext.Provider value={{ data, updateContext }}>{children}</CalcContext.Provider>;
+  return <CalcContext.Provider value={{ calcData, updateContext }}>{children}</CalcContext.Provider>;
 }

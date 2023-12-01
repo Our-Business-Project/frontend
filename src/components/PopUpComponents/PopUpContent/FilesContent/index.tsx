@@ -13,6 +13,7 @@ import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import { errorNotify } from '@/core/helpers/notifications';
 import { CalcContext } from '@/core/contexts/Calc.context';
 import { redirect } from 'next/navigation';
+import { FixedCostsContext } from '@/core/contexts/FixedCosts.context';
 
 interface FilesContentProps {
   //   handleClickdOpenFolder: (id: string) => void;
@@ -22,11 +23,13 @@ interface FilesContentProps {
 export default function FilesContent({ calcFoldersData }: FilesContentProps) {
   const [creatingNewFile, setCreatingNewFile] = React.useState(false);
   const calcContext = React.useContext(CalcContext);
-  if (!calcContext) {
+  const fixedCostsContext = React.useContext(FixedCostsContext);
+  if (!calcContext || !fixedCostsContext) {
     redirect('/404');
   }
 
-  const { data } = calcContext;
+  const { fixedCostsData } = fixedCostsContext;
+  const { calcData } = calcContext;
   const { token } = useAuth();
   const { deleteData, createData } = useCalcData(token);
 
@@ -44,8 +47,9 @@ export default function FilesContent({ calcFoldersData }: FilesContentProps) {
   };
 
   const createFileFunction = (name: string) => {
-    console.log(data)
-    if (calcFoldersData && typeof calcFoldersData.id === 'string') createData(calcFoldersData.id, name, data);
+    if (calcFoldersData && fixedCostsData && typeof calcFoldersData.id === 'string')
+      createData(calcFoldersData.id, name, calcData, fixedCostsData);
+    console.log(fixedCostsData);
   };
   return (
     <>

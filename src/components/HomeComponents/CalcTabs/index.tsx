@@ -37,7 +37,7 @@ export default function CalcTabs() {
     redirect('/404');
   }
 
-  const { data } = calcContext;
+  const { calcData } = calcContext;
 
   const handleSaveCalcInfo = () => {
     setOpenPopUp(true);
@@ -55,8 +55,8 @@ export default function CalcTabs() {
         </Box>
         <TabPanel value="1">
           <MainCalcLayout>
-            {Object.keys(data).map((key) => (
-              <CalcInput key={key} {...data[key]} name={key} />
+            {Object.keys(calcData).map((key) => (
+              <CalcInput key={key} {...calcData[key]} name={key} />
             ))}
           </MainCalcLayout>
           <Box sx={{ display: 'flex', justifyContent: 'center', mt: '20px' }}>

@@ -4,6 +4,7 @@ import { CalculatorData } from '@/core/models/СalcData.model';
 import { AxiosError } from 'axios';
 import { del, get, post } from '../../helpers/apiRequests';
 import { calcFoldersUrl } from '../config';
+import { FixedCostsData } from '@/core/models/FixedCosts.model';
 
 export const deleteDataRequest = async (token: string, folderId: string, dataID: string) => {
   try {
@@ -22,10 +23,20 @@ export const deleteDataRequest = async (token: string, folderId: string, dataID:
   }
 };
 
-export const createDataRequest = async (token: string, folderId: string, fileName: string, data: CalculatorData) => {
+export const createDataRequest = async (
+  token: string,
+  folderId: string,
+  fileName: string,
+  CalcData: CalculatorData,
+  fixedCostsData: FixedCostsData[]
+) => {
   try {
     console.log(fileName);
-    const response = await post(`${calcFoldersUrl}/${folderId}/data`, token, { name: fileName, data: data });
+    const response = await post(`${calcFoldersUrl}/${folderId}/data`, token, {
+      name: fileName,
+      data: CalcData,
+      fixedCosts: fixedCostsData,
+    });
 
     return response.data;
   } catch (error) {

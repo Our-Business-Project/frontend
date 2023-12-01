@@ -4,6 +4,7 @@ import { selectCalcData } from '../store/selectors/calcData.selectors';
 import { createDataService, deleteDataService } from '../services/calcData.service';
 import { getOneFolderDataService } from '../services/calcData.service';
 import { CalculatorData } from '../models/СalcData.model';
+import { FixedCostsData } from '../models/FixedCosts.model';
 
 export const useCalcData = (token?: string) => {
   const dispatch = useAppDispatch();
@@ -17,8 +18,8 @@ export const useCalcData = (token?: string) => {
   );
 
   const createData = useCallback(
-    (folderId: string, fileName: string, data: CalculatorData) => {
-      if (token) dispatch(createDataService(token, folderId, fileName, data));
+    (folderId: string, fileName: string, CalcData: CalculatorData, fixedCostsData: FixedCostsData[]) => {
+      if (token) dispatch(createDataService(token, folderId, fileName, CalcData, fixedCostsData));
     },
     [dispatch, token]
   );

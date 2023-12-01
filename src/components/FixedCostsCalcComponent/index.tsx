@@ -15,13 +15,13 @@ export default function FixedCostsCalcTable() {
     redirect('/404');
   }
 
-  const { data } = fixedCostsContext;
+  const { fixedCostsData } = fixedCostsContext;
   const { updateContext } = calcContext;
 
   React.useEffect(() => {
-    const newFixedCostsSumm = data.reduce((accumulator, currentValue) => accumulator + currentValue.value, 0);
+    const newFixedCostsSumm = fixedCostsData.reduce((accumulator, currentValue) => accumulator + currentValue.value, 0);
     setFixedCostsSumm(newFixedCostsSumm);
-  }, [data]);
+  }, [fixedCostsData]);
 
   const handleSave = () => {
     updateContext('FixedCosts', fixedCostsSumm);
@@ -32,7 +32,8 @@ export default function FixedCostsCalcTable() {
       <TableContainer sx={{ bgcolor: 'secondary.dark', padding: '50px' }} component={Paper}>
         <Table aria-label="collapsible table">
           <TableBody>
-            {data && Object.values(data).map((row, index) => <Row key={index} row={row} />)}
+            {fixedCostsData &&
+              Object.values(fixedCostsData).map((row, index) => <Row key={index} row={row} rowIndex={index} />)}
             <TableRow>
               <TableCell component="th" scope="row">
                 Загальні витрати

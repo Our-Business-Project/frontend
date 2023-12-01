@@ -34,7 +34,7 @@ export default function FolderContent({ handleClickdOpenFolder, calcFoldersData 
 
   return (
     <>
-      <Box sx={{minHeight:'350px'}}>
+      <Box sx={{ minHeight: '350px' }}>
         {creatingNewFolder && (
           <PopUpCreateItem setActive={setCreatingNewFolder} createItemFunction={createFolderFunction} />
         )}
