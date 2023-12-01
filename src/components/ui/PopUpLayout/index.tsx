@@ -42,7 +42,7 @@ export default function PopupLayout({
       </Box>
 
       <DialogContent dividers>
-        <DialogContentText>{children}</DialogContentText>
+        {children}
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>{successBtnText}</Button>

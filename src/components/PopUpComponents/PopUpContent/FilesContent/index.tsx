@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { ListItem, ListItemText, Box, styled, IconButton } from '@mui/material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import { CalcFolders, CalcFoldersUnit } from '@/core/models/CalcFolders.model';
+import { CalcFoldersUnit } from '@/core/models/CalcFolders.model';
 import { PopUpCreateItem } from '../../PopUpCreateItem';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { useAuth } from '@/core/hooks/useAuth';
@@ -14,10 +14,10 @@ import { errorNotify } from '@/core/helpers/notifications';
 import { CalcContext } from '@/core/contexts/Calc.context';
 import { redirect } from 'next/navigation';
 import { FixedCostsContext } from '@/core/contexts/FixedCosts.context';
+import TurnLeftIcon from '@mui/icons-material/TurnLeft';
 
 interface FilesContentProps {
-  //   handleClickdOpenFolder: (id: string) => void;
-  calcFoldersData: CalcFolders | CalculatorDataIncome | null;
+  calcFoldersData: CalculatorDataIncome | null;
 }
 
 export default function FilesContent({ calcFoldersData }: FilesContentProps) {
@@ -29,7 +29,7 @@ export default function FilesContent({ calcFoldersData }: FilesContentProps) {
   }
 
   const { fixedCostsData } = fixedCostsContext;
-  const { calcData } = calcContext;
+  const { calcDataContext } = calcContext;
   const { token } = useAuth();
   const { deleteData, createData } = useCalcData(token);
 
@@ -48,20 +48,16 @@ export default function FilesContent({ calcFoldersData }: FilesContentProps) {
 
   const createFileFunction = (name: string) => {
     if (calcFoldersData && fixedCostsData && typeof calcFoldersData.id === 'string')
-      createData(calcFoldersData.id, name, calcData, fixedCostsData);
-    console.log(fixedCostsData);
+      createData(calcFoldersData.id, name, calcDataContext, fixedCostsData);
   };
+
   return (
     <>
       <Box sx={{ minHeight: '350px' }}>
         {creatingNewFile && <PopUpCreateItem setActive={setCreatingNewFile} createItemFunction={createFileFunction} />}
         {calcFoldersData && Array.isArray(calcFoldersData.data) && calcFoldersData.data.length > 0
           ? calcFoldersData.data.map((file: CalcFoldersUnit, index: number) => (
-              <StyledListItem
-                // onClick={() => handleClickedDeleteData(folder.id)}
-                key={index}
-                className="mui-1q896iv-MuiButtonBase-root-MuiButton-root"
-              >
+              <StyledListItem key={index} className="mui-1q896iv-MuiButtonBase-root-MuiButton-root">
                 <InsertDriveFileIcon color="primary" sx={{ mr: '10px' }} />
                 <StyledListItemText primary={file.name} />
                 <IconButton onClick={() => handleClickedDeleteData(file.id)}>

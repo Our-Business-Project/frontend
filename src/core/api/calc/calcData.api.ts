@@ -31,7 +31,6 @@ export const createDataRequest = async (
   fixedCostsData: FixedCostsData[]
 ) => {
   try {
-    console.log(fileName);
     const response = await post(`${calcFoldersUrl}/${folderId}/data`, token, {
       name: fileName,
       data: CalcData,

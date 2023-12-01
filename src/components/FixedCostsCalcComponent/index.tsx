@@ -16,7 +16,7 @@ export default function FixedCostsCalcTable() {
   }
 
   const { fixedCostsData } = fixedCostsContext;
-  const { updateContext } = calcContext;
+  const { updateCalContextData } = calcContext;
 
   React.useEffect(() => {
     const newFixedCostsSumm = fixedCostsData.reduce((accumulator, currentValue) => accumulator + currentValue.value, 0);
@@ -24,7 +24,7 @@ export default function FixedCostsCalcTable() {
   }, [fixedCostsData]);
 
   const handleSave = () => {
-    updateContext('FixedCosts', fixedCostsSumm);
+    updateCalContextData('FixedCosts', fixedCostsSumm);
   };
 
   return (

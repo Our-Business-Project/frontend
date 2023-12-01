@@ -25,11 +25,7 @@ export function Row({ row, rowIndex }: { row: FixedCostsData; rowIndex: number }
     historyRowIndex?: number,
     colIndex?: number
   ) => {
-    if (historyRowIndex && colIndex) {
-      updateFixedCostsContext(+event.target.value, rowIndex, historyRowIndex, colIndex)
-    } else {
-      updateFixedCostsContext(+event.target.value, rowIndex);
-    }
+    updateFixedCostsContext(+event.target.value, rowIndex, historyRowIndex, colIndex);
   };
 
   const deleteZeros = (value: number | string) => {

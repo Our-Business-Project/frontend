@@ -1,6 +1,6 @@
 'use client';
 import * as React from 'react';
-import { List, ListItem, ListItemText, Box, styled, IconButton } from '@mui/material';
+import {ListItem, ListItemText, Box, styled, IconButton } from '@mui/material';
 import FolderIcon from '@mui/icons-material/Folder';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { CalcFolders, CalcFoldersUnit } from '@/core/models/CalcFolders.model';
@@ -10,11 +10,10 @@ import { useAuth } from '@/core/hooks/useAuth';
 import { useCalcFolders } from '@/core/hooks/useCalcFolders';
 import { useProfile } from '@/core/hooks/useProfile';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { CalculatorDataIncome } from '@/core/models/СalcData.model';
 
 interface FolderContentProps {
   handleClickdOpenFolder: (id: string) => void;
-  calcFoldersData: CalcFolders | CalculatorDataIncome | null;
+  calcFoldersData: CalcFolders | null;
 }
 
 export default function FolderContent({ handleClickdOpenFolder, calcFoldersData }: FolderContentProps) {

@@ -11,6 +11,7 @@ import PopupLayout from '@/components/ui/PopUpLayout';
 import PopUpFolders from '@/components/PopUpComponents/PopUpContent';
 import { useCalcFolders } from '@/core/hooks/useCalcFolders';
 import { useAuth } from '@/core/hooks/useAuth';
+import { useCalcData } from '@/core/hooks/useCalcData';
 
 export default function CalcTabs() {
   const [value, setValue] = React.useState('1');
@@ -18,6 +19,7 @@ export default function CalcTabs() {
   const [isPending, setIsPending] = React.useState(false);
   const { token } = useAuth();
   const { calcFolders } = useCalcFolders(token);
+  const { calcData } = useCalcData(token);
 
   const handleClosePopUp = () => {
     setOpenPopUp(false);
@@ -28,7 +30,7 @@ export default function CalcTabs() {
   };
 
   React.useEffect(() => {
-    setIsPending(calcFolders.pending);
+    setIsPending(calcFolders.pending || calcData.pending);
   }, [calcFolders]);
 
   const calcContext = React.useContext(CalcContext);
@@ -37,11 +39,10 @@ export default function CalcTabs() {
     redirect('/404');
   }
 
-  const { calcData } = calcContext;
+  const { calcDataContext } = calcContext;
 
   const handleSaveCalcInfo = () => {
     setOpenPopUp(true);
-    // функционал отправки на бек
   };
 
   return (
@@ -55,8 +56,8 @@ export default function CalcTabs() {
         </Box>
         <TabPanel value="1">
           <MainCalcLayout>
-            {Object.keys(calcData).map((key) => (
-              <CalcInput key={key} {...calcData[key]} name={key} />
+            {Object.keys(calcDataContext).map((key) => (
+              <CalcInput key={key} {...calcDataContext[key]} name={key} />
             ))}
           </MainCalcLayout>
           <Box sx={{ display: 'flex', justifyContent: 'center', mt: '20px' }}>

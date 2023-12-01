@@ -1,8 +1,6 @@
 'use client';
 import * as React from 'react';
-import { Box, List, styled } from '@mui/material';
-import { CalcFolders } from '@/core/models/CalcFolders.model';
-import { useEffect } from 'react';
+import { Box, List, ListItem, ListItemText, Typography, Button } from '@mui/material';
 import { redirect } from 'next/navigation';
 import { useAuth } from '@/core/hooks/useAuth';
 import { useCalcFolders } from '@/core/hooks/useCalcFolders';
@@ -11,16 +9,19 @@ import FolderContent from './FoldersContent';
 import FilesContent from './FilesContent';
 import { useCalcData } from '@/core/hooks/useCalcData';
 import { CalculatorDataIncome } from '@/core/models/СalcData.model';
+import { CalcFolders } from '@/core/models/CalcFolders.model';
+import TurnLeftIcon from '@mui/icons-material/TurnLeft';
 
 export default function PopUpContent() {
-  const [calcFoldersData, setCalcFoldersData] = React.useState<CalcFolders | CalculatorDataIncome | null>(null);
+  const [calcFoldersData, setCalcFoldersData] = React.useState<CalcFolders | null>(null);
+  const [calcFilesData, setCalcFilesData] = React.useState<CalculatorDataIncome | null>(null);
   const [isFolderOpened, setIsFolderOpened] = React.useState(false);
   const { isAuthenticated, token, userId } = useAuth();
   const { loadProfile } = useProfile(token);
-  const { calcFolders, getAllFolders, deleteFolder } = useCalcFolders(token);
+  const { calcFolders, getAllFolders } = useCalcFolders(token);
   const { calcData, getOneFolderData } = useCalcData(token);
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (userId) {
       getAllFolders();
       loadProfile(userId);
@@ -34,21 +35,33 @@ export default function PopUpContent() {
     setIsFolderOpened(true);
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (calcFolders.data && !isFolderOpened) setCalcFoldersData(calcFolders.data);
-    if (calcData.data && isFolderOpened) setCalcFoldersData(calcData.data);
+    if (calcData.data && isFolderOpened) setCalcFilesData(calcData.data);
   }, [calcFolders, calcData]);
 
   return (
-    <List sx={{ scrollBehavior: 'auto', position: 'relative' }}>
-      {isFolderOpened ? (
-        <FilesContent calcFoldersData={calcFoldersData} />
-      ) : (
-        <FolderContent
-          handleClickdOpenFolder={handleClickdOpenFolder}
-          calcFoldersData={calcFoldersData}
-        ></FolderContent>
-      )}
-    </List>
+    <>
+      <List sx={{ scrollBehavior: 'auto', position: 'relative' }}>
+        {isFolderOpened ? (
+          <>
+            <Box
+              sx={{ textTransform: 'none', mb: '15px' }}
+              onClick={() => setIsFolderOpened(false)}
+              className="mui-1q896iv-MuiButtonBase-root-MuiButton-root"
+            >
+              <TurnLeftIcon color="primary" sx={{ mr: '10px' }} />
+              <Typography>Повернутись </Typography>
+            </Box>
+            <FilesContent calcFoldersData={calcFilesData} />
+          </>
+        ) : (
+          <FolderContent
+            handleClickdOpenFolder={handleClickdOpenFolder}
+            calcFoldersData={calcFoldersData}
+          ></FolderContent>
+        )}
+      </List>
+    </>
   );
 }

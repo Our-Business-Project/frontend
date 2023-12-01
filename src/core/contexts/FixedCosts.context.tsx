@@ -74,8 +74,7 @@ export function FixedCostsProvider({ children }: PropsWithChildren<{}>) {
     DataItemIndex?: number
   ) => {
     const updatedData = [...fixedCostsData];
-
-    if (DataIndex && DataItemIndex) {
+    if (typeof DataIndex === 'number' && typeof DataItemIndex === 'number') {
       const DataElement = updatedData[CostsTypeIndex].data[DataIndex];
       DataElement[DataItemIndex] = newValue;
       const indexOfSumaGrn = updatedData[CostsTypeIndex].columnNames.indexOf('Сума грн.');
@@ -93,7 +92,6 @@ export function FixedCostsProvider({ children }: PropsWithChildren<{}>) {
       let localSumm = 0;
       updatedData[CostsTypeIndex].data.forEach((row) => {
         if (Array.isArray(row) && row.length > indexOfSumaGrn) {
-          console.log(row[indexOfSumaGrn]);
           localSumm += row[indexOfSumaGrn];
         }
       });

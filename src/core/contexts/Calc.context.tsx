@@ -2,8 +2,10 @@ import React, { createContext, PropsWithChildren, useState } from 'react';
 import { CalculatorData } from '../models/СalcData.model';
 
 export type CalcContextType = {
-  calcData: CalculatorData;
-  updateContext: (fieldName: string, newValue: number) => void;
+  calcDataContext: CalculatorData;
+  calcName: string;
+  updateCalcName: (name: string) => void;
+  updateCalContextData: (fieldName: string, newValue: number) => void;
 };
 
 export const CalcContext = createContext<CalcContextType | null>(null);
@@ -57,14 +59,19 @@ export function CalcProvider({ children }: PropsWithChildren<{}>) {
     DesiredPricePerUnit: { value: 0, label: 'Ціна повинна бути' },
   };
 
-  const [calcData, setData] = useState(contextValues);
+  const [calcDataContext, setCalcDataContext] = useState(contextValues);
+  const [calcName, setCalcName] = useState('');
 
-  const updateContext = (fieldName: string, newValue: number) => {
+  const updateCalcName = (name: string) => {
+    setCalcName(name);
+  };
+
+  const updateCalContextData = (fieldName: string, newValue: number) => {
     if (fieldName in contextValues) {
       const updatedData = {
-        ...calcData,
+        ...calcDataContext,
         [fieldName]: {
-          ...calcData[fieldName],
+          ...calcDataContext[fieldName],
           value: newValue,
         },
       };
@@ -96,9 +103,13 @@ export function CalcProvider({ children }: PropsWithChildren<{}>) {
         updatedData.DesiredCostPrice.value = +(updatedData.PricePerUnit.value - DesiredGrossProfit).toFixed(2);
       }
 
-      setData(updatedData);
+      setCalcDataContext(updatedData);
     }
   };
 
-  return <CalcContext.Provider value={{ calcData, updateContext }}>{children}</CalcContext.Provider>;
+  return (
+    <CalcContext.Provider value={{ calcDataContext, calcName, updateCalcName, updateCalContextData }}>
+      {children}
+    </CalcContext.Provider>
+  );
 }
