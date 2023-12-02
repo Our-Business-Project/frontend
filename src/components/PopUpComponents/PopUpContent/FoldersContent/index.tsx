@@ -53,7 +53,7 @@ export default function FolderContent({ handleClickdOpenFolder, calcFoldersData 
             </StyledListItem>
           ))}
 
-        <AbsoluteBox >
+        <AbsoluteBox>
           <IconButton onClick={() => setCreatingNewFolder((prev) => !prev)}>
             {creatingNewFolder ? (
               <CancelIcon fontSize="large" color="primary" />
