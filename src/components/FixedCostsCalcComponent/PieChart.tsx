@@ -4,10 +4,33 @@ import { PieChart, Pie, Sector, Cell, ResponsiveContainer, Legend } from 'rechar
 import Brightness1Icon from '@mui/icons-material/Brightness1';
 import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
 
-const renderActiveShape = (props: any) => {
-  const theme = useTheme();
-  const matchesSmSize = useMediaQuery(theme.breakpoints.down('sm'));
+const RenderSmallShape = (props: any) => {
+  const RADIAN = Math.PI / 180;
+  const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle, fill, percent } = props;
+  const sin = Math.sin(-RADIAN * midAngle);
+  const cos = Math.cos(-RADIAN * midAngle);
+  const mx = cx + (outerRadius + 30) * cos;
+  const my = cy + (outerRadius + 30) * sin;
 
+  return (
+    <g>
+      <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill}>
+        {`${(percent * 100).toFixed(2)}%`}
+      </text>
+      <Sector
+        cx={cx}
+        cy={cy}
+        innerRadius={innerRadius}
+        outerRadius={outerRadius}
+        startAngle={startAngle}
+        endAngle={endAngle}
+        fill={fill}
+      />
+    </g>
+  );
+};
+
+const RenderNormalShape = (props: any) => {
   const RADIAN = Math.PI / 180;
   const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle, fill, payload, percent, value } = props;
   const sin = Math.sin(-RADIAN * midAngle);
@@ -19,25 +42,6 @@ const renderActiveShape = (props: any) => {
   const ex = mx + (cos >= 0 ? 1 : -1) * 22;
   const ey = my;
   const textAnchor = cos >= 0 ? 'start' : 'end';
-
-  if (matchesSmSize) {
-    return (
-      <g>
-        <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill}>
-          {`${(percent * 100).toFixed(2)}%`}
-        </text>
-        <Sector
-          cx={cx}
-          cy={cy}
-          innerRadius={innerRadius}
-          outerRadius={outerRadius}
-          startAngle={startAngle}
-          endAngle={endAngle}
-          fill={fill}
-        />
-      </g>
-    );
-  }
 
   return (
     <g>
@@ -93,13 +97,15 @@ const RenderLegend = ({ payload, COLORS }: { payload: FixedCostsData[]; COLORS: 
 export function PieChartExample({ data }: { data: FixedCostsData[] }) {
   const COLORS = ['#F45656', '#2A5B7E', '#D5F127', '#3685BF', '#38EE3F', '#3D91DF', '#3DE2BA'];
   const [activeIndex, setActiveIndex] = useState(0);
+  const theme = useTheme();
+  const matchesSmSize = useMediaQuery(theme.breakpoints.down('sm'));
 
   const onPieEnter = useCallback(
     (entry: any, index: number, event: any) => {
       event.stopPropagation();
       activeIndex !== index && setActiveIndex(index);
     },
-    [setActiveIndex]
+    [activeIndex]
   );
 
   return (
@@ -108,13 +114,13 @@ export function PieChartExample({ data }: { data: FixedCostsData[] }) {
         <PieChart>
           <Pie
             activeIndex={activeIndex}
-            activeShape={renderActiveShape}
+            activeShape={matchesSmSize ? RenderSmallShape : RenderNormalShape}
             data={data}
             innerRadius={90}
             dataKey="value"
             onMouseEnter={onPieEnter}
           >
-            {data.map((entry, index) => (
+            {data.map((_, index) => (
               <Cell key={index} fill={COLORS[index % COLORS.length]} />
             ))}
           </Pie>
