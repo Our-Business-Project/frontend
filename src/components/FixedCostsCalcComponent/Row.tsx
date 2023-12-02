@@ -8,8 +8,7 @@ import MuiInput from '@mui/material/Input';
 import { useContext } from 'react';
 import { redirect } from 'next/navigation';
 
-export function Row(props: { row: FixedCostsData }) {
-  const { row } = props;
+export function Row({ row, rowIndex }: { row: FixedCostsData; rowIndex: number }) {
   const [open, setOpen] = React.useState(false);
 
   const fixedCostsContext = useContext(FixedCostsContext);
@@ -18,14 +17,15 @@ export function Row(props: { row: FixedCostsData }) {
     redirect('/404');
   }
 
-  const { updateContext } = fixedCostsContext;
+  const { updateFixedCostsContext } = fixedCostsContext;
 
   const handleInputChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-    id: number,
-    element?: string
+    rowIndex: number,
+    historyRowIndex?: number,
+    colIndex?: number
   ) => {
-    element ? updateContext(id, +event.target.value, element) : updateContext(id, +event.target.value);
+    updateFixedCostsContext(+event.target.value, rowIndex, historyRowIndex, colIndex);
   };
 
   const deleteZeros = (value: number | string) => {
@@ -45,7 +45,7 @@ export function Row(props: { row: FixedCostsData }) {
           <Input
             value={deleteZeros(row.value)}
             size="small"
-            onChange={(event) => handleInputChange(event, row.id)}
+            onChange={(event) => handleInputChange(event, rowIndex)}
             aria-label="Always visible"
             type="number"
             id="standard-basic"
@@ -67,20 +67,19 @@ export function Row(props: { row: FixedCostsData }) {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {row.data.map((historyRow, index) => (
-                    <TableRow key={index}>
+                  {row.data.map((historyRow, historyRowIndex) => (
+                    <TableRow key={historyRowIndex}>
                       {row.columnNames.map((columnName, colIndex) => (
                         <TableCell align="left" key={colIndex}>
-                          {typeof historyRow[columnName] === 'string' ||
+                          {typeof historyRow[colIndex] === 'string' ||
                           (columnName === 'Сума грн.' && row.columnNames.length > 3) ? (
-                            historyRow[columnName]
+                            historyRow[colIndex]
                           ) : (
                             <Input
                               sx={{ width: '120px' }}
-                              value={deleteZeros(historyRow[columnName])}
+                              value={deleteZeros(historyRow[colIndex])}
                               size="small"
-                              onChange={(event) => handleInputChange(event, historyRow.id, columnName)}
-                              aria-label="Always visible"
+                              onChange={(event) => handleInputChange(event, rowIndex, historyRowIndex, colIndex)}
                               type="number"
                               id="standard-basic"
                             />

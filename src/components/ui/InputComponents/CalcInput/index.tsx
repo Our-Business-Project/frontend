@@ -1,7 +1,6 @@
 import { Divider, FormControl, Typography, Box, styled, Slider } from '@mui/material';
 import MuiInput from '@mui/material/Input';
 import * as React from 'react';
-import { CalculatorDataUnit } from '@/core/models/СalcData.model';
 import { CalcContext } from '@/core/contexts/Calc.context';
 import { redirect } from 'next/navigation';
 
@@ -13,22 +12,30 @@ export default function CalcInput({
   disabled = true,
   slider = false,
   maxValue = 100000,
-}: CalculatorDataUnit) {
+}: {
+  name: string;
+  value: number;
+  label?: string;
+  borderRadius?: string;
+  disabled?: boolean;
+  slider?: boolean;
+  maxValue?: number;
+}) {
   const calcContext = React.useContext(CalcContext);
   const bgcolor = disabled ? 'secondary.main' : 'primary.dark';
   if (!calcContext) {
     redirect('/404');
   }
-  const { updateContext } = calcContext;
+  const { updateCalContextData } = calcContext;
 
   const handleSliderChange = (event: Event, newValue: number | number[]) => {
     const updatedValue = Array.isArray(newValue) ? newValue[0] : newValue;
-    updateContext(`${name}`, updatedValue);
+    updateCalContextData(`${name}`, updatedValue);
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value === '' ? 0 : Number(event.target.value);
-    updateContext(`${name}`, newValue);
+    updateCalContextData(`${name}`, newValue);
   };
 
   const deleteZeros = (value: number | string) => {

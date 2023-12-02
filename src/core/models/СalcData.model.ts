@@ -1,5 +1,4 @@
 export interface CalculatorDataUnit {
-  name?: string;
   value: number;
   label?: string;
   borderRadius?: string;
@@ -12,7 +11,7 @@ export interface CalculatorData {
 }
 export interface CalculatorDataIncome {
   name: string;
-  data: CalculatorDataUnit | CalculatorShortDataUnit[];
+  data: CalculatorData | CalculatorShortDataUnit[];
   id: string;
 }
 export interface CalculatorShortDataUnit {
