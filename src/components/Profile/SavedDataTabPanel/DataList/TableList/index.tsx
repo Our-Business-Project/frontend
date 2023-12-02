@@ -93,7 +93,7 @@ const StyledHeadTableRow = styled(TableRow)(({ theme }) => ({
 const StyledBodyTableRow = styled(StyledHeadTableRow)(({ theme }) => ({
   cursor: 'pointer',
   '&:hover': {
-    backgroundColor: theme.palette.common.black,
+    backgroundColor: theme.palette.primary.main,
     color: theme.palette.common.white,
   },
 }));
