@@ -15,6 +15,7 @@ export default function Footer() {
         backgroundColor: 'primary.main',
         width: '100%',
         p: 6,
+        zIndex: 0,
       }}
     >
       <Container>
