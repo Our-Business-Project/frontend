@@ -10,12 +10,12 @@ import { useCalcData } from '@/core/hooks/useCalcData';
 import { CalculatorDataIncome } from '@/core/models/СalcData.model';
 import DeleteIcon from '@mui/icons-material/Delete';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
-import { errorNotify } from '@/core/helpers/notifications';
 import { CalcContext } from '@/core/contexts/Calc.context';
 import { redirect } from 'next/navigation';
 import { FixedCostsContext } from '@/core/contexts/FixedCosts.context';
-import { useCalcFolders } from '@/core/hooks/useCalcFolders';
+import NoteAddIcon from '@mui/icons-material/NoteAdd';
 import PopupLayoutWithActions from '@/components/ui/PopUpLayout/PopupLayoutWithActions';
+
 interface FilesContentProps {
   calcFoldersData: CalculatorDataIncome | null;
 }
@@ -59,7 +59,13 @@ export default function FilesContent({ calcFoldersData }: FilesContentProps) {
   return (
     <>
       <Box sx={{ minHeight: '300px' }}>
-        {creatingNewFile && <PopUpCreateItem setActive={setCreatingNewFile} createItemFunction={createFileFunction} />}
+        {creatingNewFile && (
+          <PopUpCreateItem
+            setActive={setCreatingNewFile}
+            createItemFunction={createFileFunction}
+            icon={<NoteAddIcon color="primary" sx={{ mr: '10px' }} />}
+          />
+        )}
         {calcFoldersData && Array.isArray(calcFoldersData.data) && calcFoldersData.data.length > 0
           ? calcFoldersData.data.map((file: CalcFoldersUnit, index: number) => (
               <StyledListItem key={index} className={listItemClass}>
