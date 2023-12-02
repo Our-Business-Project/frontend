@@ -101,7 +101,8 @@ export default function FolderContent({ handleClickdOpenFolder, calcFoldersData 
         agreeBtnAction={DeleteFolderAction}
       >
         <DialogContentText id="alert-dialog-description">
-          Ви впевнені, що хочете видалити папку "{deletingFolder?.name}"? В ній знаходиться {getFileWord(deletingFolder?.numberOfFiles)}.
+          Ви впевнені, що хочете видалити папку "{deletingFolder?.name}"? В ній знаходиться{' '}
+          {getFileWord(deletingFolder?.numberOfFiles)}.
         </DialogContentText>
       </PopupLayoutWithActions>
     </>

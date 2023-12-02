@@ -31,7 +31,7 @@ export default function PopupLayoutWithoutActions({
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
-    <StiledDialog fullScreen={fullScreen} maxWidth="sm"  open={open} onClose={handleClose}>
+    <StiledDialog fullScreen={fullScreen} maxWidth="sm" open={open} onClose={handleClose}>
       {isPending && <LinearProgress />}
       <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
         <DialogTitle color="text.secondary">{title}</DialogTitle>
