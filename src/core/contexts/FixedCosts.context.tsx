@@ -38,7 +38,7 @@ export function FixedCostsProvider({ children }: PropsWithChildren<{}>) {
       ],
     },
     {
-      name: 'Адміністративно Управлінський Персонал',
+      name: 'Адміністративно управлінський персонал',
       value: 0,
       columnNames: ['Посада', 'Число, людина', 'Оклад грн./міс', 'Сума грн.'],
       data: [
