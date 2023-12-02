@@ -7,10 +7,11 @@ import { CalcContext } from '@/core/contexts/Calc.context';
 import FixedCostsCalcTable from '@/components/FixedCostsCalcComponent';
 import GreenCustomButton from '@/components/ui/GreenCustomButton';
 import { redirect } from 'next/navigation';
-import PopupLayout from '@/components/ui/PopUpLayout';
+import PopupLayoutWithoutActions from '@/components/ui/PopUpLayout/PopupLayoutWithoutActions';
 import PopUpFolders from '@/components/PopUpComponents/PopUpContent';
 import { useCalcFolders } from '@/core/hooks/useCalcFolders';
 import { useAuth } from '@/core/hooks/useAuth';
+import { useCalcData } from '@/core/hooks/useCalcData';
 
 export default function CalcTabs() {
   const [value, setValue] = React.useState('1');
@@ -18,6 +19,7 @@ export default function CalcTabs() {
   const [isPending, setIsPending] = React.useState(false);
   const { token } = useAuth();
   const { calcFolders } = useCalcFolders(token);
+  const { calcData } = useCalcData(token);
 
   const handleClosePopUp = () => {
     setOpenPopUp(false);
@@ -28,7 +30,7 @@ export default function CalcTabs() {
   };
 
   React.useEffect(() => {
-    setIsPending(calcFolders.pending);
+    setIsPending(calcFolders.pending || calcData.pending);
   }, [calcFolders]);
 
   const calcContext = React.useContext(CalcContext);
@@ -37,11 +39,10 @@ export default function CalcTabs() {
     redirect('/404');
   }
 
-  const { data } = calcContext;
+  const { calcDataContext } = calcContext;
 
   const handleSaveCalcInfo = () => {
     setOpenPopUp(true);
-    // функционал отправки на бек
   };
 
   return (
@@ -55,8 +56,8 @@ export default function CalcTabs() {
         </Box>
         <TabPanel value="1">
           <MainCalcLayout>
-            {Object.keys(data).map((key) => (
-              <CalcInput key={key} {...data[key]} />
+            {Object.keys(calcDataContext).map((key) => (
+              <CalcInput key={key} {...calcDataContext[key]} name={key} />
             ))}
           </MainCalcLayout>
           <Box sx={{ display: 'flex', justifyContent: 'center', mt: '20px' }}>
@@ -67,15 +68,14 @@ export default function CalcTabs() {
           <FixedCostsCalcTable />
         </TabPanel>
       </TabContext>
-      <PopupLayout
+      <PopupLayoutWithoutActions
         handleClose={handleClosePopUp}
         open={openPopUp}
         title="Збереження розрахунків"
-        successBtnText="Зберегти"
         isPending={isPending}
       >
         <PopUpFolders />
-      </PopupLayout>
+      </PopupLayoutWithoutActions>
     </Box>
   );
 }
