@@ -13,7 +13,7 @@ export default function ProfileInfoTabPanel({ value, ...props }: TabPanelProps) 
 }
 
 const StyledTabPanel = styled(TabPanel)(() => ({
-  paddingLeft: '3.125rem',
+  padding: '0',
   display: 'flex',
   justifyContent: 'space-between',
 }));

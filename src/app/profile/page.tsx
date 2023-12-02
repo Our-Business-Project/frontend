@@ -21,5 +21,9 @@ export default function ProfilePage() {
     }
   }, [logout, profile.error]);
 
-  return <Box sx={{ backgroundColor: 'background.primary' }}>{isAuthenticated && profile.data && <ProfileInfo />}</Box>;
+  return (
+    <Box sx={{ backgroundColor: 'background.primary', flex: 1 }}>
+      {isAuthenticated && profile.data && <ProfileInfo />}
+    </Box>
+  );
 }

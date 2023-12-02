@@ -53,7 +53,7 @@ export default function ProfilePhotoUpload() {
 }
 
 const StyledContainer = styled(Box)(() => ({
-  margin: '-10px 115px 0 0',
+  margin: '-10px 0 0',
 }));
 
 const StyledBox = styled(Box)(({ theme }) => ({
