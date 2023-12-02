@@ -76,6 +76,7 @@ const renderActiveShape = (props: any) => {
 };
 
 const RenderLegend = ({ payload, COLORS }: { payload: FixedCostsData[]; COLORS: string[] }) => {
+
   return (
     <Box>
       {payload.map((entry, index) => (
