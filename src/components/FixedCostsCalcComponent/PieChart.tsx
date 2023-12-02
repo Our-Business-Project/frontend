@@ -4,7 +4,7 @@ import { PieChart, Pie, Sector, Cell, ResponsiveContainer, Legend } from 'rechar
 import Brightness1Icon from '@mui/icons-material/Brightness1';
 import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
 
-const renderActiveShape = (props: any) => {
+const RenderActiveShape = (props: any) => {
   const theme = useTheme();
   const matchesSmSize = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -100,7 +100,7 @@ export function PieChartExample({ data }: { data: FixedCostsData[] }) {
       event.stopPropagation();
       activeIndex !== index && setActiveIndex(index);
     },
-    [setActiveIndex]
+    [setActiveIndex, activeIndex]
   );
 
   return (
@@ -109,7 +109,7 @@ export function PieChartExample({ data }: { data: FixedCostsData[] }) {
         <PieChart>
           <Pie
             activeIndex={activeIndex}
-            activeShape={renderActiveShape}
+            activeShape={RenderActiveShape}
             data={data}
             innerRadius={90}
             dataKey="value"
