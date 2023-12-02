@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Box, ListItemIcon, Tab, Tabs, styled, tabsClasses } from '@mui/material';
+import { Box, Tab, Tabs, styled, tabsClasses } from '@mui/material';
 import { TabContext, TabPanel } from '@mui/lab';
 import MainCalcLayout from '@/components/MainCalcLayout';
 import CalcInput from '@/components/ui/InputComponents/CalcInput';
