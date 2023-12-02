@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useAppDispatch, useAppSelector } from './useRedux';
 import { selectCalcData } from '../store/selectors/calcData.selectors';
-import { deleteDataService } from '../services/calcData.service';
+import { deleteDataService, getOneFileDataService } from '../services/calcData.service';
 import { getOneFolderDataService } from '../services/calcData.service';
 
 export const useCalcData = (token?: string) => {
@@ -22,9 +22,17 @@ export const useCalcData = (token?: string) => {
     [dispatch, token]
   );
 
+  const getOneFileData = useCallback(
+    (folderId: string, fileId: string) => {
+      if (token) dispatch(getOneFileDataService(token, folderId, fileId));
+    },
+    [dispatch, token]
+  );
+
   return {
     calcData,
     deleteData,
     getOneFolderData,
+    getOneFileData,
   };
 };

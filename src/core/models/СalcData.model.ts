@@ -12,6 +12,13 @@ export interface CalculatorData {
 }
 export interface CalculatorDataIncome {
   name: string;
-  data: CalculatorDataUnit;
+  data: CalculatorDataUnit | CalculatorShortDataUnit[];
+  id: string;
+}
+export interface CalculatorShortDataUnit {
+  name: string;
+  createdAt: string;
+  modifiedAt: string;
+  numberOfFiles?: number;
   id: string;
 }
