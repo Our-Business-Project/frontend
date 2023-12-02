@@ -32,7 +32,12 @@ export function PopUpCreateItem({ setActive, createItemFunction }: PopUpCreateIt
     <ListItem>
       <CreateNewFolderIcon color="primary" sx={{ mr: '10px' }} />
       <StyledListItemText>
-        <TextField onChange={handleInputChange} sx={{ input: { color: 'text.secondary' } }} variant="standard" />{' '}
+        <TextField
+          autoFocus
+          onChange={handleInputChange}
+          sx={{ input: { color: 'text.secondary' } }}
+          variant="standard"
+        />{' '}
         <IconButton onClick={handleClickCreateItem} disabled={!isAcceptActive} color="primary">
           <DoneIcon />
         </IconButton>

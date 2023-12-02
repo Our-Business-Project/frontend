@@ -2,8 +2,10 @@ import React, { createContext, PropsWithChildren, useState } from 'react';
 import { CalculatorData } from '../models/СalcData.model';
 
 export type CalcContextType = {
-  data: CalculatorData;
-  updateContext: (fieldName: string, newValue: number) => void;
+  calcDataContext: CalculatorData;
+  calcName: string;
+  updateCalcName: (name: string) => void;
+  updateCalContextData: (fieldName: string, newValue: number) => void;
 };
 
 export const CalcContext = createContext<CalcContextType | null>(null);
@@ -11,7 +13,6 @@ export const CalcContext = createContext<CalcContextType | null>(null);
 export function CalcProvider({ children }: PropsWithChildren<{}>) {
   const contextValues: CalculatorData = {
     ProductionPlan: {
-      name: 'ProductionPlan',
       value: 0,
       label: 'План виробництва',
       borderRadius: '0 0 15px 0',
@@ -20,7 +21,6 @@ export function CalcProvider({ children }: PropsWithChildren<{}>) {
       maxValue: 10000,
     },
     CostPrice: {
-      name: 'CostPrice',
       value: 0,
       label: 'Собівартість',
       borderRadius: '0 0 15px 15px',
@@ -29,7 +29,6 @@ export function CalcProvider({ children }: PropsWithChildren<{}>) {
       maxValue: 10000,
     },
     PricePerUnit: {
-      name: 'PricePerUnit',
       value: 0,
       label: 'Ціна за одиницю товару',
       borderRadius: '0 0 0 15px',
@@ -37,40 +36,42 @@ export function CalcProvider({ children }: PropsWithChildren<{}>) {
       slider: true,
       maxValue: 10000,
     },
-    GrossProfit: { name: 'GrossProfit', value: 0, label: 'Маржинальний дохід' },
+    GrossProfit: { value: 0, label: 'Маржинальний дохід' },
     ProductionCost: {
-      name: 'ProductionCost',
       value: 0,
       label: 'Виробнича собівартість',
       borderRadius: '0 15px 15px 0',
     },
-    FixedCosts: { name: 'FixedCosts', value: 0, label: 'Постійні витрати', disabled: false },
+    FixedCosts: { value: 0, label: 'Постійні витрати', disabled: false },
     Revenue: {
-      name: 'Revenue',
       value: 0,
       label: 'Виторг від реалізації',
       borderRadius: '15px 0 0 15px',
     },
-    BreakEvenPoint: { name: 'BreakEvenPoint', value: 0, label: 'Точка беззбитковості' },
-    Profit: { name: 'Profit', value: 0, label: 'Прибуток' },
-    Want: { name: 'Want', value: 0, label: 'Бажаю заробити', slider: true, maxValue: 100000, disabled: false },
+    BreakEvenPoint: { value: 0, label: 'Точка беззбитковості' },
+    Profit: { value: 0, label: 'Прибуток' },
+    Want: { value: 0, label: 'Бажаю заробити', slider: true, maxValue: 100000, disabled: false },
     DesiredProductionPlan: {
-      name: 'desiredProductionPlan',
       value: 0,
       label: 'План виробництва повинен бути',
     },
-    DesiredCostPrice: { name: 'desiredCostPrice', value: 0, label: 'Собівартість повинна бути ' },
-    DesiredPricePerUnit: { name: 'Profit', value: 0, label: 'Ціна повинна бути' },
+    DesiredCostPrice: { value: 0, label: 'Собівартість повинна бути ' },
+    DesiredPricePerUnit: { value: 0, label: 'Ціна повинна бути' },
   };
 
-  const [data, setData] = useState(contextValues);
+  const [calcDataContext, setCalcDataContext] = useState(contextValues);
+  const [calcName, setCalcName] = useState('');
 
-  const updateContext = (fieldName: string, newValue: number) => {
+  const updateCalcName = (name: string) => {
+    setCalcName(name);
+  };
+
+  const updateCalContextData = (fieldName: string, newValue: number) => {
     if (fieldName in contextValues) {
       const updatedData = {
-        ...data,
+        ...calcDataContext,
         [fieldName]: {
-          ...data[fieldName],
+          ...calcDataContext[fieldName],
           value: newValue,
         },
       };
@@ -102,9 +103,13 @@ export function CalcProvider({ children }: PropsWithChildren<{}>) {
         updatedData.DesiredCostPrice.value = +(updatedData.PricePerUnit.value - DesiredGrossProfit).toFixed(2);
       }
 
-      setData(updatedData);
+      setCalcDataContext(updatedData);
     }
   };
 
-  return <CalcContext.Provider value={{ data, updateContext }}>{children}</CalcContext.Provider>;
+  return (
+    <CalcContext.Provider value={{ calcDataContext, calcName, updateCalcName, updateCalContextData }}>
+      {children}
+    </CalcContext.Provider>
+  );
 }

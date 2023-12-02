@@ -12,6 +12,8 @@ import { AuthState } from '../store/reducers/auth.reducer';
 import { useLocalStorage } from './useLocalStorage';
 import { useAppDispatch, useAppSelector } from './useRedux';
 
+const privatePaths = ['/profile'];
+
 export const useAuth = () => {
   const { storedValue: token, setValue: setLocalToken, removeValue: removeLocalToken } = useLocalStorage('token');
   const { storedValue: userId, setValue: setLocalUserId, removeValue: removeLocalUserId } = useLocalStorage('id');
@@ -55,7 +57,7 @@ export const useAuth = () => {
   useEffect(() => {
     if (!isAuthenticated) {
       const currentPathname = window.location.pathname;
-      if (currentPathname !== '/sign-in') {
+      if (privatePaths.includes(currentPathname)) {
         redirect('/sign-in');
       }
     }

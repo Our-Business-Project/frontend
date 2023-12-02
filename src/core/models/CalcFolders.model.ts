@@ -3,6 +3,8 @@ export interface CalcFolders {
 }
 
 export interface CalcFoldersUnit {
-  name: string | null;
+  name: string;
   id: string;
+  numberOfFiles?: number;
+  createdAt: string;
 }

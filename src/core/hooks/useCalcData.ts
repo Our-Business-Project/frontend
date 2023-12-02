@@ -1,8 +1,10 @@
 import { useCallback } from 'react';
 import { useAppDispatch, useAppSelector } from './useRedux';
 import { selectCalcData } from '../store/selectors/calcData.selectors';
-import { deleteDataService } from '../services/calcData.service';
+import { createDataService, deleteDataService } from '../services/calcData.service';
 import { getOneFolderDataService } from '../services/calcData.service';
+import { CalculatorData } from '../models/СalcData.model';
+import { FixedCostsData } from '../models/FixedCosts.model';
 
 export const useCalcData = (token?: string) => {
   const dispatch = useAppDispatch();
@@ -11,6 +13,13 @@ export const useCalcData = (token?: string) => {
   const deleteData = useCallback(
     (folderId: string, dataId: string) => {
       if (token) dispatch(deleteDataService(token, folderId, dataId));
+    },
+    [dispatch, token]
+  );
+
+  const createData = useCallback(
+    (folderId: string, fileName: string, CalcData: CalculatorData, fixedCostsData: FixedCostsData[]) => {
+      if (token) dispatch(createDataService(token, folderId, fileName, CalcData, fixedCostsData));
     },
     [dispatch, token]
   );
@@ -25,6 +34,7 @@ export const useCalcData = (token?: string) => {
   return {
     calcData,
     deleteData,
+    createData,
     getOneFolderData,
   };
 };
