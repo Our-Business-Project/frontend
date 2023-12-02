@@ -1,6 +1,6 @@
 'use client';
 import * as React from 'react';
-import { ListItem, ListItemText, Box, styled, IconButton } from '@mui/material';
+import { ListItem, ListItemText, Box, styled, IconButton, Typography, DialogContentText } from '@mui/material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { CalcFoldersUnit } from '@/core/models/CalcFolders.model';
 import { PopUpCreateItem } from '../../PopUpCreateItem';
@@ -14,16 +14,20 @@ import { errorNotify } from '@/core/helpers/notifications';
 import { CalcContext } from '@/core/contexts/Calc.context';
 import { redirect } from 'next/navigation';
 import { FixedCostsContext } from '@/core/contexts/FixedCosts.context';
-import TurnLeftIcon from '@mui/icons-material/TurnLeft';
-
+import { useCalcFolders } from '@/core/hooks/useCalcFolders';
+import PopupLayoutWithActions from '@/components/ui/PopUpLayout/PopupLayoutWithActions';
 interface FilesContentProps {
   calcFoldersData: CalculatorDataIncome | null;
 }
 
 export default function FilesContent({ calcFoldersData }: FilesContentProps) {
   const [creatingNewFile, setCreatingNewFile] = React.useState(false);
+  const [deletingFile, setDeletingFile] = React.useState<CalcFoldersUnit | null>(null);
+  const [isDeletingingFile, setIsDeletingFile] = React.useState(false);
   const calcContext = React.useContext(CalcContext);
   const fixedCostsContext = React.useContext(FixedCostsContext);
+  const listItemClass = 'mui-1q896iv-MuiButtonBase-root-MuiButton-root';
+
   if (!calcContext || !fixedCostsContext) {
     redirect('/404');
   }
@@ -33,17 +37,18 @@ export default function FilesContent({ calcFoldersData }: FilesContentProps) {
   const { token } = useAuth();
   const { deleteData, createData } = useCalcData(token);
 
-  const handleClickedDeleteData = (dataId: string) => {
-    if (calcFoldersData) {
-      const folderId = calcFoldersData.id;
-      if (typeof folderId === 'string') {
-        deleteData(folderId, dataId);
-      } else {
-        errorNotify('щось пішло не так');
-      }
-    } else {
-      errorNotify('щось пішло не так');
-    }
+  const handleClickedDeleteData = (data: CalcFoldersUnit) => {
+    setIsDeletingFile(true);
+    setDeletingFile(data);
+  };
+
+  const DeleteFileAction = () => {
+    deletingFile && calcFoldersData && deleteData(calcFoldersData.id, deletingFile.id);
+    setIsDeletingFile(false);
+  };
+
+  const handleCloseDeletingPopUp = () => {
+    setIsDeletingFile(false);
   };
 
   const createFileFunction = (name: string) => {
@@ -53,19 +58,19 @@ export default function FilesContent({ calcFoldersData }: FilesContentProps) {
 
   return (
     <>
-      <Box sx={{ minHeight: '350px' }}>
+      <Box sx={{ minHeight: '300px' }}>
         {creatingNewFile && <PopUpCreateItem setActive={setCreatingNewFile} createItemFunction={createFileFunction} />}
         {calcFoldersData && Array.isArray(calcFoldersData.data) && calcFoldersData.data.length > 0
           ? calcFoldersData.data.map((file: CalcFoldersUnit, index: number) => (
-              <StyledListItem key={index} className="mui-1q896iv-MuiButtonBase-root-MuiButton-root">
+              <StyledListItem key={index} className={listItemClass}>
                 <InsertDriveFileIcon color="primary" sx={{ mr: '10px' }} />
-                <StyledListItemText primary={file.name} />
-                <IconButton onClick={() => handleClickedDeleteData(file.id)}>
+                <StyledListItemText primary={file.name} color={'text.secondary'} />
+                <IconButton onClick={() => handleClickedDeleteData(file)}>
                   <DeleteIcon fontSize="medium" color="error" />
                 </IconButton>
               </StyledListItem>
             ))
-          : !creatingNewFile && <Box>У вас ще немає збережених файлів(</Box>}
+          : !creatingNewFile && <Typography color="text.secondary">У вас ще немає збережених файлів(</Typography>}
       </Box>
 
       <AbsoluteBox>
@@ -77,6 +82,18 @@ export default function FilesContent({ calcFoldersData }: FilesContentProps) {
           )}
         </IconButton>
       </AbsoluteBox>
+
+      <PopupLayoutWithActions
+        handleClose={handleCloseDeletingPopUp}
+        open={isDeletingingFile}
+        title="Видалення файлу"
+        agreeBtnText="Видалити"
+        agreeBtnAction={DeleteFileAction}
+      >
+        <DialogContentText id="alert-dialog-description">
+          Ви впевнені, що хочете видалити файл "{deletingFile?.name}"?
+        </DialogContentText>
+      </PopupLayoutWithActions>
     </>
   );
 }
@@ -89,11 +106,10 @@ const AbsoluteBox = styled(Box)`
 `;
 
 const StyledListItemText = styled(ListItemText)`
-  margin: 5px 45px 0px 5px;
+  text-transform: none;
 `;
 
 const StyledListItem = styled(ListItem)`
-  text-transform: none;
   button {
     opacity: 0;
   }

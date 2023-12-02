@@ -7,7 +7,7 @@ import { CalcContext } from '@/core/contexts/Calc.context';
 import FixedCostsCalcTable from '@/components/FixedCostsCalcComponent';
 import GreenCustomButton from '@/components/ui/GreenCustomButton';
 import { redirect } from 'next/navigation';
-import PopupLayout from '@/components/ui/PopUpLayout';
+import PopupLayoutWithoutActions from '@/components/ui/PopUpLayout/PopupLayoutWithoutActions';
 import PopUpFolders from '@/components/PopUpComponents/PopUpContent';
 import { useCalcFolders } from '@/core/hooks/useCalcFolders';
 import { useAuth } from '@/core/hooks/useAuth';
@@ -68,15 +68,14 @@ export default function CalcTabs() {
           <FixedCostsCalcTable />
         </TabPanel>
       </TabContext>
-      <PopupLayout
+      <PopupLayoutWithoutActions
         handleClose={handleClosePopUp}
         open={openPopUp}
         title="Збереження розрахунків"
-        successBtnText="Зберегти"
         isPending={isPending}
       >
         <PopUpFolders />
-      </PopupLayout>
+      </PopupLayoutWithoutActions>
     </Box>
   );
 }

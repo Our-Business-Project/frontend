@@ -28,7 +28,7 @@ export default function PopUpContent() {
     } else {
       redirect('/sign-in');
     }
-  }, [isAuthenticated, getAllFolders]);
+  }, [isAuthenticated, getAllFolders, isFolderOpened]);
 
   const handleClickdOpenFolder = (id: string) => {
     getOneFolderData(id);
@@ -36,8 +36,8 @@ export default function PopUpContent() {
   };
 
   React.useEffect(() => {
-    if (calcFolders.data && !isFolderOpened) setCalcFoldersData(calcFolders.data);
-    if (calcData.data && isFolderOpened) setCalcFilesData(calcData.data);
+    setCalcFoldersData(calcFolders.data);
+    setCalcFilesData(calcData.data);
   }, [calcFolders, calcData]);
 
   return (
@@ -48,7 +48,7 @@ export default function PopUpContent() {
             <Box
               sx={{ textTransform: 'none', mb: '15px' }}
               onClick={() => setIsFolderOpened(false)}
-              className="mui-1q896iv-MuiButtonBase-root-MuiButton-root"
+              className={'mui-1q896iv-MuiButtonBase-root-MuiButton-root'}
             >
               <TurnLeftIcon color="primary" sx={{ mr: '10px' }} />
               <Typography>Повернутись </Typography>
