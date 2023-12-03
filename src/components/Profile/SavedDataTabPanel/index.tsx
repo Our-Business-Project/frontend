@@ -11,11 +11,14 @@ import { useCalcData } from '@/core/hooks/useCalcData';
 import { CalcFolders, CalcFoldersUnit } from '@/core/models/CalcFolders.model';
 import { DataListProvider } from '@/core/contexts/DataList.context';
 import PopupLayoutWithActions from '@/components/ui/PopUpLayout/PopupLayoutWithActions';
+import { useCalculations } from '@/core/hooks/useCalculations';
+import { errorNotify } from '@/core/helpers/notifications';
 
 export default function SavedDataTabPanel({ value, ...props }: TabPanelProps) {
   const { token } = useAuth();
   const { calcFolders, getAllFolders } = useCalcFolders(token);
-  const { calcData, getOneFolderData, getOneFileData, deleteData } = useCalcData(token);
+  const { calcData, getOneFolderData, deleteData } = useCalcData(token);
+  const { calculations, getCalculations, reset } = useCalculations(token);
 
   const [calcFoldersData, setCalcFoldersData] = useState<CalcFolders | CalculatorShortDataUnit[] | null>(null);
   const [currentFolderId, setCurrentFolderId] = useState<string>('');
@@ -30,10 +33,11 @@ export default function SavedDataTabPanel({ value, ...props }: TabPanelProps) {
   }, [calcFolders, getAllFolders, currentFolderId]);
 
   useEffect(() => {
-    if (currentFolderId && calcData.data && Object.keys(calcData.data.data).includes('ProductionPlan')) {
-      redirect('/');
+    if (calculations.error) {
+      errorNotify('Помилка завантаження даних!');
+      reset();
     }
-  });
+  }, [calculations.data, calculations.error, reset]);
 
   const handleClickOpenFolder = (id: string) => {
     if (!calcFolders.pending) {
@@ -43,7 +47,7 @@ export default function SavedDataTabPanel({ value, ...props }: TabPanelProps) {
   };
 
   const handleClickOpenFile = (fileId: string) => {
-    getOneFileData(currentFolderId, fileId);
+    getCalculations(currentFolderId, fileId);
   };
 
   const handleGoBack = () => {

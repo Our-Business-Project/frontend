@@ -1,35 +1,13 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from './useRedux';
-import { selectCalcData } from '../store/selectors/calcData.selectors';
-import { getCalculationsService } from '../services/calculations.service';
-import { getOneFolderDataService } from '../services/calcData.service';
-import { CalculatorData } from '../models/СalcData.model';
-import { FixedCostsData } from '../models/FixedCosts.model';
+import { selectCalculations } from '../store/selectors/calculations.selector';
+import { getCalculationsService, resetCalculations } from '../services/calculations.service';
+import { calculationsRedirected } from '../store/actions/calculations.action';
+import { redirect } from 'next/navigation';
 
-export const useCalcData = (token?: string) => {
+export const useCalculations = (token?: string) => {
   const dispatch = useAppDispatch();
-  const calcData = useAppSelector(selectCalcData);
-
-  const deleteData = useCallback(
-    (folderId: string, dataId: string) => {
-      if (token) dispatch(deleteDataService(token, folderId, dataId));
-    },
-    [dispatch, token]
-  );
-
-  const createData = useCallback(
-    (folderId: string, fileName: string, CalcData: CalculatorData, fixedCostsData: FixedCostsData[]) => {
-      if (token) dispatch(createDataService(token, folderId, fileName, CalcData, fixedCostsData));
-    },
-    [dispatch, token]
-  );
-
-  const getOneFolderData = useCallback(
-    (folderId: string) => {
-      if (token) dispatch(getOneFolderDataService(token, folderId));
-    },
-    [dispatch, token]
-  );
+  const calculations = useAppSelector(selectCalculations);
 
   const getCalculations = useCallback(
     (folderId: string, fileId: string) => {
@@ -38,11 +16,20 @@ export const useCalcData = (token?: string) => {
     [dispatch, token]
   );
 
+  const reset = useCallback(() => {
+    dispatch(resetCalculations());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (calculations.data && !calculations.redirected) {
+      dispatch(calculationsRedirected());
+      redirect('/');
+    }
+  }, [calculations.data, calculations.redirected, dispatch]);
+
   return {
-    calcData,
-    deleteData,
-    createData,
-    getOneFolderData,
-    getOneFileData,
+    calculations,
+    getCalculations,
+    reset,
   };
 };
