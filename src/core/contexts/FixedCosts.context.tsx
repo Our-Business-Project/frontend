@@ -89,17 +89,17 @@ export function FixedCostsProvider({ children }: PropsWithChildren<{}>) {
         });
 
         DataElement[indexOfSumaGrn] = localProduct;
-
-        let localSumm = 0;
-        updatedData[CostsTypeIndex].data.forEach((row) => {
-          if (Array.isArray(row) && row.length > indexOfSumaGrn) {
-            localSumm += row[indexOfSumaGrn];
-          }
-        });
-        updatedData[CostsTypeIndex].value = localSumm;
       } else {
         updatedData[CostsTypeIndex].value = newValue;
       }
+
+      let localSumm = 0;
+      updatedData[CostsTypeIndex].data.forEach((row) => {
+        if (Array.isArray(row) && row.length > indexOfSumaGrn) {
+          localSumm += row[indexOfSumaGrn];
+        }
+      });
+      updatedData[CostsTypeIndex].value = localSumm;
     }
 
     setData(updatedData);
