@@ -107,7 +107,10 @@ const BodyTable = ({ sm, smmd }: { sm: boolean; smmd: boolean }) => {
 
           {context.type === 'files' && (
             <StyledTableCell align="right">
-              <IconButton onClick={(e) => handleDeleteFileOnClick(e, { id, name, numberOfFiles, createdAt })}>
+              <IconButton
+                className="delete-button"
+                onClick={(e) => handleDeleteFileOnClick(e, { id, name, numberOfFiles, createdAt })}
+              >
                 <DeleteIcon fontSize="medium" color="error" />
               </IconButton>
             </StyledTableCell>
@@ -155,6 +158,14 @@ const StyledBodyTableRow = styled(StyledHeadTableRow)(({ theme }) => ({
   '&:hover': {
     backgroundColor: theme.palette.primary.main,
     color: theme.palette.common.white,
+  },
+
+  '& .delete-button': {
+    opacity: 0,
+  },
+
+  '&:hover .delete-button': {
+    opacity: 1,
   },
 }));
 
