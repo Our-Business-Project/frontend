@@ -13,6 +13,17 @@ export const get = async (url: string, token: string) => {
   return await axios(config);
 };
 
+export const guestGet = async (url: string) => {
+  const config = {
+    method: 'get',
+    url,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+  return await axios(config);
+};
+
 export const post = async (url: string, token: string, payload: object) => {
   const config = {
     method: 'post',

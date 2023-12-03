@@ -1,7 +1,7 @@
 'use client';
 import { AxiosError } from 'axios';
-import { get } from '../../helpers/apiRequests';
-import { calcFoldersUrl } from '../config';
+import { get, guestGet } from '../../helpers/apiRequests';
+import { calcFoldersUrl, calcExampleUrl } from '../config';
 
 export const getCalculationsRequest = async (token: string, folderId: string, fileId: string) => {
   try {
@@ -15,5 +15,15 @@ export const getCalculationsRequest = async (token: string, folderId: string, fi
     } else {
       throw new Error('Щось пішло не по плану :(');
     }
+  }
+};
+
+export const getCalculationsExampleRequest = async () => {
+  try {
+    const response = await guestGet(calcExampleUrl);
+
+    return response.data;
+  } catch (error) {
+    throw new Error('Щось пішло не по плану :(');
   }
 };

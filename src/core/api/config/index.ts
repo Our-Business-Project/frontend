@@ -9,5 +9,7 @@ export const mailVerifyUrl = apiRoot + '/mail/verify';
 
 export const calcFoldersUrl = apiRoot + '/calc/folders';
 
+export const calcExampleUrl = apiRoot + '/examples/calc/data';
+
 const imagesUrl = apiRoot + '/images';
 export const profileImagesUrl = imagesUrl + '/profile';

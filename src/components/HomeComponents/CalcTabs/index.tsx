@@ -12,6 +12,7 @@ import PopUpFolders from '@/components/PopUpComponents/PopUpContent';
 import { useCalcFolders } from '@/core/hooks/useCalcFolders';
 import { useAuth } from '@/core/hooks/useAuth';
 import { useCalcData } from '@/core/hooks/useCalcData';
+import { HelpButton } from '@/components/HelpButton';
 
 export default function CalcTabs() {
   const [value, setValue] = React.useState('1');
@@ -48,11 +49,21 @@ export default function CalcTabs() {
   return (
     <Box sx={{ width: '100%', typography: 'body1' }}>
       <TabContext value={value}>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+        <Box
+          sx={{
+            borderBottom: 1,
+            borderColor: 'divider',
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
           <CustomTabs onChange={handleChange} value={value} variant="scrollable" allowScrollButtonsMobile>
             <Tab label="Калькулятор бізнесу" value="1" />
             <Tab label="Калькулятор постійних витрат" value="2" />
           </CustomTabs>
+          <HelpButton />
         </Box>
         <TabPanel value="1">
           <MainCalcLayout>
