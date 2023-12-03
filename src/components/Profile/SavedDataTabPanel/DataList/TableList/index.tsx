@@ -1,4 +1,5 @@
 import {
+  IconButton,
   Table,
   TableBody,
   TableCell,
@@ -13,8 +14,10 @@ import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { DataListContext } from '@/core/contexts/DataList.context';
 import { useProfile } from '@/core/hooks/useProfile';
 import { useAuth } from '@/core/hooks/useAuth';
+import DeleteIcon from '@mui/icons-material/Delete';
 import GoBackItem from '../GoBackItem';
 import Item from '../Item';
+import { CalcFoldersUnit } from '@/core/models/CalcFolders.model';
 
 const columnNames = ["Ім'я", 'Дата створення', 'Дата модифікації', 'Кіл. Файлів'];
 
@@ -75,16 +78,21 @@ const BodyTable = ({ sm, smmd }: { sm: boolean; smmd: boolean }) => {
     [context]
   );
 
+  const handleDeleteFileOnClick = (e: React.MouseEvent<HTMLButtonElement>, item: CalcFoldersUnit) => {
+    e.stopPropagation();
+    context && context.fileDeleteOnClick(item);
+  };
+
   const data = context && Array.isArray(context?.items) && (
     <>
       {
-        <StyledBodyTableRow onClick={context.goBack}>
+        <StyledBodyTableBackButtonRow onClick={context.goBack}>
           {context.type === 'files' && (
             <StyledTableCell>
               <GoBackItem primary={'Назад'} fontSize="small" />
             </StyledTableCell>
           )}
-        </StyledBodyTableRow>
+        </StyledBodyTableBackButtonRow>
       }
       {context.items.map(({ id, name, numberOfFiles, createdAt, modifiedAt }) => (
         <StyledBodyTableRow key={id} onClick={() => onClick(id)}>
@@ -92,8 +100,18 @@ const BodyTable = ({ sm, smmd }: { sm: boolean; smmd: boolean }) => {
             <Item primary={name || profile.data?.firstName || 'Мої документи'} fontSize="small" type={context.type} />
           </StyledTableCell>
           {!smmd && <StyledTableCell>{createdAt}</StyledTableCell>}
-          {!sm && <StyledTableCell>{modifiedAt}</StyledTableCell>}
-          <StyledTableCell align="right">{numberOfFiles !== undefined ? numberOfFiles : '-'}</StyledTableCell>
+          {!sm && <StyledTableCell>{modifiedAt || 'Не модіфікований'}</StyledTableCell>}
+          {context.type === 'folders' && (
+            <StyledTableCell align="right">{numberOfFiles !== undefined ? numberOfFiles : '-'}</StyledTableCell>
+          )}
+
+          {context.type === 'files' && (
+            <StyledTableCell align="right">
+              <IconButton onClick={(e) => handleDeleteFileOnClick(e, { id, name, numberOfFiles, createdAt })}>
+                <DeleteIcon fontSize="medium" color="error" />
+              </IconButton>
+            </StyledTableCell>
+          )}
         </StyledBodyTableRow>
       ))}
     </>
@@ -104,7 +122,7 @@ const BodyTable = ({ sm, smmd }: { sm: boolean; smmd: boolean }) => {
 
 const StyledHeadTableRow = styled(TableRow)(({ theme }) => ({
   display: 'grid',
-  gridTemplateColumns: '2fr 2fr 2fr 1fr',
+  gridTemplateColumns: '3fr 2fr 2fr 1fr',
   color: theme.palette.text.secondary,
   backgroundColor: theme.palette.background.default,
   whiteSpace: 'nowrap',
@@ -140,11 +158,21 @@ const StyledBodyTableRow = styled(StyledHeadTableRow)(({ theme }) => ({
   },
 }));
 
+const StyledBodyTableBackButtonRow = styled(StyledBodyTableRow)(({ theme }) => ({
+  display: 'grid',
+  gridTemplateColumns: '1fr',
+}));
+
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   color: 'inherit',
   display: 'flex',
   alignItems: 'center',
   gap: '1rem',
+
+  textOverflow: 'ellipsis',
+  width: '100%',
+  overflow: 'hidden',
+  whiteSpace: 'nowrap',
 
   [theme.breakpoints.up('md')]: {
     '&:nth-of-type(1)': {
