@@ -10,9 +10,9 @@ export default function Custom404() {
     <StyledContainer maxWidth="xl">
       <StyledBox>
         <StyledTypography variant="h3">404</StyledTypography>
-        <StyledDescription variant="h5">oops, smth went wrong</StyledDescription>
+        <StyledDescription variant="h5">Сторінка не знайдена :(</StyledDescription>
         <ButtonContainer>
-          <StyledButton href="/">Go to home page</StyledButton>
+          <StyledButton href="/">На головну</StyledButton>
         </ButtonContainer>
         <ManContainer>
           <StyledMan src={`${folder}/man.png`} width="800" height="800" alt="man" />
