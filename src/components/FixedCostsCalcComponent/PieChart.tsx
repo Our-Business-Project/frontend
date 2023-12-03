@@ -101,8 +101,7 @@ export function PieChartExample({ data }: { data: FixedCostsData[] }) {
   const matchesSmSize = useMediaQuery(theme.breakpoints.down('sm'));
 
   const onPieEnter = useCallback(
-    (entry: any, index: number, event: any) => {
-      event.stopPropagation();
+    (entry: any, index: number) => {
       activeIndex !== index && setActiveIndex(index);
     },
     [activeIndex]
