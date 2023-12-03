@@ -26,10 +26,6 @@ export const customTheme = createTheme({
       fontSize: '2rem',
       fontWeight: 500,
     },
-    h4: {
-      fontSize: '1.25rem',
-      fontWeight: 400,
-    },
     button: {
       // textTransform: 'none',
     },

@@ -1,17 +1,25 @@
+import { useState, useEffect } from 'react';
 import { Box, List, ListItem, Typography, styled } from '@mui/material';
 import Link from 'next/link';
 import { Props } from './props';
 
 export default function RightPart({ menu }: Props) {
+  const [isClient, setIsClient] = useState<boolean>(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   return (
     <StyledBox>
       <StyledTypography as="p">Навігація:</StyledTypography>
       <List>
-        {menu.map(({ name, href }, index) => (
-          <StyledListItem key={index}>
-            <StyledLink href={href}>{name}</StyledLink>
-          </StyledListItem>
-        ))}
+        {isClient &&
+          menu.map(({ name, href }, index) => (
+            <StyledListItem key={index}>
+              <StyledLink href={href}>{name}</StyledLink>
+            </StyledListItem>
+          ))}
       </List>
     </StyledBox>
   );
