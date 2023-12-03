@@ -37,10 +37,6 @@ export default function FolderContent({ handleClickdOpenFolder, calcFoldersData 
     setISDeletingFolder(false);
   };
 
-  const createFolderFunction = (name: string) => {
-    createFolder(name);
-  };
-
   const handleCloseDeletingPopUp = () => {
     setISDeletingFolder(false);
   };
@@ -66,7 +62,7 @@ export default function FolderContent({ handleClickdOpenFolder, calcFoldersData 
         {creatingNewFolder && (
           <PopUpCreateItem
             setActive={setCreatingNewFolder}
-            createItemFunction={createFolderFunction}
+            createItemFunction={createFolder}
             icon={<CreateNewFolderIcon color="primary" sx={{ mr: '10px' }} />}
           />
         )}

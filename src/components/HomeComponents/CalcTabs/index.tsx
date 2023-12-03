@@ -3,44 +3,28 @@ import { Box, Tab, Tabs, Typography, styled, tabsClasses } from '@mui/material';
 import { TabContext, TabPanel } from '@mui/lab';
 import MainCalcLayout from '@/components/MainCalcLayout';
 import CalcInput from '@/components/ui/InputComponents/CalcInput';
-import { CalcContext } from '@/core/contexts/Calc.context';
 import FixedCostsCalcTable from '@/components/FixedCostsCalcComponent';
 import GreenCustomButton from '@/components/ui/GreenCustomButton';
-import { redirect } from 'next/navigation';
 import PopupLayoutWithoutActions from '@/components/ui/PopUpLayout/PopupLayoutWithoutActions';
 import PopUpFolders from '@/components/PopUpComponents/PopUpContent';
-import { useCalcFolders } from '@/core/hooks/useCalcFolders';
 import { useAuth } from '@/core/hooks/useAuth';
-import { useCalcData } from '@/core/hooks/useCalcData';
+import { useCalculations } from '@/core/hooks/useCalculations';
+import { FieldName } from '@/core/models/Calculations.model';
 import { HelpButton } from '@/components/HelpButton';
 
 export default function CalcTabs() {
   const [value, setValue] = React.useState('1');
   const [openPopUp, setOpenPopUp] = React.useState(false);
-  const [isPending, setIsPending] = React.useState(false);
   const { token } = useAuth();
-  const { calcFolders } = useCalcFolders(token);
-  const { calcData } = useCalcData(token);
+  const { calculations, calcData: calculationData, updateCalcData } = useCalculations(token);
 
   const handleClosePopUp = () => {
     setOpenPopUp(false);
   };
 
-  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
+  const handleChange = (_: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
   };
-
-  React.useEffect(() => {
-    setIsPending(calcFolders.pending || calcData.pending);
-  }, [calcFolders]);
-
-  const calcContext = React.useContext(CalcContext);
-
-  if (!calcContext) {
-    redirect('/404');
-  }
-
-  const { calcDataContext } = calcContext;
 
   const handleSaveCalcInfo = () => {
     setOpenPopUp(true);
@@ -56,15 +40,18 @@ export default function CalcTabs() {
           </CustomTabs>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <HelpButton />
-            <StyledTypography color="text.secondary">
-              Потрібна допомога?
-            </StyledTypography>
+            <StyledTypography color="text.secondary">Потрібна допомога?</StyledTypography>
           </Box>
         </StyledWrapperBox>
         <TabPanel value="1">
           <MainCalcLayout>
-            {Object.keys(calcDataContext).map((key) => (
-              <CalcInput key={key} {...calcDataContext[key]} name={key} />
+            {Object.keys(calculationData).map((key) => (
+              <CalcInput
+                key={key}
+                {...calculationData[key as FieldName]}
+                updateCalcData={updateCalcData}
+                name={key as FieldName}
+              />
             ))}
           </MainCalcLayout>
           <Box sx={{ display: 'flex', justifyContent: 'center', mt: '20px' }}>
@@ -79,7 +66,7 @@ export default function CalcTabs() {
         handleClose={handleClosePopUp}
         open={openPopUp}
         title="Збереження розрахунків"
-        isPending={isPending}
+        isPending={calculations.pending}
       >
         <PopUpFolders />
       </PopupLayoutWithoutActions>
@@ -109,8 +96,6 @@ const StyledWrapperBox = styled(Box)(({ theme }) => ({
 
 const StyledTypography = styled(Typography)(({ theme }) => ({
   [theme.breakpoints.up('sm')]: {
-    display:'none'
+    display: 'none',
   },
 }));
-
-

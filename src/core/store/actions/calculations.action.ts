@@ -1,4 +1,4 @@
-import { CalculationData } from '@/core/models/Calculations.model';
+import { CalculationsData } from '@/core/models/Calculations.model';
 import {
   CALCULATIONS_REQUEST,
   CALCULATIONS_SUCCESS,
@@ -13,7 +13,7 @@ interface CalculationsRequestAction {
 
 interface CalculationsSuccessAction {
   type: typeof CALCULATIONS_SUCCESS;
-  data: CalculationData;
+  data: CalculationsData;
 }
 
 interface CalculationsFailedAction {
@@ -40,7 +40,7 @@ const calculationsRequest = (): CalculationsRequestAction => ({
   type: CALCULATIONS_REQUEST,
 });
 
-const calculationsSuccess = (data: CalculationData): CalculationsSuccessAction => ({
+const calculationsSuccess = (data: CalculationsData): CalculationsSuccessAction => ({
   type: CALCULATIONS_SUCCESS,
   data,
 });
