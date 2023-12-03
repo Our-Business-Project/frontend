@@ -33,9 +33,7 @@ const StyledFormControl = styled(FormControl)(() => ({
 const StyledFormLabel = styled(FormLabel)(({ theme }) => ({
   '&.MuiFormLabel-root': {
     marginBottom: '6px',
-    '&.Mui-focused': {
-      color: 'rgba(0, 0, 0, 0.5)',
-    },
+    color: 'rgba(0, 0, 0, 0.5)',
   },
 }));
 
