@@ -59,12 +59,12 @@ export default function ProfileInfoForm() {
   const loader = profile.infoPending && <StyledCircularProgress size="1.625rem" />;
 
   return (
-    <Box>
+    <StyledBox>
       <StyledGrid container columns={12}>
-        <StyledGrid container item sm={8} columns={12}>
+        <StyledGrid container item sm={12} md={6} lg={8} columns={12}>
           <ProfileInfoTextFields control={control} InputProps={{ readOnly }} />
         </StyledGrid>
-        <StyledGrid container item sm={3}>
+        <StyledGrid container item sm={12} md={5} lg={3}>
           <ProfileRadioGroup control={control} readOnly={readOnly} />
         </StyledGrid>
       </StyledGrid>
@@ -76,7 +76,7 @@ export default function ProfileInfoForm() {
         )}
         {loader}
       </StyledBoxButton>
-    </Box>
+    </StyledBox>
   );
 }
 
@@ -92,25 +92,37 @@ const SaveButton = ({ onClick, ...props }: ButtonProps) => (
   </StyledSaveButton>
 );
 
+const StyledBox = styled(Box)(({ theme }) => ({
+  width: '100%',
+}));
+
 const StyledGrid = styled(Grid)(({ theme }) => ({
   maxWidth: '900px',
   justifyContent: 'space-between',
   [theme.breakpoints.down('md')]: {
     flexDirection: 'column',
   },
+  [theme.breakpoints.down('smmd')]: {
+    alignItems: 'center',
+  },
   [theme.breakpoints.down('sm')]: {
     gap: '1.25rem 3.25rem',
   },
 }));
 
-const StyledBoxButton = styled(Box)(() => ({
+const StyledBoxButton = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   gap: '1rem',
-  margin: '77px 0 0 5px',
+  margin: '4.8125rem 0 0 0.3125rem',
+
+  [theme.breakpoints.down('smmd')]: {
+    justifyContent: 'center',
+    margin: '2.8125rem 0 0 0.3125rem',
+  },
 }));
 
-const StyledChangeButton = styled(Button)(() => ({
+const StyledChangeButton = styled(Button)(({ theme }) => ({
   backgroundColor: '#1D5279',
   borderRadius: '15px',
   padding: '15px',
@@ -121,6 +133,10 @@ const StyledChangeButton = styled(Button)(() => ({
   fontWeight: '400',
   lineHeight: 'normal',
   textTransform: 'none',
+
+  [theme.breakpoints.down('smmd')]: {
+    width: '200px',
+  },
 }));
 
 const StyledSaveButton = styled(Button)(({ theme }) => ({
@@ -137,6 +153,10 @@ const StyledSaveButton = styled(Button)(({ theme }) => ({
 
   '&:hover': {
     backgroundColor: theme.palette.success.dark,
+  },
+
+  [theme.breakpoints.down('smmd')]: {
+    width: '200px',
   },
 }));
 

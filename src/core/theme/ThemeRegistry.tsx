@@ -12,6 +12,7 @@ declare module '@mui/material/styles' {
     xs: true;
     mi: true;
     sm: true;
+    smmd: true;
     md: true;
     lg: true;
     xl: true;

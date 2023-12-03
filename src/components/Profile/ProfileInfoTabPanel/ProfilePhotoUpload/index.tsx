@@ -52,8 +52,12 @@ export default function ProfilePhotoUpload() {
   );
 }
 
-const StyledContainer = styled(Box)(() => ({
-  margin: '-10px 0 0',
+const StyledContainer = styled(Box)(({ theme }) => ({
+  margin: '-0.625rem 0 0',
+
+  [theme.breakpoints.down('smmd')]: {
+    margin: '-0.625rem 0 2rem',
+  },
 }));
 
 const StyledBox = styled(Box)(({ theme }) => ({

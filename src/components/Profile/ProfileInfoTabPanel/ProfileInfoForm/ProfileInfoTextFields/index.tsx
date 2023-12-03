@@ -5,14 +5,14 @@ import { Props as InputFieldProps } from '@/components/ui/InputComponents/FormIn
 import { Props } from './props';
 
 const GridItem = ({ name, control, label, theme, InputProps }: InputFieldProps & { theme: Theme }) => (
-  <StyledGridItem item sm={5}>
-    <StyledInputWithController name={name} control={control} label={label} theme={theme} InputProps={InputProps} />
+  <StyledGridItem item sm={12} lg={5}>
+    <InputWithController name={name} control={control} label={label} theme={theme} InputProps={InputProps} />
   </StyledGridItem>
 );
 
 const PhoneGridItem = ({ name, control, label, theme, InputProps }: InputFieldProps & { theme: Theme }) => (
-  <StyledGridItem item sm={5}>
-    <StyledPhoneInput name={name} control={control} label={label} theme={theme} InputProps={InputProps} />
+  <StyledGridItem item sm={12} lg={5}>
+    <PhoneInput name={name} control={control} label={label} theme={theme} InputProps={InputProps} />
   </StyledGridItem>
 );
 
@@ -44,5 +44,17 @@ const StyledGridItem = styled(Grid)(({ theme }) => ({
   [theme.breakpoints.down('md')]: {
     width: '100%',
     maxWidth: '350px',
+  },
+}));
+
+const InputWithController = styled(StyledInputWithController)(({ theme }) => ({
+  [theme.breakpoints.down('smmd')]: {
+    minWidth: '100%',
+  },
+}));
+
+const PhoneInput = styled(StyledPhoneInput)(({ theme }) => ({
+  [theme.breakpoints.down('smmd')]: {
+    minWidth: '100%',
   },
 }));

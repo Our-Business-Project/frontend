@@ -15,25 +15,48 @@ export default function ProfileRadioGroup({ control, readOnly }: Props) {
         name="taxation"
         control={control}
         render={({ field }) => (
-          <RadioGroup aria-labelledby="taxation-label" {...field}>
+          <StyledRadioGroup aria-labelledby="taxation-label" {...field}>
             {radioList.map(({ label, value }) => (
               <StyledFormControlLabel key={value} label={label} value={value} control={<Radio disabled={readOnly} />} />
             ))}
-          </RadioGroup>
+          </StyledRadioGroup>
         )}
       />
     </StyledFormControl>
   );
 }
 
-const StyledFormControl = styled(FormControl)(() => ({
+const StyledFormControl = styled(FormControl)(({ theme }) => ({
   marginTop: '-10px',
+
+  [theme.breakpoints.down('smmd')]: {
+    marginTop: 0,
+  },
 }));
 
 const StyledFormLabel = styled(FormLabel)(({ theme }) => ({
   '&.MuiFormLabel-root': {
     marginBottom: '6px',
     color: 'rgba(0, 0, 0, 0.5)',
+  },
+}));
+
+const StyledRadioGroup = styled(RadioGroup)(({ theme }) => ({
+  [theme.breakpoints.down('smmd')]: {
+    alignItems: 'center',
+    marginRight: 0,
+  },
+
+  [theme.breakpoints.down('smmd')]: {
+    '& .MuiFormControlLabel-root': {
+      width: '100%',
+      justifyContent: 'center',
+      marginRight: 0,
+
+      '& .MuiTypography-root': {
+        width: '50px',
+      },
+    },
   },
 }));
 

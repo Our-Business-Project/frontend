@@ -7,6 +7,7 @@ export const customTheme = createTheme({
       xs: 0,
       mi: 400,
       sm: 600,
+      smmd: 700,
       md: 900,
       lg: 1200,
       xl: 1600,
