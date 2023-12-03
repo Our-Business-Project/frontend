@@ -4,6 +4,7 @@ import profileReducer from './reducers/profile.reducer';
 import mailVerificationReducer from './reducers/mailVerification.reducer';
 import calcFoldersReducer from './reducers/calcFolders.reducer';
 import calcDataReducer from './reducers/calcData.reducer';
+import calculationsReducer from './reducers/calculations.reducer';
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     profile: profileReducer,
     calcFolders: calcFoldersReducer,
     calcData: calcDataReducer,
+    calculations: calculationsReducer,
   },
 });
 
