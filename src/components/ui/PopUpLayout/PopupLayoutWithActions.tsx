@@ -1,14 +1,6 @@
 'use client';
 import * as React from 'react';
-import {
-  Button,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  useMediaQuery,
-  useTheme,
-  DialogActions,
-} from '@mui/material';
+import { Button, Dialog, DialogTitle, DialogContent, useMediaQuery, useTheme, DialogActions } from '@mui/material';
 
 export default function PopupLayoutWithActions({
   handleClose,
