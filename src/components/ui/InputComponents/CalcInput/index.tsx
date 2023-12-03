@@ -1,41 +1,37 @@
+import { FieldName } from '@/core/models/Calculations.model';
 import { Divider, FormControl, Typography, Box, styled, Slider } from '@mui/material';
 import MuiInput from '@mui/material/Input';
 import * as React from 'react';
-import { CalcContext } from '@/core/contexts/Calc.context';
-import { redirect } from 'next/navigation';
 
 export default function CalcInput({
   name,
   label,
   value,
+  updateCalcData,
   borderRadius = '15px',
   disabled = true,
   slider = false,
   maxValue = 100000,
 }: {
-  name: string;
+  name: FieldName;
   value: number;
   label?: string;
   borderRadius?: string;
   disabled?: boolean;
   slider?: boolean;
   maxValue?: number;
+  updateCalcData: (fieldName: FieldName, newValue: number) => void;
 }) {
-  const calcContext = React.useContext(CalcContext);
   const bgcolor = disabled ? 'secondary.main' : 'primary.dark';
-  if (!calcContext) {
-    redirect('/404');
-  }
-  const { updateCalContextData } = calcContext;
 
-  const handleSliderChange = (event: Event, newValue: number | number[]) => {
+  const handleSliderChange = (_: Event, newValue: number | number[]) => {
     const updatedValue = Array.isArray(newValue) ? newValue[0] : newValue;
-    updateCalContextData(`${name}`, updatedValue);
+    updateCalcData(`${name}`, updatedValue);
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value === '' ? 0 : Number(event.target.value);
-    updateCalContextData(`${name}`, newValue);
+    updateCalcData(`${name}`, newValue);
   };
 
   const deleteZeros = (value: number | string) => {

@@ -8,26 +8,20 @@ import ThemeRegistry from '@/core/theme/ThemeRegistry';
 import Header from '@/components/global/Header';
 import Main from '@/components/global/Main';
 import Footer from '@/components/global/Footer';
-import { CalcProvider } from '@/core/contexts/Calc.context';
-import { FixedCostsProvider } from '@/core/contexts/FixedCosts.context';
 import GlobalStyles from '@/core/styles/GlobalStyles';
 
 export default function AppWrapper({ children }: { children: ReactNode }) {
   return (
     <Provider store={store}>
-      <CalcProvider>
-        <FixedCostsProvider>
-          <ThemeRegistry options={{ key: 'mui' }}>
-            <ContentContainer>
-              <Header />
-              <Main>{children}</Main>
-              <Footer />
-              <GlobalStyles />
-            </ContentContainer>
-            <ToastContainer />
-          </ThemeRegistry>
-        </FixedCostsProvider>
-      </CalcProvider>
+      <ThemeRegistry options={{ key: 'mui' }}>
+        <ContentContainer>
+          <Header />
+          <Main>{children}</Main>
+          <Footer />
+          <GlobalStyles />
+        </ContentContainer>
+        <ToastContainer />
+      </ThemeRegistry>
     </Provider>
   );
 }

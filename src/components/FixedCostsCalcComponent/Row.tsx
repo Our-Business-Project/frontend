@@ -2,22 +2,20 @@ import * as React from 'react';
 import { Box, Collapse, IconButton, Table, TableBody, TableCell, TableHead, TableRow, styled } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import { FixedCostsContext } from '@/core/contexts/FixedCosts.context';
 import { FixedCostsData } from '@/core/models/FixedCosts.model';
 import MuiInput from '@mui/material/Input';
-import { useContext } from 'react';
 import { redirect } from 'next/navigation';
 
-export function Row({ row, rowIndex }: { row: FixedCostsData; rowIndex: number }) {
+export function Row({
+  row,
+  rowIndex,
+  updateFixedCostsData,
+}: {
+  row: FixedCostsData;
+  rowIndex: number;
+  updateFixedCostsData: (newValue: number, CostsTypeIndex: number, DataIndex?: number, DataItemIndex?: number) => void;
+}) {
   const [open, setOpen] = React.useState(false);
-
-  const fixedCostsContext = useContext(FixedCostsContext);
-
-  if (!fixedCostsContext) {
-    redirect('/404');
-  }
-
-  const { updateFixedCostsContext } = fixedCostsContext;
 
   const handleInputChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -25,7 +23,7 @@ export function Row({ row, rowIndex }: { row: FixedCostsData; rowIndex: number }
     historyRowIndex?: number,
     colIndex?: number
   ) => {
-    updateFixedCostsContext(+event.target.value, rowIndex, historyRowIndex, colIndex);
+    updateFixedCostsData(+event.target.value, rowIndex, historyRowIndex, colIndex);
   };
 
   const deleteZeros = (value: number | string) => {

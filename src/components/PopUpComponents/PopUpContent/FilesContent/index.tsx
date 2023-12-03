@@ -10,11 +10,9 @@ import { useCalcData } from '@/core/hooks/useCalcData';
 import { CalculatorDataIncome } from '@/core/models/СalcData.model';
 import DeleteIcon from '@mui/icons-material/Delete';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
-import { CalcContext } from '@/core/contexts/Calc.context';
-import { redirect } from 'next/navigation';
-import { FixedCostsContext } from '@/core/contexts/FixedCosts.context';
 import NoteAddIcon from '@mui/icons-material/NoteAdd';
 import PopupLayoutWithActions from '@/components/ui/PopUpLayout/PopupLayoutWithActions';
+import { useCalculations } from '@/core/hooks/useCalculations';
 
 interface FilesContentProps {
   calcFoldersData: CalculatorDataIncome | null;
@@ -24,18 +22,11 @@ export default function FilesContent({ calcFoldersData }: FilesContentProps) {
   const [creatingNewFile, setCreatingNewFile] = React.useState(false);
   const [deletingFile, setDeletingFile] = React.useState<CalcFoldersUnit | null>(null);
   const [isDeletingingFile, setIsDeletingFile] = React.useState(false);
-  const calcContext = React.useContext(CalcContext);
-  const fixedCostsContext = React.useContext(FixedCostsContext);
   const listItemClass = 'mui-1q896iv-MuiButtonBase-root-MuiButton-root';
 
-  if (!calcContext || !fixedCostsContext) {
-    redirect('/404');
-  }
-
-  const { fixedCostsData } = fixedCostsContext;
-  const { calcDataContext } = calcContext;
   const { token } = useAuth();
   const { deleteData, createData } = useCalcData(token);
+  const { calcData, fixedCostsData } = useCalculations(token);
 
   const handleClickedDeleteData = (data: CalcFoldersUnit) => {
     setIsDeletingFile(true);
@@ -51,10 +42,13 @@ export default function FilesContent({ calcFoldersData }: FilesContentProps) {
     setIsDeletingFile(false);
   };
 
-  const createFileFunction = (name: string) => {
-    if (calcFoldersData && fixedCostsData && typeof calcFoldersData.id === 'string')
-      createData(calcFoldersData.id, name, calcDataContext, fixedCostsData);
-  };
+  const createFileFunction = React.useCallback(
+    (name: string) => {
+      if (calcFoldersData && fixedCostsData && typeof calcFoldersData.id === 'string')
+        createData(calcFoldersData.id, name, calcData, fixedCostsData);
+    },
+    [calcData, calcFoldersData, createData, fixedCostsData]
+  );
 
   return (
     <>
