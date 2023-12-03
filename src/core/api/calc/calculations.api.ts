@@ -22,6 +22,7 @@ export const getCalculationsExampleRequest = async () => {
   try {
     const response = await guestGet(calcExampleUrl);
 
+    console.log(response);
     return response.data;
   } catch (error) {
     throw new Error('Щось пішло не по плану :(');

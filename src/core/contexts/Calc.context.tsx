@@ -6,6 +6,7 @@ export type CalcContextType = {
   calcName: string;
   updateCalcName: (name: string) => void;
   updateCalContextData: (fieldName: string, newValue: number) => void;
+  updateAllCalContextData: (newContextData: CalculatorData) => void;
 };
 
 export const CalcContext = createContext<CalcContextType | null>(null);
@@ -107,8 +108,14 @@ export function CalcProvider({ children }: PropsWithChildren<{}>) {
     }
   };
 
+  const updateAllCalContextData = (newContextData: CalculatorData) => {
+    setCalcDataContext(newContextData);
+  };
+
   return (
-    <CalcContext.Provider value={{ calcDataContext, calcName, updateCalcName, updateCalContextData }}>
+    <CalcContext.Provider
+      value={{ calcDataContext, calcName, updateCalcName, updateCalContextData, updateAllCalContextData }}
+    >
       {children}
     </CalcContext.Provider>
   );

@@ -49,7 +49,7 @@ export default function FixedCostsCalcTable() {
       {fixedCostsData.some((item) => item.value > 1) && <PieChartExample data={fixedCostsData} />}
 
       <Box sx={{ display: 'flex', justifyContent: 'center', mt: '20px' }}>
-        <GreenCustomButton handleClick={handleSave} buttonText={'Застосувати розрахунки'} />
+        <GreenCustomButton handleClick={handleSave} buttonText={'Перенести розрахунки в калькулятор бізнесу'} />
       </Box>
     </>
   );

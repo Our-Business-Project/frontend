@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Box, Tab, Tabs, styled, tabsClasses } from '@mui/material';
+import { Box, Tab, Tabs, Typography, styled, tabsClasses } from '@mui/material';
 import { TabContext, TabPanel } from '@mui/lab';
 import MainCalcLayout from '@/components/MainCalcLayout';
 import CalcInput from '@/components/ui/InputComponents/CalcInput';
@@ -49,22 +49,18 @@ export default function CalcTabs() {
   return (
     <Box sx={{ width: '100%', typography: 'body1' }}>
       <TabContext value={value}>
-        <Box
-          sx={{
-            borderBottom: 1,
-            borderColor: 'divider',
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}
-        >
+        <StyledWrapperBox>
           <CustomTabs onChange={handleChange} value={value} variant="scrollable" allowScrollButtonsMobile>
             <Tab label="Калькулятор бізнесу" value="1" />
             <Tab label="Калькулятор постійних витрат" value="2" />
           </CustomTabs>
-          <HelpButton />
-        </Box>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <HelpButton />
+            <StyledTypography color="text.secondary">
+              Потрібна допомога?
+            </StyledTypography>
+          </Box>
+        </StyledWrapperBox>
         <TabPanel value="1">
           <MainCalcLayout>
             {Object.keys(calcDataContext).map((key) => (
@@ -93,7 +89,28 @@ export default function CalcTabs() {
 
 const CustomTabs = styled(Tabs)(({ theme }) => ({
   color: theme.palette.text.secondary,
+  width: '100%',
   [`& .${tabsClasses.scrollButtons}`]: {
     '&.Mui-disabled': { opacity: 0.3 },
   },
 }));
+
+const StyledWrapperBox = styled(Box)(({ theme }) => ({
+  borderBottom: 1,
+  borderColor: 'divider',
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  [theme.breakpoints.down('sm')]: {
+    flexDirection: ' column-reverse',
+  },
+}));
+
+const StyledTypography = styled(Typography)(({ theme }) => ({
+  [theme.breakpoints.up('sm')]: {
+    display:'none'
+  },
+}));
+
+

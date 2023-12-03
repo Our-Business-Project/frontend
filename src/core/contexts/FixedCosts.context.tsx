@@ -9,6 +9,7 @@ export type FixedCostsContextType = {
     DataIndex?: number,
     DataItemIndex?: number
   ) => void;
+  updateAllFixedCostsContext: (newContextData: FixedCostsData[]) => void;
 };
 
 export const FixedCostsContext = createContext<FixedCostsContextType | null>(null);
@@ -105,8 +106,12 @@ export function FixedCostsProvider({ children }: PropsWithChildren<{}>) {
     setData(updatedData);
   };
 
+  const updateAllFixedCostsContext = (newContextData: FixedCostsData[]) => {
+    setData(newContextData);
+  };
+
   return (
-    <FixedCostsContext.Provider value={{ fixedCostsData, updateFixedCostsContext }}>
+    <FixedCostsContext.Provider value={{ fixedCostsData, updateFixedCostsContext, updateAllFixedCostsContext }}>
       {children}
     </FixedCostsContext.Provider>
   );

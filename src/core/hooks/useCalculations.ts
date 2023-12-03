@@ -20,12 +20,9 @@ export const useCalculations = (token?: string) => {
     [dispatch, token]
   );
 
-  const getCalculationsExample = useCallback(
-    (folderId: string, fileId: string) => {
-      if (token) dispatch(getCalculationsExampleService());
-    },
-    [dispatch, token]
-  );
+  const getCalculationsExample = useCallback(() => {
+    dispatch(getCalculationsExampleService());
+  }, [dispatch]);
 
   const reset = useCallback(() => {
     dispatch(resetCalculations());
@@ -34,13 +31,14 @@ export const useCalculations = (token?: string) => {
   useEffect(() => {
     if (calculations.data && !calculations.redirected) {
       dispatch(calculationsRedirected());
-      redirect('/');
+      // redirect('/');
     }
   }, [calculations.data, calculations.redirected, dispatch]);
 
   return {
     calculations,
     getCalculations,
+    getCalculationsExample,
     reset,
   };
 };

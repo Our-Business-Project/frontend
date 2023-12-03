@@ -6,10 +6,10 @@ import {
   CALCULATIONS_RESET,
 } from '../constants/calculations.constants';
 import { CalculationsActions } from '../actions/calculations.action';
-import { CalculationData } from '@/core/models/Calculations.model';
+import { CalculationsData } from '@/core/models/Calculations.model';
 
 interface CalculationsInterface {
-  data: CalculationData | null;
+  data: CalculationsData | null;
   error: string | null;
   pending: boolean;
   redirected: boolean;
