@@ -7,6 +7,17 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { customTheme } from './customTheme';
 import { useState } from 'react';
 
+declare module '@mui/material/styles' {
+  interface BreakpointOverrides {
+    xs: true;
+    mi: true;
+    sm: true;
+    md: true;
+    lg: true;
+    xl: true;
+  }
+}
+
 export default function ThemeRegistry(props: { options: any; children: any }) {
   const { options, children } = props;
 
