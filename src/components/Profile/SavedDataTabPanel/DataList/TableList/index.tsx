@@ -1,5 +1,15 @@
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, styled } from '@mui/material';
-import { useCallback, useContext, useMemo } from 'react';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  styled,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { DataListContext } from '@/core/contexts/DataList.context';
 import { useProfile } from '@/core/hooks/useProfile';
 import { useAuth } from '@/core/hooks/useAuth';
@@ -9,29 +19,47 @@ import Item from '../Item';
 const columnNames = ["Ім'я", 'Дата створення', 'Дата модифікації', 'Кіл. Файлів'];
 
 export default function TableList() {
+  const theme = useTheme();
+  const smmd = useMediaQuery(theme.breakpoints.down('smmd'));
+  const sm = useMediaQuery(theme.breakpoints.down('sm'));
+
   return (
     <>
       <TableContainer>
         <Table>
-          <HeadTable />
-          <BodyTable />
+          <HeadTable sm={sm} smmd={smmd} />
+          <BodyTable sm={sm} smmd={smmd} />
         </Table>
       </TableContainer>
     </>
   );
 }
 
-const HeadTable = () => (
-  <TableHead>
-    <StyledHeadTableRow>
-      {columnNames.map((itemName, index) => (
-        <StyledTableCell key={index}>{itemName}</StyledTableCell>
-      ))}
-    </StyledHeadTableRow>
-  </TableHead>
-);
+const HeadTable = ({ sm, smmd }: { sm: boolean; smmd: boolean }) => {
+  const [colNames, setColNames] = useState<string[]>(columnNames);
 
-const BodyTable = () => {
+  useEffect(() => {
+    if (sm) {
+      setColNames([...columnNames.slice(0, 1), ...columnNames.slice(3, 4)]);
+    } else if (smmd) {
+      setColNames([...columnNames.slice(0, 1), ...columnNames.slice(2, 4)]);
+    } else {
+      setColNames([...columnNames]);
+    }
+  }, [sm, smmd]);
+
+  return (
+    <TableHead>
+      <StyledHeadTableRow>
+        {colNames.map((itemName, index) => (
+          <StyledTableCell key={index}>{itemName}</StyledTableCell>
+        ))}
+      </StyledHeadTableRow>
+    </TableHead>
+  );
+};
+
+const BodyTable = ({ sm, smmd }: { sm: boolean; smmd: boolean }) => {
   const context = useContext(DataListContext);
   const { token } = useAuth();
   const { profile } = useProfile(token);
@@ -47,37 +75,28 @@ const BodyTable = () => {
     [context]
   );
 
-  const data = useMemo(
-    () =>
-      context &&
-      Array.isArray(context?.items) && (
-        <>
-          {
-            <StyledBodyTableRow onClick={context.goBack}>
-              {context.type === 'files' && (
-                <StyledTableCell>
-                  <GoBackItem primary={'Назад'} fontSize="small" />
-                </StyledTableCell>
-              )}
-            </StyledBodyTableRow>
-          }
-          {context.items.map(({ id, name, numberOfFiles, createdAt, modifiedAt }) => (
-            <StyledBodyTableRow key={id} onClick={() => onClick(id)}>
-              <StyledTableCell>
-                <Item
-                  primary={name || profile.data?.firstName || 'Мої документи'}
-                  fontSize="small"
-                  type={context.type}
-                />
-              </StyledTableCell>
-              <StyledTableCell>{createdAt}</StyledTableCell>
-              <StyledTableCell>{modifiedAt}</StyledTableCell>
-              <StyledTableCell align="right">{numberOfFiles !== undefined ? numberOfFiles : '-'}</StyledTableCell>
-            </StyledBodyTableRow>
-          ))}
-        </>
-      ),
-    [context, onClick, profile.data?.firstName]
+  const data = context && Array.isArray(context?.items) && (
+    <>
+      {
+        <StyledBodyTableRow onClick={context.goBack}>
+          {context.type === 'files' && (
+            <StyledTableCell>
+              <GoBackItem primary={'Назад'} fontSize="small" />
+            </StyledTableCell>
+          )}
+        </StyledBodyTableRow>
+      }
+      {context.items.map(({ id, name, numberOfFiles, createdAt, modifiedAt }) => (
+        <StyledBodyTableRow key={id} onClick={() => onClick(id)}>
+          <StyledTableCell>
+            <Item primary={name || profile.data?.firstName || 'Мої документи'} fontSize="small" type={context.type} />
+          </StyledTableCell>
+          {!smmd && <StyledTableCell>{createdAt}</StyledTableCell>}
+          {!sm && <StyledTableCell>{modifiedAt}</StyledTableCell>}
+          <StyledTableCell align="right">{numberOfFiles !== undefined ? numberOfFiles : '-'}</StyledTableCell>
+        </StyledBodyTableRow>
+      ))}
+    </>
   );
 
   return <TableBody>{data}</TableBody>;
@@ -88,6 +107,29 @@ const StyledHeadTableRow = styled(TableRow)(({ theme }) => ({
   gridTemplateColumns: '2fr 2fr 2fr 1fr',
   color: theme.palette.text.secondary,
   backgroundColor: theme.palette.background.default,
+  whiteSpace: 'nowrap',
+
+  [theme.breakpoints.up('md')]: {
+    '&:nth-of-type(2),&:nth-of-type(3)': {
+      minWidth: '155px',
+    },
+  },
+
+  [theme.breakpoints.down('smmd')]: {
+    gridTemplateColumns: '2fr 2fr 1fr',
+
+    '&:nth-of-type(2)': {
+      minWidth: '155px',
+    },
+  },
+
+  [theme.breakpoints.down('sm')]: {
+    gridTemplateColumns: '3fr 1fr',
+
+    '&:nth-of-type(1)': {
+      minWidth: '165px',
+    },
+  },
 }));
 
 const StyledBodyTableRow = styled(StyledHeadTableRow)(({ theme }) => ({
@@ -98,9 +140,34 @@ const StyledBodyTableRow = styled(StyledHeadTableRow)(({ theme }) => ({
   },
 }));
 
-const StyledTableCell = styled(TableCell)(() => ({
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
   color: 'inherit',
   display: 'flex',
   alignItems: 'center',
   gap: '1rem',
+
+  [theme.breakpoints.up('md')]: {
+    '&:nth-of-type(1)': {
+      minWidth: '200px',
+    },
+    '&:nth-of-type(2),&:nth-of-type(3)': {
+      minWidth: '155px',
+    },
+  },
+
+  [theme.breakpoints.down('smmd')]: {
+    gridTemplateColumns: '2fr 2fr 1fr',
+
+    '&:nth-of-type(2)': {
+      minWidth: '155px',
+    },
+  },
+
+  [theme.breakpoints.down('sm')]: {
+    gridTemplateColumns: '3fr 1fr',
+
+    '&:nth-of-type(1)': {
+      minWidth: '165px',
+    },
+  },
 }));

@@ -7,7 +7,7 @@ export default function Item({ primary, fontSize, type }: Props) {
   return (
     <>
       {type === 'folders' ? <StyledFolderIcon fontSize={fontSize} /> : <StyledFileIcon fontSize={fontSize} />}
-      <ListItemText primary={primary} />
+      <StyledListItemText primary={primary} />
     </>
   );
 }
@@ -18,4 +18,13 @@ const StyledFolderIcon = styled(FolderIcon)(() => ({
 
 const StyledFileIcon = styled(DescriptionIcon)(() => ({
   color: 'inherit',
+}));
+
+const StyledListItemText = styled(ListItemText)(() => ({
+  '& .MuiTypography-root': {
+    textOverflow: 'ellipsis',
+    width: '100%',
+    overflow: 'hidden',
+    whiteSpace: 'nowrap',
+  },
 }));
