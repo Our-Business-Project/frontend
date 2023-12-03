@@ -46,7 +46,8 @@ export default function FixedCostsCalcTable() {
           </TableBody>
         </Table>
       </TableContainer>
-      <PieChartExample data={fixedCostsData} />
+      {fixedCostsData.some((item) => item.value > 1) && <PieChartExample data={fixedCostsData} />}
+
       <Box sx={{ display: 'flex', justifyContent: 'center', mt: '20px' }}>
         <GreenCustomButton handleClick={handleSave} buttonText={'Застосувати розрахунки'} />
       </Box>

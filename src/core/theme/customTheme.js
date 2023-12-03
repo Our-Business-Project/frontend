@@ -2,19 +2,33 @@ import { createTheme } from '@mui/material';
 import '@fontsource/montserrat';
 
 export const customTheme = createTheme({
+  breakpoints: {
+    values: {
+      xs: 0,
+      mi: 400,
+      sm: 600,
+      md: 900,
+      lg: 1200,
+      xl: 1600,
+    },
+  },
   typography: {
     fontFamily: 'Montserrat',
     fontSize: 16,
     h1: {
-      fontSize: '40px',
+      fontSize: '2.5rem',
       fontWeight: 700,
     },
     h2: {
-      fontSize: '34px',
+      fontSize: '2.125rem',
     },
     h3: {
-      fontSize: '32px',
+      fontSize: '2rem',
       fontWeight: 500,
+    },
+    h4: {
+      fontSize: '1.25rem',
+      fontWeight: 400,
     },
     button: {
       // textTransform: 'none',
