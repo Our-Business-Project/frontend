@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Box, Typography, styled, Tabs, Tab } from '@mui/material';
+import { Container, Typography, styled, Tabs, Tab } from '@mui/material';
 import TabContext from '@mui/lab/TabContext';
 import ProfileInfoTabPanel from '../ProfileInfoTabPanel';
 import SavedDataTabPanel from '../SavedDataTabPanel';
@@ -17,7 +17,7 @@ export default function ProfileInfo() {
   };
 
   return (
-    <BoxStyled>
+    <ContainerStyled maxWidth="xl">
       <StyledTitle variant="h4">Ваш профіль</StyledTitle>
       <TabContext value={value}>
         <StyledTabs
@@ -34,17 +34,17 @@ export default function ProfileInfo() {
         <ProfileInfoTabPanel value={'0'} />
         <SavedDataTabPanel value={'1'} />
       </TabContext>
-    </BoxStyled>
+    </ContainerStyled>
   );
 }
 
-const BoxStyled = styled(Box)(() => ({
-  paddingTop: '64px',
+const ContainerStyled = styled(Container)(() => ({
+  padding: '64px 0',
 }));
 
 const StyledTitle = styled(Typography)(({ theme }) => ({
   color: theme.palette.common.black,
-  margin: '4.375rem 3.125rem 3.125rem',
+  margin: '4.375rem 0 3.125rem',
 }));
 
 const StyledTabs = styled(Tabs)(() => ({

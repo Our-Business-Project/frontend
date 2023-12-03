@@ -1,20 +1,6 @@
 'use client';
 import * as React from 'react';
-import {
-  Button,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  IconButton,
-  Box,
-  LinearProgress,
-  useMediaQuery,
-  useTheme,
-  DialogContentText,
-  DialogActions,
-} from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
-import { styled } from '@mui/system';
+import { Button, Dialog, DialogTitle, DialogContent, useMediaQuery, useTheme, DialogActions } from '@mui/material';
 
 export default function PopupLayoutWithActions({
   handleClose,
@@ -51,8 +37,3 @@ export default function PopupLayoutWithActions({
     </Dialog>
   );
 }
-
-// const StiledDialog = styled(Dialog)`
-//   margin: '0 auto';
-//   height: '800px';
-// `;

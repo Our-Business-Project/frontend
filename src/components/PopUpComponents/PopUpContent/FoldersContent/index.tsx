@@ -11,6 +11,7 @@ import { useCalcFolders } from '@/core/hooks/useCalcFolders';
 import { useProfile } from '@/core/hooks/useProfile';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PopupLayoutWithActions from '@/components/ui/PopUpLayout/PopupLayoutWithActions';
+import CreateNewFolderIcon from '@mui/icons-material/CreateNewFolder';
 
 interface FolderContentProps {
   handleClickdOpenFolder: (id: string) => void;
@@ -63,7 +64,11 @@ export default function FolderContent({ handleClickdOpenFolder, calcFoldersData 
     <>
       <Box sx={{ minHeight: '350px' }}>
         {creatingNewFolder && (
-          <PopUpCreateItem setActive={setCreatingNewFolder} createItemFunction={createFolderFunction} />
+          <PopUpCreateItem
+            setActive={setCreatingNewFolder}
+            createItemFunction={createFolderFunction}
+            icon={<CreateNewFolderIcon color="primary" sx={{ mr: '10px' }} />}
+          />
         )}
         {Array.isArray(calcFoldersData) &&
           calcFoldersData.map((folder: CalcFoldersUnit, index: number) => (
@@ -101,7 +106,8 @@ export default function FolderContent({ handleClickdOpenFolder, calcFoldersData 
         agreeBtnAction={DeleteFolderAction}
       >
         <DialogContentText id="alert-dialog-description">
-          Ви впевнені, що хочете видалити папку "{deletingFolder?.name}"? В ній знаходиться {getFileWord(deletingFolder?.numberOfFiles)}.
+          Ви впевнені, що хочете видалити папку "{deletingFolder?.name}"? В ній знаходиться{' '}
+          {getFileWord(deletingFolder?.numberOfFiles)}.
         </DialogContentText>
       </PopupLayoutWithActions>
     </>

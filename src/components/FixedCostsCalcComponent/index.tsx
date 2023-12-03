@@ -5,6 +5,7 @@ import { Row } from './Row';
 import { CalcContext } from '@/core/contexts/Calc.context';
 import GreenCustomButton from '../ui/GreenCustomButton';
 import { redirect } from 'next/navigation';
+import { PieChartExample } from './PieChart';
 
 export default function FixedCostsCalcTable() {
   const fixedCostsContext = React.useContext(FixedCostsContext);
@@ -45,6 +46,8 @@ export default function FixedCostsCalcTable() {
           </TableBody>
         </Table>
       </TableContainer>
+      {fixedCostsData.some((item) => item.value > 1) && <PieChartExample data={fixedCostsData} />}
+
       <Box sx={{ display: 'flex', justifyContent: 'center', mt: '20px' }}>
         <GreenCustomButton handleClick={handleSave} buttonText={'Застосувати розрахунки'} />
       </Box>

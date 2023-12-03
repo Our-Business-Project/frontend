@@ -26,7 +26,7 @@ export function FixedCostsProvider({ children }: PropsWithChildren<{}>) {
       ],
     },
     {
-      name: 'Енергоресурси, Комунальні Витрати',
+      name: 'Енергоресурси, Комунальні витрати',
       columnNames: ['Посада', 'Од. вим', 'Кількість', 'Ціна, грн/од змін', 'Сума грн.'],
       value: 0,
       data: [
@@ -38,7 +38,7 @@ export function FixedCostsProvider({ children }: PropsWithChildren<{}>) {
       ],
     },
     {
-      name: 'Адміністративно Управлінський Персонал',
+      name: 'Адміністративно управлінський персонал',
       value: 0,
       columnNames: ['Посада', 'Число, людина', 'Оклад грн./міс', 'Сума грн.'],
       data: [

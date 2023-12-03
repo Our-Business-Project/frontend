@@ -1,5 +1,5 @@
 import { AppDispatch } from '../store';
-import { createDataRequest, deleteDataRequest } from '../api/calc/calcData.api';
+import { createDataRequest, deleteDataRequest, getOneFileDataRequest } from '../api/calc/calcData.api';
 import { calcDataRequest, calcDataSuccess, calcDataFailed } from '../store/actions/calcData.action';
 import { errorNotify } from '../helpers/notifications';
 import { getOneFolderDataRequest } from '../api/calc/calcData.api';
@@ -47,6 +47,20 @@ export const getOneFolderDataService = (token: string, folderId: string) => {
     dispatch(calcDataRequest());
     try {
       const data = await getOneFolderDataRequest(token, folderId);
+      dispatch(calcDataSuccess(data));
+    } catch (err) {
+      const error = err as Error;
+      dispatch(calcDataFailed(error.message));
+      errorNotify(error.message);
+    }
+  };
+};
+
+export const getOneFileDataService = (token: string, folderId: string, fileId: string) => {
+  return async (dispatch: AppDispatch) => {
+    dispatch(calcDataRequest());
+    try {
+      const data = await getOneFileDataRequest(token, folderId, fileId);
       dispatch(calcDataSuccess(data));
     } catch (err) {
       const error = err as Error;

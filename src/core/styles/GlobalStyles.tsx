@@ -4,6 +4,9 @@ const GlobalStyles = () => {
   return (
     <GS
       styles={{
+        '*': {
+          outline: 'none',
+        },
         a: {
           color: '#FFFFFF',
         },
