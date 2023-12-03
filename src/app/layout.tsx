@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Box } from '@mui/material';
 import AppWrapper from '@/components/global/AppWrapper';
 import 'react-toastify/dist/ReactToastify.css';
+import '@/styles/index.css';
 
 export const metadata: Metadata = {
   title: 'Your Business Adviser | Калькулятор для Вашого Успішного Бізнесу',
