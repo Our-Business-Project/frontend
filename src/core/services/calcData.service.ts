@@ -70,6 +70,7 @@ export const getOneFolderDataService = (token: string, folderId: string) => {
     dispatch(calcDataRequest());
     try {
       const data = await getOneFolderDataRequest(token, folderId);
+      console.log(data);
       dispatch(calcDataSuccess(data));
     } catch (err) {
       const error = err as Error;

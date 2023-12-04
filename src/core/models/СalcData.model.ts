@@ -18,6 +18,7 @@ export interface CalculatorShortDataUnit {
   name: string;
   createdAt: string;
   modifiedAt: string;
+  parentFolderId: string;
   numberOfFiles?: number;
   id: string;
 }

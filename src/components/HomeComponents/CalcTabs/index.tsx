@@ -21,7 +21,8 @@ export default function CalcTabs() {
   const { token } = useAuth();
   const { calculations, calcData: calculationData, updateCalcData } = useCalculations(token);
   const { patchData } = useCalcData(token);
-  // const {  } = useCalcFolders(token);
+
+  console.log(calculationData);
 
   const handleClosePopUp = () => {
     setOpenPopUp(false);
@@ -36,12 +37,10 @@ export default function CalcTabs() {
   };
 
   const handleSyncCalcInfo = () => {
-    setOpenPopUp(true);
-    // patchData(folderId
-    //   calculations.data.id,
-    //   fileName
-    //   CalcData
-    //   fixedCostsData);
+    if (calculations.data) {
+      const { parentFolderId, id, name, data, fixedCosts } = calculations.data;
+      patchData(parentFolderId, id, name, data, fixedCosts);
+    }
   };
 
   return (
@@ -70,11 +69,13 @@ export default function CalcTabs() {
           </MainCalcLayout>
           <Box sx={{ display: 'flex', justifyContent: 'center', mt: '20px' }}>
             <GreenCustomButton handleClick={handleSaveCalcInfo}>Зберегти нові розрахунки</GreenCustomButton>
-            <GreenCustomButton handleClick={handleSaveCalcInfo}>
-              <ButtonStyledTypography>
-                Синхронізувати <SyncIcon sx={{ ml: '5px' }} />
-              </ButtonStyledTypography>
-            </GreenCustomButton>
+            {calculations.data && (
+              <GreenCustomButton handleClick={handleSyncCalcInfo}>
+                <ButtonStyledTypography>
+                  Синхронізувати <SyncIcon sx={{ ml: '5px' }} />
+                </ButtonStyledTypography>
+              </GreenCustomButton>
+            )}
           </Box>
         </TabPanel>
         <TabPanel value="2">

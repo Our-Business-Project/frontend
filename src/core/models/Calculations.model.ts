@@ -38,5 +38,6 @@ export type CalculationsData = {
   fixedCosts: FixedCostsData[];
   createdAt: string;
   modifiedAt?: string;
+  parentFolderId: string;
   id: string;
 };
