@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback } from 'react';
 import { useAppDispatch, useAppSelector } from './useRedux';
 import { selectCalculations } from '../store/selectors/calculations.selector';
 import {
@@ -12,14 +12,7 @@ import {
 } from '../services/calculations.service';
 import { FixedCostsData } from '../models/FixedCosts.model';
 import { CalcData, FieldName } from '../models/Calculations.model';
-import { calcDataDefaults, fixedCostsDataDefaults } from '../constants/calculations.constants';
 import { redirect } from 'next/navigation';
-
-type State = {
-  fixedCostsData: FixedCostsData[];
-  calcData: CalcData;
-  calcName: string;
-};
 
 export const useCalculations = (token?: string) => {
   const dispatch = useAppDispatch();
@@ -42,8 +35,8 @@ export const useCalculations = (token?: string) => {
           const prevSumItem = fixedCostsUpdateElem.data[DataIndex][indexOfSumaGrn];
 
           const numList = fixedCostsUpdateElem.data[DataIndex].map((item, index) => {
-            if (index === indexOfSumaGrn || typeof item !== 'number') return 1;
             if (index === DataItemIndex) return newValue;
+            if (index === indexOfSumaGrn || typeof item !== 'number') return 1;
             return item;
           });
           const newSumItem = !numList.includes(0)
@@ -97,7 +90,6 @@ export const useCalculations = (token?: string) => {
 
   const updateCalcName = useCallback(
     (name: string) => {
-      // setState((prevState) => ({ ...prevState, calcName: name }));
       dispatch(updateFileNameService(name));
     },
     [dispatch]

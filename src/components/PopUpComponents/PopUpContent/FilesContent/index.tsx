@@ -37,7 +37,6 @@ export default function FilesContent({ calcFoldersData }: FilesContentProps) {
 
   const handleClickedChangeData = (data: CalcFoldersUnit) => {
     setIsChangingFile(true);
-    console.log(data);
     setChangingFile(data);
   };
 
@@ -49,7 +48,13 @@ export default function FilesContent({ calcFoldersData }: FilesContentProps) {
   const changeFileAction = () => {
     changingFile &&
       calcFoldersData &&
-      patchData(calcFoldersData.id, changingFile.id, changingFile.name, calcData, fixedCostsData);
+      patchData(
+        calcFoldersData.id,
+        changingFile.id,
+        changingFile.name,
+        calculations.data.data,
+        calculations.data.fixedCosts
+      );
     setIsChangingFile(false);
   };
 
