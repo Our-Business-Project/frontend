@@ -1,14 +1,13 @@
 import { TabPanel, TabPanelProps } from '@mui/lab';
 import { DialogContentText, styled } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { redirect } from 'next/navigation';
 
 import DataList from './DataList';
 import { CalculatorShortDataUnit } from '@/core/models/СalcData.model';
 import { useCalcFolders } from '@/core/hooks/useCalcFolders';
 import { useAuth } from '@/core/hooks/useAuth';
 import { useCalcData } from '@/core/hooks/useCalcData';
-import { CalcFolders, CalcFoldersUnit } from '@/core/models/CalcFolders.model';
+import { CalcFoldersUnit } from '@/core/models/CalcFolders.model';
 import { DataListProvider } from '@/core/contexts/DataList.context';
 import PopupLayoutWithActions from '@/components/ui/PopUpLayout/PopupLayoutWithActions';
 import { useCalculations } from '@/core/hooks/useCalculations';
@@ -20,7 +19,7 @@ export default function SavedDataTabPanel({ value, ...props }: TabPanelProps) {
   const { calcData, getOneFolderData, deleteData } = useCalcData(token);
   const { calculations, getCalculations, reset, redirection } = useCalculations(token);
 
-  const [calcFoldersData, setCalcFoldersData] = useState<CalcFolders | CalculatorShortDataUnit[] | null>(null);
+  const [calcFoldersData, setCalcFoldersData] = useState<CalculatorShortDataUnit[] | null>(null);
   const [currentFolderId, setCurrentFolderId] = useState<string>('');
 
   const [deletingFile, setDeletingFile] = useState<CalcFoldersUnit | null>(null);
@@ -71,8 +70,8 @@ export default function SavedDataTabPanel({ value, ...props }: TabPanelProps) {
   };
 
   useEffect(() => {
-    if (calcFolders.data && !currentFolderId) setCalcFoldersData(calcFolders.data);
-    if (calcData.data && currentFolderId) setCalcFoldersData(calcData.data.data as CalculatorShortDataUnit[]);
+    if (calcFolders.data && !currentFolderId) setCalcFoldersData([...calcFolders.data]);
+    if (calcData.data && currentFolderId) setCalcFoldersData([...calcData.data.data] as CalculatorShortDataUnit[]);
   }, [calcFolders, calcData, currentFolderId]);
 
   return (

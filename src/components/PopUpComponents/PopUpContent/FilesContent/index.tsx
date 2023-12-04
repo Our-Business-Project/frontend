@@ -26,7 +26,7 @@ export default function FilesContent({ calcFoldersData }: FilesContentProps) {
 
   const { token } = useAuth();
   const { deleteData, createData } = useCalcData(token);
-  const { calcData, fixedCostsData } = useCalculations(token);
+  const { calculations } = useCalculations(token);
 
   const handleClickedDeleteData = (data: CalcFoldersUnit) => {
     setIsDeletingFile(true);
@@ -44,10 +44,10 @@ export default function FilesContent({ calcFoldersData }: FilesContentProps) {
 
   const createFileFunction = React.useCallback(
     (name: string) => {
-      if (calcFoldersData && fixedCostsData && typeof calcFoldersData.id === 'string')
-        createData(calcFoldersData.id, name, calcData, fixedCostsData);
+      if (calcFoldersData && calculations.data?.fixedCosts && typeof calcFoldersData.id === 'string')
+        createData(calcFoldersData.id, name, calculations.data.data, calculations.data.fixedCosts);
     },
-    [calcData, calcFoldersData, createData, fixedCostsData]
+    [calcFoldersData, calculations.data?.data, calculations.data?.fixedCosts, createData]
   );
 
   return (

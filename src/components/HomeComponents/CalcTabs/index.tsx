@@ -16,7 +16,7 @@ export default function CalcTabs() {
   const [value, setValue] = React.useState('1');
   const [openPopUp, setOpenPopUp] = React.useState(false);
   const { token } = useAuth();
-  const { calculations, calcData: calculationData, updateCalcData } = useCalculations(token);
+  const { calculations, updateCalcData } = useCalculations(token);
 
   const handleClosePopUp = () => {
     setOpenPopUp(false);
@@ -44,16 +44,18 @@ export default function CalcTabs() {
           </Box>
         </StyledWrapperBox>
         <TabPanel value="1">
-          <MainCalcLayout>
-            {Object.keys(calculationData).map((key) => (
-              <CalcInput
-                key={key}
-                {...calculationData[key as FieldName]}
-                updateCalcData={updateCalcData}
-                name={key as FieldName}
-              />
-            ))}
-          </MainCalcLayout>
+          {calculations.data && (
+            <MainCalcLayout>
+              {Object.keys(calculations.data.data).map((key) => (
+                <CalcInput
+                  key={key}
+                  {...calculations.data!.data[key as FieldName]}
+                  updateCalcData={updateCalcData}
+                  name={key as FieldName}
+                />
+              ))}
+            </MainCalcLayout>
+          )}
           <Box sx={{ display: 'flex', justifyContent: 'center', mt: '20px' }}>
             <GreenCustomButton handleClick={handleSaveCalcInfo} buttonText={'Зберегти дані'} />
           </Box>

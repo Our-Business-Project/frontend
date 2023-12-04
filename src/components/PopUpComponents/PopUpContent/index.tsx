@@ -8,12 +8,11 @@ import { useProfile } from '@/core/hooks/useProfile';
 import FolderContent from './FoldersContent';
 import FilesContent from './FilesContent';
 import { useCalcData } from '@/core/hooks/useCalcData';
-import { CalculatorDataIncome } from '@/core/models/СalcData.model';
-import { CalcFolders } from '@/core/models/CalcFolders.model';
+import { CalculatorDataIncome, CalculatorShortDataUnit } from '@/core/models/СalcData.model';
 import TurnLeftIcon from '@mui/icons-material/TurnLeft';
 
 export default function PopUpContent() {
-  const [calcFoldersData, setCalcFoldersData] = React.useState<CalcFolders | null>(null);
+  const [calcFoldersData, setCalcFoldersData] = React.useState<CalculatorShortDataUnit[] | null>(null);
   const [calcFilesData, setCalcFilesData] = React.useState<CalculatorDataIncome | null>(null);
   const [isFolderOpened, setIsFolderOpened] = React.useState(false);
   const { isAuthenticated, token, userId } = useAuth();
@@ -36,8 +35,8 @@ export default function PopUpContent() {
   };
 
   React.useEffect(() => {
-    setCalcFoldersData(calcFolders.data);
-    setCalcFilesData(calcData.data);
+    if (calcFolders.data) setCalcFoldersData([...calcFolders.data]);
+    if (calcData.data) setCalcFilesData({ ...calcData.data });
   }, [calcFolders, calcData]);
 
   return (

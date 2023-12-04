@@ -3,7 +3,7 @@ import * as React from 'react';
 import { ListItem, ListItemText, Box, styled, IconButton, DialogContentText } from '@mui/material';
 import FolderIcon from '@mui/icons-material/Folder';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import { CalcFolders, CalcFoldersUnit } from '@/core/models/CalcFolders.model';
+import { CalcFoldersUnit } from '@/core/models/CalcFolders.model';
 import { PopUpCreateItem } from '../../PopUpCreateItem';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { useAuth } from '@/core/hooks/useAuth';
@@ -12,10 +12,11 @@ import { useProfile } from '@/core/hooks/useProfile';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PopupLayoutWithActions from '@/components/ui/PopUpLayout/PopupLayoutWithActions';
 import CreateNewFolderIcon from '@mui/icons-material/CreateNewFolder';
+import { CalculatorShortDataUnit } from '@/core/models/СalcData.model';
 
 interface FolderContentProps {
   handleClickdOpenFolder: (id: string) => void;
-  calcFoldersData: CalcFolders | null;
+  calcFoldersData: CalculatorShortDataUnit[] | null;
 }
 
 export default function FolderContent({ handleClickdOpenFolder, calcFoldersData }: FolderContentProps) {

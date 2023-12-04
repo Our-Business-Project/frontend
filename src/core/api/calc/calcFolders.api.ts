@@ -1,15 +1,15 @@
 'use client';
 
-import { CalcFolders } from '@/core/models/CalcFolders.model';
 import { AxiosError } from 'axios';
 import { del, get, post } from '../../helpers/apiRequests';
 import { calcFoldersUrl } from '../config';
+import { CalculatorShortDataUnit } from '@/core/models/СalcData.model';
 
 export const getAllCaclFoldersRequest = async (token: string) => {
   try {
     const response = await get(calcFoldersUrl, token);
 
-    return response.data as CalcFolders;
+    return response.data as CalculatorShortDataUnit[];
   } catch (error) {
     const err = error as unknown as AxiosError;
     if (err.response?.status === 400) {

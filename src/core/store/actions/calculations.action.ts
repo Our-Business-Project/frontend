@@ -1,11 +1,15 @@
-import { CalculationsData } from '@/core/models/Calculations.model';
+import { CalcData, CalculationsData } from '@/core/models/Calculations.model';
 import {
   CALCULATIONS_REQUEST,
   CALCULATIONS_SUCCESS,
   CALCULATIONS_FAILED,
+  CALCULATIONS_UPDATE_DATA,
+  CALCULATIONS_UPDATE_FIXED_COSTS,
+  CALCULATIONS_UPDATE_FILE_NAME,
   CALCULATIONS_REDIRECTED,
   CALCULATIONS_RESET,
 } from '../constants/calculations.constants';
+import { FixedCostsData } from '@/core/models/FixedCosts.model';
 
 interface CalculationsRequestAction {
   type: typeof CALCULATIONS_REQUEST;
@@ -21,6 +25,21 @@ interface CalculationsFailedAction {
   message: string;
 }
 
+interface CalculationsUpdateDataAction {
+  type: typeof CALCULATIONS_UPDATE_DATA;
+  data: CalcData;
+}
+
+interface CalculationsUpdateFixedCostsAction {
+  type: typeof CALCULATIONS_UPDATE_FIXED_COSTS;
+  data: FixedCostsData[];
+}
+
+interface CalculationsUpdateFileNameAction {
+  type: typeof CALCULATIONS_UPDATE_FILE_NAME;
+  data: string;
+}
+
 interface CalculationsRedirectedAction {
   type: typeof CALCULATIONS_REDIRECTED;
 }
@@ -33,6 +52,9 @@ type CalculationsActions =
   | CalculationsRequestAction
   | CalculationsSuccessAction
   | CalculationsFailedAction
+  | CalculationsUpdateDataAction
+  | CalculationsUpdateFixedCostsAction
+  | CalculationsUpdateFileNameAction
   | CalculationsRedirectedAction
   | CalculationsResetAction;
 
@@ -50,6 +72,21 @@ const calculationsFailed = (message: string): CalculationsFailedAction => ({
   message,
 });
 
+const calculationsUpdateData = (data: CalcData): CalculationsUpdateDataAction => ({
+  type: CALCULATIONS_UPDATE_DATA,
+  data,
+});
+
+const calculationsUpdateFixedCosts = (data: FixedCostsData[]): CalculationsUpdateFixedCostsAction => ({
+  type: CALCULATIONS_UPDATE_FIXED_COSTS,
+  data,
+});
+
+const calculationsUpdateFileName = (data: string): CalculationsUpdateFileNameAction => ({
+  type: CALCULATIONS_UPDATE_FILE_NAME,
+  data,
+});
+
 const calculationsRedirected = (): CalculationsRedirectedAction => ({
   type: CALCULATIONS_REDIRECTED,
 });
@@ -59,4 +96,13 @@ const calculationsReset = (): CalculationsResetAction => ({
 });
 
 export type { CalculationsActions };
-export { calculationsRequest, calculationsSuccess, calculationsFailed, calculationsRedirected, calculationsReset };
+export {
+  calculationsRequest,
+  calculationsSuccess,
+  calculationsFailed,
+  calculationsUpdateData,
+  calculationsUpdateFixedCosts,
+  calculationsUpdateFileName,
+  calculationsRedirected,
+  calculationsReset,
+};

@@ -18,8 +18,8 @@ export const useCalcData = (token?: string) => {
   );
 
   const createData = useCallback(
-    (folderId: string, fileName: string, CalcData: CalculatorData, fixedCostsData: FixedCostsData[]) => {
-      if (token) dispatch(createDataService(token, folderId, fileName, CalcData, fixedCostsData));
+    (folderId: string, fileName: string, calcData: CalculatorData, fixedCostsData: FixedCostsData[]) => {
+      if (token) dispatch(createDataService(token, folderId, fileName, calcData, fixedCostsData));
     },
     [dispatch, token]
   );

@@ -1,5 +1,7 @@
 import { getCalculationsExampleRequest, getCalculationsRequest } from '../api/calc/calculations.api';
 import { errorNotify } from '../helpers/notifications';
+import { CalcData } from '../models/Calculations.model';
+import { FixedCostsData } from '../models/FixedCosts.model';
 import { AppDispatch } from '../store';
 import {
   calculationsFailed,
@@ -7,6 +9,9 @@ import {
   calculationsRequest,
   calculationsReset,
   calculationsSuccess,
+  calculationsUpdateData,
+  calculationsUpdateFileName,
+  calculationsUpdateFixedCosts,
 } from '../store/actions/calculations.action';
 
 export const getCalculationsService = (token: string, folderId: string, fileId: string) => {
@@ -37,13 +42,31 @@ export const getCalculationsExampleService = () => {
   };
 };
 
-export const setCalculationsIsRedirected = () => {
+export const updateCalcDataService = (calcData: CalcData) => {
+  return async (dispatch: AppDispatch) => {
+    dispatch(calculationsUpdateData(calcData));
+  };
+};
+
+export const updateFixedCostsService = (fixedCosts: FixedCostsData[]) => {
+  return async (dispatch: AppDispatch) => {
+    dispatch(calculationsUpdateFixedCosts(fixedCosts));
+  };
+};
+
+export const updateFileNameService = (fileName: string) => {
+  return async (dispatch: AppDispatch) => {
+    dispatch(calculationsUpdateFileName(fileName));
+  };
+};
+
+export const setCalculationsIsRedirectedService = () => {
   return async (dispatch: AppDispatch) => {
     dispatch(calculationsRedirected());
   };
 };
 
-export const resetCalculations = () => {
+export const resetCalculationsService = () => {
   return async (dispatch: AppDispatch) => {
     dispatch(calculationsReset());
   };

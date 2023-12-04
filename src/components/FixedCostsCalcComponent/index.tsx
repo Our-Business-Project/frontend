@@ -8,24 +8,26 @@ import { useCalculations } from '@/core/hooks/useCalculations';
 
 export default function FixedCostsCalcTable() {
   const { token } = useAuth();
-  const { fixedCostsData, updateCalcData, updateFixedCosts } = useCalculations(token);
+  const { calculations, updateCalcData, updateFixedCosts } = useCalculations(token);
 
   const [fixedCostsSumm, setFixedCostsSumm] = React.useState(0);
 
   React.useEffect(() => {
-    const newFixedCostsSumm = fixedCostsData.reduce((accumulator, currentValue) => accumulator + currentValue.value, 0);
+    const newFixedCostsSumm = calculations.data.fixedCosts.reduce(
+      (accumulator, currentValue) => accumulator + currentValue.value,
+      0
+    );
     setFixedCostsSumm(newFixedCostsSumm);
-  }, [fixedCostsData]);
+  }, [calculations.data.fixedCosts]);
 
   return (
     <>
       <TableContainer sx={{ bgcolor: 'secondary.dark', padding: '50px' }} component={Paper}>
         <Table aria-label="collapsible table">
           <TableBody>
-            {fixedCostsData &&
-              Object.values(fixedCostsData).map((row, index) => (
-                <Row key={index} row={row} rowIndex={index} updateFixedCostsData={updateFixedCosts} />
-              ))}
+            {Object.values(calculations.data.fixedCosts).map((row, index) => (
+              <Row key={index} row={row} rowIndex={index} updateFixedCostsData={updateFixedCosts} />
+            ))}
             <TableRow>
               <TableCell component="th" scope="row">
                 Загальні витрати
@@ -37,7 +39,9 @@ export default function FixedCostsCalcTable() {
           </TableBody>
         </Table>
       </TableContainer>
-      {fixedCostsData.some((item) => item.value > 1) && <PieChartExample data={fixedCostsData} />}
+      {calculations.data.fixedCosts.some((item) => item.value > 1) && (
+        <PieChartExample data={calculations.data.fixedCosts} />
+      )}
 
       <Box sx={{ display: 'flex', justifyContent: 'center', mt: '20px' }}>
         <GreenCustomButton

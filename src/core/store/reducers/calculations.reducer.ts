@@ -2,14 +2,18 @@ import {
   CALCULATIONS_REQUEST,
   CALCULATIONS_SUCCESS,
   CALCULATIONS_FAILED,
+  CALCULATIONS_UPDATE_DATA,
+  CALCULATIONS_UPDATE_FIXED_COSTS,
+  CALCULATIONS_UPDATE_FILE_NAME,
   CALCULATIONS_REDIRECTED,
   CALCULATIONS_RESET,
 } from '../constants/calculations.constants';
 import { CalculationsActions } from '../actions/calculations.action';
-import { CalculationsData } from '@/core/models/Calculations.model';
+import { CalculationsData, CalculationsDataDefault } from '@/core/models/Calculations.model';
+import { calcDataDefaults, fixedCostsDataDefaults } from '@/core/constants/calculations.constants';
 
 interface CalculationsInterface {
-  data: CalculationsData | null;
+  data: CalculationsData | CalculationsDataDefault;
   error: string | null;
   pending: boolean;
   redirected: boolean;
@@ -17,8 +21,13 @@ interface CalculationsInterface {
 
 type CalculationsState = CalculationsInterface;
 
+const initData = {
+  data: calcDataDefaults,
+  fixedCosts: fixedCostsDataDefaults,
+};
+
 const initialState: CalculationsState = {
-  data: null,
+  data: { ...initData },
   error: null,
   pending: false,
   redirected: true,
@@ -29,7 +38,7 @@ export default function calculationsReducer(state = initialState, action: Calcul
     case CALCULATIONS_REQUEST: {
       return {
         ...state,
-        data: null,
+        data: { ...initData },
         error: null,
         pending: true,
       };
@@ -46,9 +55,30 @@ export default function calculationsReducer(state = initialState, action: Calcul
     case CALCULATIONS_FAILED: {
       return {
         ...state,
-        data: null,
+        data: { ...initData },
         error: action.message,
         pending: false,
+      };
+    }
+
+    case CALCULATIONS_UPDATE_DATA: {
+      return {
+        ...state,
+        data: state.data ? { ...state.data, data: action.data } : { ...initData },
+      };
+    }
+
+    case CALCULATIONS_UPDATE_FIXED_COSTS: {
+      return {
+        ...state,
+        data: state.data ? { ...state.data, fixedCosts: action.data } : { ...initData },
+      };
+    }
+
+    case CALCULATIONS_UPDATE_FILE_NAME: {
+      return {
+        ...state,
+        data: state.data ? { ...state.data, name: action.data } : { ...initData },
       };
     }
 

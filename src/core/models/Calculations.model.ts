@@ -40,3 +40,8 @@ export type CalculationsData = {
   modifiedAt?: string;
   id: string;
 };
+
+export type CalculationsDataDefault = {
+  data: CalcData;
+  fixedCosts: FixedCostsData[];
+};
