@@ -1,25 +1,14 @@
 import * as React from 'react';
-import { Box, Button, IconButton, Typography } from '@mui/material';
+import { Box, IconButton, Typography } from '@mui/material';
 import HelpIcon from '@mui/icons-material/Help';
 import PopupLayoutWithoutActions from '../ui/PopUpLayout/PopupLayoutWithoutActions';
 import GreenCustomButton from '../ui/GreenCustomButton';
 import { useCalculations } from '@/core/hooks/useCalculations';
-import { CalcContext } from '@/core/contexts/Calc.context';
-import { FixedCostsContext } from '@/core/contexts/FixedCosts.context';
 import { redirect } from 'next/navigation';
 
 export function HelpButton() {
   const [isPopUpOpen, setIsPopUpOpen] = React.useState(false);
-  const { calculations, getCalculationsExample } = useCalculations();
-  const calcContext = React.useContext(CalcContext);
-  const fixedCostsContext = React.useContext(FixedCostsContext);
-
-  if (!fixedCostsContext || !calcContext) {
-    redirect('/404');
-  }
-
-  const { updateAllCalContextData } = calcContext;
-  const { updateAllFixedCostsContext } = fixedCostsContext;
+  const { getCalculationsExample } = useCalculations();
 
   const handleClosePopUp = () => {
     setIsPopUpOpen(false);
@@ -30,13 +19,6 @@ export function HelpButton() {
     handleClosePopUp();
     redirect('/#calculatorTabs');
   };
-
-  React.useEffect(() => {
-    if (calculations.data) {
-      updateAllCalContextData(calculations.data.data);
-      updateAllFixedCostsContext(calculations.data.fixedCosts);
-    }
-  }, [calculations]);
 
   return (
     <>

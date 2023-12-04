@@ -18,7 +18,7 @@ export default function SavedDataTabPanel({ value, ...props }: TabPanelProps) {
   const { token } = useAuth();
   const { calcFolders, getAllFolders } = useCalcFolders(token);
   const { calcData, getOneFolderData, deleteData } = useCalcData(token);
-  const { calculations, getCalculations, reset } = useCalculations(token);
+  const { calculations, getCalculations, reset, redirection } = useCalculations(token);
 
   const [calcFoldersData, setCalcFoldersData] = useState<CalcFolders | CalculatorShortDataUnit[] | null>(null);
   const [currentFolderId, setCurrentFolderId] = useState<string>('');
@@ -33,11 +33,13 @@ export default function SavedDataTabPanel({ value, ...props }: TabPanelProps) {
   }, [calcFolders, getAllFolders, currentFolderId]);
 
   useEffect(() => {
-    if (calculations.error) {
+    if (calculations.data && !calculations.redirected) {
+      redirection();
+    } else if (calculations.error) {
       errorNotify('Помилка завантаження даних!');
       reset();
     }
-  }, [calculations.data, calculations.error, reset]);
+  }, [calculations.data, calculations.error, calculations.redirected, redirection, reset]);
 
   const handleClickOpenFolder = (id: string) => {
     if (!calcFolders.pending) {

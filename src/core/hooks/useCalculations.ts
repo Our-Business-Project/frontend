@@ -10,6 +10,7 @@ import { calculationsRedirected } from '../store/actions/calculations.action';
 import { FixedCostsData } from '../models/FixedCosts.model';
 import { CalcData, FieldName } from '../models/Calculations.model';
 import { calcDataDefaults, fixedCostsDataDefaults } from '../constants/calculations.constants';
+import { redirect } from 'next/navigation';
 
 type State = {
   fixedCostsData: FixedCostsData[];
@@ -145,6 +146,21 @@ export const useCalculations = (token?: string) => {
     }));
   };
 
+  const updateAllFixedCostsData = (newFixedCostsData: FixedCostsData[]) => {
+    setState((prev) => ({
+      ...prev,
+      fixedCostsData: [...newFixedCostsData],
+    }));
+  };
+
+  const redirection = useCallback(
+    (path = '/') => {
+      dispatch(calculationsRedirected());
+      redirect(path);
+    },
+    [dispatch]
+  );
+
   const reset = useCallback(() => {
     setState({
       fixedCostsData: [...fixedCostsDataDefaults],
@@ -153,13 +169,6 @@ export const useCalculations = (token?: string) => {
     });
     dispatch(resetCalculations());
   }, [dispatch]);
-
-  useEffect(() => {
-    if (calculations.data && !calculations.redirected) {
-      dispatch(calculationsRedirected());
-      // redirect('/');
-    }
-  }, [calculations.data, calculations.redirected, dispatch]);
 
   return {
     calculations,
@@ -170,6 +179,8 @@ export const useCalculations = (token?: string) => {
     updateCalcName,
     updateCalcData,
     updateAllCalcData,
+    updateAllFixedCostsData,
     reset,
+    redirection,
   };
 };
