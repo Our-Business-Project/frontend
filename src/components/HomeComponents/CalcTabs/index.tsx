@@ -9,11 +9,10 @@ import PopupLayoutWithoutActions from '@/components/ui/PopUpLayout/PopupLayoutWi
 import PopUpContent from '@/components/PopUpComponents/PopUpContent';
 import { useAuth } from '@/core/hooks/useAuth';
 import { useCalculations } from '@/core/hooks/useCalculations';
-import { FieldName } from '@/core/models/Calculations.model';
+import { FieldName, isCalculationsData } from '@/core/models/Calculations.model';
 import { HelpButton } from '@/components/HelpButton';
 import SyncIcon from '@mui/icons-material/Sync';
 import { useCalcData } from '@/core/hooks/useCalcData';
-import { useCalcFolders } from '@/core/hooks/useCalcFolders';
 
 export default function CalcTabs() {
   const [value, setValue] = React.useState('1');
@@ -35,7 +34,7 @@ export default function CalcTabs() {
   };
 
   const handleSyncCalcInfo = () => {
-    if (calculations.data) {
+    if (isCalculationsData(calculations.data)) {
       const { parentFolderId, id, name, data, fixedCosts } = calculations.data;
       patchData(parentFolderId, id, name, data, fixedCosts);
     }

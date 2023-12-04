@@ -44,10 +44,9 @@ export default function FixedCostsCalcTable() {
       )}
 
       <Box sx={{ display: 'flex', justifyContent: 'center', mt: '20px' }}>
-        <GreenCustomButton
-          handleClick={() => updateCalcData('FixedCosts', fixedCostsSumm)}
-          buttonText={'Перенести розрахунки в калькулятор бізнесу'}
-        />
+        <GreenCustomButton handleClick={() => updateCalcData('FixedCosts', fixedCostsSumm)}>
+          Перенести розрахунки в калькулятор бізнесу
+        </GreenCustomButton>
       </Box>
     </>
   );

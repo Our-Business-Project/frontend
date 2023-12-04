@@ -42,6 +42,19 @@ export type CalculationsData = {
   id: string;
 };
 
+export function isCalculationsData(obj: any): obj is CalculationsData {
+  return (
+    typeof obj === 'object' &&
+    obj !== null &&
+    'name' in obj &&
+    'data' in obj &&
+    'fixedCosts' in obj &&
+    'createdAt' in obj &&
+    'parentFolderId' in obj &&
+    'id' in obj
+  );
+}
+
 export type CalculationsDataDefault = {
   data: CalcData;
   fixedCosts: FixedCostsData[];
