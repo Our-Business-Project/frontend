@@ -9,7 +9,7 @@ import { useAuth } from '@/core/hooks/useAuth';
 import { useCalcData } from '@/core/hooks/useCalcData';
 import { CalculatorDataIncome } from '@/core/models/СalcData.model';
 import DeleteIcon from '@mui/icons-material/Delete';
-import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
+import DescriptionIcon from '@mui/icons-material/Description';
 import NoteAddIcon from '@mui/icons-material/NoteAdd';
 import PopupLayoutWithActions from '@/components/ui/PopUpLayout/PopupLayoutWithActions';
 import { useCalculations } from '@/core/hooks/useCalculations';
@@ -19,13 +19,15 @@ interface FilesContentProps {
 }
 
 export default function FilesContent({ calcFoldersData }: FilesContentProps) {
-  const [creatingNewFile, setCreatingNewFile] = React.useState(false);
+  const [creatingNewFile, setCreatingNewFile] = React.useState(true);
   const [deletingFile, setDeletingFile] = React.useState<CalcFoldersUnit | null>(null);
+  const [changingFile, setChangingFile] = React.useState<CalcFoldersUnit | null>(null);
   const [isDeletingingFile, setIsDeletingFile] = React.useState(false);
+  const [isChangingFile, setIsChangingFile] = React.useState(false);
   const listItemClass = 'mui-1q896iv-MuiButtonBase-root-MuiButton-root';
 
   const { token } = useAuth();
-  const { deleteData, createData } = useCalcData(token);
+  const { deleteData, createData, patchData } = useCalcData(token);
   const { calculations } = useCalculations(token);
 
   const handleClickedDeleteData = (data: CalcFoldersUnit) => {
@@ -33,9 +35,26 @@ export default function FilesContent({ calcFoldersData }: FilesContentProps) {
     setDeletingFile(data);
   };
 
-  const DeleteFileAction = () => {
+  const handleClickedChangeData = (data: CalcFoldersUnit) => {
+    setIsChangingFile(true);
+    console.log(data);
+    setChangingFile(data);
+  };
+
+  const deleteFileAction = () => {
     deletingFile && calcFoldersData && deleteData(calcFoldersData.id, deletingFile.id);
     setIsDeletingFile(false);
+  };
+
+  const changeFileAction = () => {
+    changingFile &&
+      calcFoldersData &&
+      patchData(calcFoldersData.id, changingFile.id, changingFile.name, calcData, fixedCostsData);
+    setIsChangingFile(false);
+  };
+
+  const handleCloseChangingPopUp = () => {
+    setIsChangingFile(false);
   };
 
   const handleCloseDeletingPopUp = () => {
@@ -62,8 +81,8 @@ export default function FilesContent({ calcFoldersData }: FilesContentProps) {
         )}
         {calcFoldersData && Array.isArray(calcFoldersData.data) && calcFoldersData.data.length > 0
           ? calcFoldersData.data.map((file: CalcFoldersUnit, index: number) => (
-              <StyledListItem key={index} className={listItemClass}>
-                <InsertDriveFileIcon color="primary" sx={{ mr: '10px' }} />
+              <StyledListItem onClick={() => handleClickedChangeData(file)} key={index} className={listItemClass}>
+                <DescriptionIcon color="primary" sx={{ mr: '10px' }} />
                 <StyledListItemText primary={file.name} color={'text.secondary'} />
                 <IconButton onClick={() => handleClickedDeleteData(file)}>
                   <DeleteIcon fontSize="medium" color="error" />
@@ -84,15 +103,25 @@ export default function FilesContent({ calcFoldersData }: FilesContentProps) {
       </AbsoluteBox>
 
       <PopupLayoutWithActions
+        handleClose={handleCloseChangingPopUp}
+        open={isChangingFile}
+        title="Зміна файлу"
+        agreeBtnText="Перезаписати"
+        agreeBtnAction={changeFileAction}
+      >
+        <DialogContentText>
+          Ви впевнені, що хочете перезаписати в файл "{changingFile?.name}" нові дані?
+        </DialogContentText>
+      </PopupLayoutWithActions>
+
+      <PopupLayoutWithActions
         handleClose={handleCloseDeletingPopUp}
         open={isDeletingingFile}
         title="Видалення файлу"
         agreeBtnText="Видалити"
-        agreeBtnAction={DeleteFileAction}
+        agreeBtnAction={deleteFileAction}
       >
-        <DialogContentText id="alert-dialog-description">
-          Ви впевнені, що хочете видалити файл "{deletingFile?.name}"?
-        </DialogContentText>
+        <DialogContentText>Ви впевнені, що хочете видалити файл "{deletingFile?.name}"?</DialogContentText>
       </PopupLayoutWithActions>
     </>
   );

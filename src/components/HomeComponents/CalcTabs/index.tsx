@@ -6,17 +6,21 @@ import CalcInput from '@/components/ui/InputComponents/CalcInput';
 import FixedCostsCalcTable from '@/components/FixedCostsCalcComponent';
 import GreenCustomButton from '@/components/ui/GreenCustomButton';
 import PopupLayoutWithoutActions from '@/components/ui/PopUpLayout/PopupLayoutWithoutActions';
-import PopUpFolders from '@/components/PopUpComponents/PopUpContent';
+import PopUpContent from '@/components/PopUpComponents/PopUpContent';
 import { useAuth } from '@/core/hooks/useAuth';
 import { useCalculations } from '@/core/hooks/useCalculations';
 import { FieldName } from '@/core/models/Calculations.model';
 import { HelpButton } from '@/components/HelpButton';
+import SyncIcon from '@mui/icons-material/Sync';
+import { useCalcData } from '@/core/hooks/useCalcData';
+import { useCalcFolders } from '@/core/hooks/useCalcFolders';
 
 export default function CalcTabs() {
   const [value, setValue] = React.useState('1');
   const [openPopUp, setOpenPopUp] = React.useState(false);
   const { token } = useAuth();
   const { calculations, updateCalcData } = useCalculations(token);
+  const { patchData } = useCalcData(token);
 
   const handleClosePopUp = () => {
     setOpenPopUp(false);
@@ -28,6 +32,13 @@ export default function CalcTabs() {
 
   const handleSaveCalcInfo = () => {
     setOpenPopUp(true);
+  };
+
+  const handleSyncCalcInfo = () => {
+    if (calculations.data) {
+      const { parentFolderId, id, name, data, fixedCosts } = calculations.data;
+      patchData(parentFolderId, id, name, data, fixedCosts);
+    }
   };
 
   return (
@@ -57,7 +68,14 @@ export default function CalcTabs() {
             </MainCalcLayout>
           )}
           <Box sx={{ display: 'flex', justifyContent: 'center', mt: '20px' }}>
-            <GreenCustomButton handleClick={handleSaveCalcInfo} buttonText={'Зберегти дані'} />
+            <GreenCustomButton handleClick={handleSaveCalcInfo}>Зберегти нові розрахунки</GreenCustomButton>
+            {calculations.data && (
+              <GreenCustomButton handleClick={handleSyncCalcInfo}>
+                <ButtonStyledTypography>
+                  Синхронізувати <SyncIcon sx={{ ml: '5px' }} />
+                </ButtonStyledTypography>
+              </GreenCustomButton>
+            )}
           </Box>
         </TabPanel>
         <TabPanel value="2">
@@ -70,7 +88,7 @@ export default function CalcTabs() {
         title="Збереження розрахунків"
         isPending={calculations.pending}
       >
-        <PopUpFolders />
+        <PopUpContent />
       </PopupLayoutWithoutActions>
     </Box>
   );
@@ -99,5 +117,19 @@ const StyledWrapperBox = styled(Box)(({ theme }) => ({
 const StyledTypography = styled(Typography)(({ theme }) => ({
   [theme.breakpoints.up('sm')]: {
     display: 'none',
+  },
+}));
+
+const ButtonStyledTypography = styled(Typography)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  '&:hover': {
+    svg: {
+      transform: 'rotate(360deg)',
+    },
+  },
+  '& svg': {
+    transition: 'transform 0.8s ease-in-out',
+    transform: 'rotate(0deg)',
   },
 }));

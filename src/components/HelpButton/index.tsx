@@ -45,10 +45,9 @@ export function HelpButton() {
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowFullScreen
           ></iframe>
-          <GreenCustomButton
-            buttonText=" Завантажити тренувальні дані"
-            handleClick={(event) => handleClickExample(event)}
-          ></GreenCustomButton>
+          <GreenCustomButton handleClick={(event) => handleClickExample(event)}>
+            Завантажити тренувальні дані
+          </GreenCustomButton>
         </Box>
       </PopupLayoutWithoutActions>
     </>

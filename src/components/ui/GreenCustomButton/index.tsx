@@ -1,16 +1,16 @@
 import { Box, Button, styled } from '@mui/material';
-import React, { MouseEventHandler } from 'react';
+import React, { MouseEventHandler, ReactNode } from 'react';
 
 interface GreenCustomButtonProps {
   handleClick: MouseEventHandler<HTMLButtonElement>;
-  buttonText: string;
+  children: ReactNode | string;
 }
 
-export default function GreenCustomButton({ handleClick, buttonText }: GreenCustomButtonProps) {
+export default function GreenCustomButton({ handleClick, children }: GreenCustomButtonProps) {
   return (
     <Box sx={{ m: '20px' }}>
       <CustomButton onClick={handleClick} variant="contained" color="success">
-        {buttonText}
+        {children}
       </CustomButton>
     </Box>
   );
