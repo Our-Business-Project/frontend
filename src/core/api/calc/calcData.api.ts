@@ -2,7 +2,7 @@
 import { CalculatorData } from '@/core/models/СalcData.model';
 
 import { AxiosError } from 'axios';
-import { del, get, post } from '../../helpers/apiRequests';
+import { del, get, patch, post } from '../../helpers/apiRequests';
 import { calcFoldersUrl } from '../config';
 import { FixedCostsData } from '@/core/models/FixedCosts.model';
 
@@ -51,6 +51,32 @@ export const createDataRequest = async (
 export const getOneFolderDataRequest = async (token: string, folderId: string) => {
   try {
     const response = await get(`${calcFoldersUrl}/${folderId}`, token);
+
+    return response.data;
+  } catch (error) {
+    const err = error as unknown as AxiosError;
+    if (err.response?.status === 401) {
+      throw new Error('Не авторизоавний!');
+    } else {
+      throw new Error('Щось пішло не по плану :(');
+    }
+  }
+};
+
+export const patchDataRequest = async (
+  token: string,
+  folderId: string,
+  dataId: string,
+  fileName: string,
+  CalcData: CalculatorData,
+  fixedCostsData: FixedCostsData[]
+) => {
+  try {
+    const response = await patch(`${calcFoldersUrl}/${folderId}/data/${dataId}`, token, {
+      name: fileName,
+      data: CalcData,
+      fixedCosts: fixedCostsData,
+    });
 
     return response.data;
   } catch (error) {

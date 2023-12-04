@@ -41,14 +41,15 @@ export const useCalculations = (token?: string) => {
   const updateFixedCosts = useCallback(
     (newValue: number, CostsTypeIndex: number, DataIndex?: number, DataItemIndex?: number) => {
       const updatedData = [...state.fixedCostsData];
+
       if (typeof DataIndex === 'number' && typeof DataItemIndex === 'number') {
         const DataElement = updatedData[CostsTypeIndex].data[DataIndex];
         DataElement[DataItemIndex] = newValue;
         const indexOfSumaGrn = updatedData[CostsTypeIndex].columnNames.indexOf('Сума грн.');
         DataElement[indexOfSumaGrn] = newValue;
-        let localProduct = 1;
 
         if (updatedData[CostsTypeIndex].columnNames.length > 2) {
+          let localProduct = 1;
           DataElement.forEach((element, index) => {
             if (typeof element === 'number' && index !== indexOfSumaGrn) {
               localProduct = localProduct * element;
@@ -69,6 +70,9 @@ export const useCalculations = (token?: string) => {
         }
       }
 
+      if (typeof DataIndex === 'undefined' && typeof DataItemIndex === 'undefined') {
+        updatedData[CostsTypeIndex].value = newValue;
+      }
       setState((prevState) => ({
         ...prevState,
         fixedCostsData: updatedData,
