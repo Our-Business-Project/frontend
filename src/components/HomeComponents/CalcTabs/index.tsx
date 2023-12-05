@@ -61,7 +61,7 @@ export default function CalcTabs() {
                   key={key}
                   {...calculations.data.data[key as FieldName]}
                   disallowNegativeNumbers={key === 'DesiredProductionPlan'}
-                  defaultText={key === 'DesiredProductionPlan' && 'Не реально'}
+                  defaultText={'Не реально'}
                   updateCalcData={updateCalcData}
                   name={key as FieldName}
                 />
