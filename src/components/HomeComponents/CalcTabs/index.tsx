@@ -70,7 +70,7 @@ export default function CalcTabs() {
           )}
           <Box sx={{ display: 'flex', justifyContent: 'center', mt: '20px' }}>
             <GreenCustomButton handleClick={handleSaveCalcInfo}>Зберегти нові розрахунки</GreenCustomButton>
-            {calculations.data && (
+            {isCalculationsData(calculations.data) && (
               <GreenCustomButton handleClick={handleSyncCalcInfo}>
                 <ButtonStyledTypography>
                   Синхронізувати <SyncIcon sx={{ ml: '5px' }} />
