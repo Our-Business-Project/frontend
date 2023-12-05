@@ -1,5 +1,5 @@
 import { FixedCostsData } from './FixedCosts.model';
-import { CalculatorDataUnit } from './СalcData.model';
+import { CalculatorDataUnit, CalculatorDesiredProductionPlanDataUnit } from './СalcData.model';
 
 export type FieldName =
   | 'ProductionPlan'
@@ -27,7 +27,7 @@ export type CalcData = {
   BreakEvenPoint: CalculatorDataUnit;
   Profit: CalculatorDataUnit;
   Want: CalculatorDataUnit;
-  DesiredProductionPlan: CalculatorDataUnit;
+  DesiredProductionPlan: CalculatorDesiredProductionPlanDataUnit;
   DesiredCostPrice: CalculatorDataUnit;
   DesiredPricePerUnit: CalculatorDataUnit;
 };

@@ -6,6 +6,15 @@ export interface CalculatorDataUnit {
   slider?: boolean;
   maxValue?: number;
 }
+export interface CalculatorDesiredProductionPlanDataUnit {
+  value: number | null;
+  label?: string;
+  borderRadius?: string;
+  disabled?: boolean;
+  slider?: boolean;
+  maxValue?: number;
+}
+
 export interface CalculatorData {
   [key: string]: CalculatorDataUnit;
 }

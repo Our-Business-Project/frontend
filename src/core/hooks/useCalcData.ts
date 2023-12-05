@@ -3,8 +3,8 @@ import { useAppDispatch, useAppSelector } from './useRedux';
 import { selectCalcData } from '../store/selectors/calcData.selectors';
 import { createDataService, deleteDataService, patchDataService } from '../services/calcData.service';
 import { getOneFolderDataService } from '../services/calcData.service';
-import { CalculatorData } from '../models/СalcData.model';
 import { FixedCostsData } from '../models/FixedCosts.model';
+import { CalcData } from '../models/Calculations.model';
 
 export const useCalcData = (token?: string) => {
   const dispatch = useAppDispatch();
@@ -18,21 +18,15 @@ export const useCalcData = (token?: string) => {
   );
 
   const createData = useCallback(
-    (folderId: string, fileName: string, calcData: CalculatorData, fixedCostsData: FixedCostsData[]) => {
+    (folderId: string, fileName: string, calcData: CalcData, fixedCostsData: FixedCostsData[]) => {
       if (token) dispatch(createDataService(token, folderId, fileName, calcData, fixedCostsData));
     },
     [dispatch, token]
   );
 
   const patchData = useCallback(
-    (
-      folderId: string,
-      dataId: string,
-      fileName: string,
-      CalcData: CalculatorData,
-      fixedCostsData: FixedCostsData[]
-    ) => {
-      if (token) dispatch(patchDataService(token, folderId, dataId, fileName, CalcData, fixedCostsData));
+    (folderId: string, dataId: string, fileName: string, calcData: CalcData, fixedCostsData: FixedCostsData[]) => {
+      if (token) dispatch(patchDataService(token, folderId, dataId, fileName, calcData, fixedCostsData));
     },
     [dispatch, token]
   );

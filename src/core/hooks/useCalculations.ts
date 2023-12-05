@@ -98,6 +98,19 @@ export const useCalculations = (token?: string) => {
   const updateCalcData = useCallback(
     (fieldName: FieldName, newValue: number) => {
       if (!calculations.data) return;
+
+      const PricePerUnitValue = fieldName === 'PricePerUnit' ? newValue : calculations.data.data.PricePerUnit.value;
+      const CostPriceValue = fieldName === 'CostPrice' ? newValue : calculations.data.data.CostPrice.value;
+
+      const ProductionPlanValue =
+        fieldName === 'ProductionPlan' ? newValue : calculations.data.data.ProductionPlan.value;
+
+      const FixedCostsValue = fieldName === 'FixedCosts' ? newValue : calculations.data.data.FixedCosts.value;
+      const WantValue = fieldName === 'Want' ? newValue : calculations.data.data.Want.value;
+
+      const GrossProfitValue = +(PricePerUnitValue - CostPriceValue).toFixed(2);
+      const BreakEvenPointValue = GrossProfitValue ? Math.round(+(FixedCostsValue / GrossProfitValue)) : 0;
+
       const updatedData = {
         ...calculations.data.data,
         [fieldName]: {
@@ -106,56 +119,58 @@ export const useCalculations = (token?: string) => {
         },
         GrossProfit: {
           ...calculations.data.data.GrossProfit,
-          value: +(calculations.data.data.PricePerUnit.value - calculations.data.data.CostPrice.value).toFixed(2),
+          value: GrossProfitValue,
         },
         ProductionCost: {
           ...calculations.data.data.ProductionCost,
-          value: +(calculations.data.data.ProductionPlan.value * calculations.data.data.CostPrice.value).toFixed(2),
+          value: +(ProductionPlanValue * CostPriceValue).toFixed(2),
         },
         Revenue: {
           ...calculations.data.data.Revenue,
-          value: +(calculations.data.data.ProductionPlan.value * calculations.data.data.PricePerUnit.value).toFixed(2),
+          value: +(ProductionPlanValue * PricePerUnitValue).toFixed(2),
         },
         BreakEvenPoint: {
           ...calculations.data.data.BreakEvenPoint,
-          value: calculations.data.data.GrossProfit.value
-            ? Math.round(+(calculations.data.data.FixedCosts.value / calculations.data.data.GrossProfit.value))
-            : 0,
+          value: BreakEvenPointValue,
         },
         Profit: {
           ...calculations.data.data.Profit,
-          value: +(
-            calculations.data.data.ProductionPlan.value * calculations.data.data.GrossProfit.value -
-            calculations.data.data.FixedCosts.value
-          ).toFixed(2),
+          value: +(ProductionPlanValue * GrossProfitValue - FixedCostsValue).toFixed(2),
         },
       };
 
-      const DesiredGrossProfit =
-        +(updatedData.FixedCosts.value + updatedData.Want.value) / updatedData.ProductionPlan.value;
+      const DesiredGrossProfit = +(FixedCostsValue + WantValue) / ProductionPlanValue;
 
       const additionalFields =
-        updatedData.Want.value &&
-        updatedData.PricePerUnit.value &&
-        updatedData.CostPrice.value &&
-        updatedData.ProductionPlan.value
+        WantValue && PricePerUnitValue && CostPriceValue && ProductionPlanValue
           ? {
               DesiredProductionPlan: {
                 ...calculations.data.data.DesiredProductionPlan,
-                value: Math.round(
-                  +(updatedData.Want.value / updatedData.GrossProfit.value + updatedData.BreakEvenPoint.value)
-                ),
+                value: Math.round(+(WantValue / GrossProfitValue + BreakEvenPointValue)),
               },
               DesiredPricePerUnit: {
                 ...calculations.data.data.DesiredPricePerUnit,
-                value: +(DesiredGrossProfit + updatedData.CostPrice.value).toFixed(2),
+                value: +(DesiredGrossProfit + CostPriceValue).toFixed(2),
               },
               DesiredCostPrice: {
                 ...calculations.data.data.DesiredCostPrice,
-                value: +(updatedData.PricePerUnit.value - DesiredGrossProfit).toFixed(2),
+                value: +(PricePerUnitValue - DesiredGrossProfit).toFixed(2),
               },
             }
-          : {};
+          : {
+              DesiredProductionPlan: {
+                ...calculations.data.data.DesiredProductionPlan,
+                value: 0,
+              },
+              DesiredPricePerUnit: {
+                ...calculations.data.data.DesiredPricePerUnit,
+                value: 0,
+              },
+              DesiredCostPrice: {
+                ...calculations.data.data.DesiredCostPrice,
+                value: 0,
+              },
+            };
 
       dispatch(updateCalcDataService({ ...updatedData, ...additionalFields }));
     },

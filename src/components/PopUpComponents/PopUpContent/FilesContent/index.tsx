@@ -30,7 +30,8 @@ export default function FilesContent({ calcFoldersData }: FilesContentProps) {
   const { deleteData, createData, patchData } = useCalcData(token);
   const { calculations } = useCalculations(token);
 
-  const handleClickedDeleteData = (data: CalcFoldersUnit) => {
+  const handleClickedDeleteData = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, data: CalcFoldersUnit) => {
+    event.stopPropagation();
     setIsDeletingFile(true);
     setDeletingFile(data);
   };
@@ -89,7 +90,7 @@ export default function FilesContent({ calcFoldersData }: FilesContentProps) {
               <StyledListItem onClick={() => handleClickedChangeData(file)} key={index} className={listItemClass}>
                 <DescriptionIcon color="primary" sx={{ mr: '10px' }} />
                 <StyledListItemText primary={file.name} color={'text.secondary'} />
-                <IconButton onClick={() => handleClickedDeleteData(file)}>
+                <IconButton onClick={(event) => handleClickedDeleteData(event, file)}>
                   <DeleteIcon fontSize="medium" color="error" />
                 </IconButton>
               </StyledListItem>

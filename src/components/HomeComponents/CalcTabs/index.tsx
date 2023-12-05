@@ -59,7 +59,9 @@ export default function CalcTabs() {
               {Object.keys(calculations.data.data).map((key) => (
                 <CalcInput
                   key={key}
-                  {...calculations.data!.data[key as FieldName]}
+                  {...calculations.data.data[key as FieldName]}
+                  disallowNegativeNumbers={key === 'DesiredProductionPlan'}
+                  defaultText={key === 'DesiredProductionPlan' && 'Не реально'}
                   updateCalcData={updateCalcData}
                   name={key as FieldName}
                 />

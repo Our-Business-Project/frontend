@@ -3,8 +3,8 @@ import { createDataRequest, deleteDataRequest, patchDataRequest } from '../api/c
 import { calcDataRequest, calcDataSuccess, calcDataFailed } from '../store/actions/calcData.action';
 import { errorNotify, successNotify } from '../helpers/notifications';
 import { getOneFolderDataRequest } from '../api/calc/calcData.api';
-import { CalculatorData } from '../models/СalcData.model';
 import { FixedCostsData } from '../models/FixedCosts.model';
+import { CalcData } from '../models/Calculations.model';
 
 export const deleteDataService = (token: string, folderId: string, dataId: string) => {
   return async (dispatch: AppDispatch) => {
@@ -25,13 +25,13 @@ export const createDataService = (
   token: string,
   folderId: string,
   fileName: string,
-  CalcData: CalculatorData,
+  calcData: CalcData,
   fixedCostsData: FixedCostsData[]
 ) => {
   return async (dispatch: AppDispatch) => {
     dispatch(calcDataRequest());
     try {
-      await createDataRequest(token, folderId, fileName, CalcData, fixedCostsData);
+      await createDataRequest(token, folderId, fileName, calcData, fixedCostsData);
       const responseData = await getOneFolderDataRequest(token, folderId);
       dispatch(calcDataSuccess(responseData));
     } catch (err) {
@@ -47,13 +47,13 @@ export const patchDataService = (
   folderId: string,
   dataId: string,
   fileName: string,
-  CalcData: CalculatorData,
+  calcData: CalcData,
   fixedCostsData: FixedCostsData[]
 ) => {
   return async (dispatch: AppDispatch) => {
     dispatch(calcDataRequest());
     try {
-      await patchDataRequest(token, folderId, dataId, fileName, CalcData, fixedCostsData);
+      await patchDataRequest(token, folderId, dataId, fileName, calcData, fixedCostsData);
       const responseData = await getOneFolderDataRequest(token, folderId);
       dispatch(calcDataSuccess(responseData));
       successNotify('Дані успішно оновлено');

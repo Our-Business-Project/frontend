@@ -12,14 +12,18 @@ export default function CalcInput({
   disabled = true,
   slider = false,
   maxValue = 100000,
+  disallowNegativeNumbers = false,
+  defaultText = '',
 }: {
   name: FieldName;
-  value: number;
+  value: number | null;
   label?: string;
   borderRadius?: string;
   disabled?: boolean;
   slider?: boolean;
   maxValue?: number;
+  disallowNegativeNumbers: boolean;
+  defaultText: string;
   updateCalcData: (fieldName: FieldName, newValue: number) => void;
 }) {
   const bgcolor = disabled ? 'secondary.main' : 'primary.dark';
@@ -30,6 +34,7 @@ export default function CalcInput({
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.value === defaultText) return;
     const newValue = event.target.value === '' ? 0 : Number(event.target.value);
     updateCalcData(`${name}`, newValue);
   };
@@ -37,6 +42,24 @@ export default function CalcInput({
   const deleteZeros = (value: number | string) => {
     return value !== 0 ? ('' + value).replace(/^0+/, '') : value;
   };
+
+  const newValue =
+    value !== null
+      ? !disallowNegativeNumbers
+        ? deleteZeros(value)
+        : value >= 0 && value !== Infinity
+        ? deleteZeros(value)
+        : defaultText
+      : defaultText;
+
+  const inpType =
+    value !== null
+      ? !disallowNegativeNumbers
+        ? 'number'
+        : value >= 0 && value !== Infinity
+        ? 'number'
+        : 'string'
+      : 'string';
 
   return (
     <TotalWrapper>
@@ -52,11 +75,11 @@ export default function CalcInput({
         <Divider sx={{ borderColor: 'text.primary' }} />
         <FormControl sx={{ m: '5px auto 0 auto', width: '130px' }} fullWidth variant="filled">
           <Input
-            value={deleteZeros(value)}
+            value={newValue}
             size="small"
             onChange={handleInputChange}
             aria-label="Always visible"
-            type="number"
+            type={inpType}
             id="standard-basic"
             disabled={disabled}
             sx={{
