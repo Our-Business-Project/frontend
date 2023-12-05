@@ -1,46 +1,65 @@
+import { FieldName } from '@/core/models/Calculations.model';
 import { Divider, FormControl, Typography, Box, styled, Slider } from '@mui/material';
 import MuiInput from '@mui/material/Input';
 import * as React from 'react';
-import { CalcContext } from '@/core/contexts/Calc.context';
-import { redirect } from 'next/navigation';
 
 export default function CalcInput({
   name,
   label,
   value,
+  updateCalcData,
   borderRadius = '15px',
   disabled = true,
   slider = false,
   maxValue = 100000,
+  disallowNegativeNumbers = false,
+  defaultText = '',
 }: {
-  name: string;
-  value: number;
+  name: FieldName;
+  value: number | null;
   label?: string;
   borderRadius?: string;
   disabled?: boolean;
   slider?: boolean;
   maxValue?: number;
+  disallowNegativeNumbers: boolean;
+  defaultText: string;
+  updateCalcData: (fieldName: FieldName, newValue: number) => void;
 }) {
-  const calcContext = React.useContext(CalcContext);
   const bgcolor = disabled ? 'secondary.main' : 'primary.dark';
-  if (!calcContext) {
-    redirect('/404');
-  }
-  const { updateCalContextData } = calcContext;
 
-  const handleSliderChange = (event: Event, newValue: number | number[]) => {
+  const handleSliderChange = (_: Event, newValue: number | number[]) => {
     const updatedValue = Array.isArray(newValue) ? newValue[0] : newValue;
-    updateCalContextData(`${name}`, updatedValue);
+    updateCalcData(`${name}`, updatedValue);
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.value === defaultText) return;
     const newValue = event.target.value === '' ? 0 : Number(event.target.value);
-    updateCalContextData(`${name}`, newValue);
+    updateCalcData(`${name}`, newValue);
   };
 
   const deleteZeros = (value: number | string) => {
     return value !== 0 ? ('' + value).replace(/^0+/, '') : value;
   };
+
+  const newValue =
+    value !== null
+      ? !disallowNegativeNumbers
+        ? deleteZeros(value)
+        : value >= 0 && value !== Infinity
+        ? deleteZeros(value)
+        : defaultText
+      : defaultText;
+
+  const inpType =
+    value !== null
+      ? !disallowNegativeNumbers
+        ? 'number'
+        : value >= 0 && value !== Infinity
+        ? 'number'
+        : 'string'
+      : 'string';
 
   return (
     <TotalWrapper>
@@ -56,11 +75,11 @@ export default function CalcInput({
         <Divider sx={{ borderColor: 'text.primary' }} />
         <FormControl sx={{ m: '5px auto 0 auto', width: '130px' }} fullWidth variant="filled">
           <Input
-            value={deleteZeros(value)}
+            value={newValue}
             size="small"
             onChange={handleInputChange}
             aria-label="Always visible"
-            type="number"
+            type={inpType}
             id="standard-basic"
             disabled={disabled}
             sx={{

@@ -24,6 +24,7 @@ export default function ProfileInfo() {
           variant="scrollable"
           scrollButtons="auto"
           aria-label="scrollable auto tabs"
+          allowScrollButtonsMobile
           value={+value}
           onChange={handleChange}
         >
@@ -45,17 +46,38 @@ const ContainerStyled = styled(Container)(() => ({
 const StyledTitle = styled(Typography)(({ theme }) => ({
   color: theme.palette.common.black,
   margin: '4.375rem 0 3.125rem',
+
+  [theme.breakpoints.down('sm')]: {
+    margin: '1.375rem 0 2.125rem',
+    paddingLeft: '0.625rem',
+  },
+
+  [theme.breakpoints.down('mi')]: {
+    width: '100%',
+    textAlign: 'center',
+    paddingLeft: 0,
+  },
 }));
 
-const StyledTabs = styled(Tabs)(() => ({
+const StyledTabs = styled(Tabs)(({ theme }) => ({
   '&.MuiTabs-root': {
     boxShadow: 'inset 0px -2px 0px 0px rgb(65 110 142 / 30%)',
     maxWidth: '935px',
     paddingLeft: '4.375rem',
     marginBottom: '4.375rem',
+
+    '& .MuiButtonBase-root': {
+      color: theme.palette.common.black,
+    },
   },
   '& .MuiTabs-indicator': {
     backgroundColor: 'rgb(65 110 142 / 100%)',
+  },
+
+  [theme.breakpoints.down('smmd')]: {
+    '&.MuiTabs-root': {
+      paddingLeft: '0',
+    },
   },
 }));
 

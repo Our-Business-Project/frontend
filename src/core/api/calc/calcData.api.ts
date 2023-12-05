@@ -2,9 +2,10 @@
 import { CalculatorData } from '@/core/models/СalcData.model';
 
 import { AxiosError } from 'axios';
-import { del, get, post } from '../../helpers/apiRequests';
+import { del, get, patch, post } from '../../helpers/apiRequests';
 import { calcFoldersUrl } from '../config';
 import { FixedCostsData } from '@/core/models/FixedCosts.model';
+import { CalcData } from '@/core/models/Calculations.model';
 
 export const deleteDataRequest = async (token: string, folderId: string, dataID: string) => {
   try {
@@ -27,13 +28,13 @@ export const createDataRequest = async (
   token: string,
   folderId: string,
   fileName: string,
-  CalcData: CalculatorData,
+  calcData: CalcData,
   fixedCostsData: FixedCostsData[]
 ) => {
   try {
     const response = await post(`${calcFoldersUrl}/${folderId}/data`, token, {
       name: fileName,
-      data: CalcData,
+      data: calcData,
       fixedCosts: fixedCostsData,
     });
 
@@ -63,9 +64,20 @@ export const getOneFolderDataRequest = async (token: string, folderId: string) =
   }
 };
 
-export const getOneFileDataRequest = async (token: string, folderId: string, fileId: string) => {
+export const patchDataRequest = async (
+  token: string,
+  folderId: string,
+  dataId: string,
+  fileName: string,
+  calcData: CalcData,
+  fixedCostsData: FixedCostsData[]
+) => {
   try {
-    const response = await get(`${calcFoldersUrl}/${folderId}/data/${fileId}`, token);
+    const response = await patch(`${calcFoldersUrl}/${folderId}/data/${dataId}`, token, {
+      name: fileName,
+      data: calcData,
+      fixedCosts: fixedCostsData,
+    });
 
     return response.data;
   } catch (error) {

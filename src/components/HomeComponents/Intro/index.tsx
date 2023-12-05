@@ -67,7 +67,7 @@ export default function Intro() {
               <Grid item xs={2} sm={4} md={4} key={index}>
                 <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
                   <img src={benefit.path} alt={benefit.title} style={{ maxWidth: '90px' }} />
-                  <Typography textAlign="center" variant="subtitle2" sx={{ mt: '10px' }}>
+                  <Typography textAlign="center" sx={{ mt: '10px', fontSize: '14px' }}>
                     {benefit.title}
                   </Typography>
                 </Box>

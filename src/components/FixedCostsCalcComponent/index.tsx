@@ -1,40 +1,33 @@
 import * as React from 'react';
 import { Table, TableBody, TableContainer, Paper, TableRow, TableCell, Box } from '@mui/material';
-import { FixedCostsContext } from '@/core/contexts/FixedCosts.context';
 import { Row } from './Row';
-import { CalcContext } from '@/core/contexts/Calc.context';
 import GreenCustomButton from '../ui/GreenCustomButton';
-import { redirect } from 'next/navigation';
 import { PieChartExample } from './PieChart';
+import { useAuth } from '@/core/hooks/useAuth';
+import { useCalculations } from '@/core/hooks/useCalculations';
 
 export default function FixedCostsCalcTable() {
-  const fixedCostsContext = React.useContext(FixedCostsContext);
-  const calcContext = React.useContext(CalcContext);
+  const { token } = useAuth();
+  const { calculations, updateCalcData, updateFixedCosts } = useCalculations(token);
+
   const [fixedCostsSumm, setFixedCostsSumm] = React.useState(0);
 
-  if (!fixedCostsContext || !calcContext) {
-    redirect('/404');
-  }
-
-  const { fixedCostsData } = fixedCostsContext;
-  const { updateCalContextData } = calcContext;
-
   React.useEffect(() => {
-    const newFixedCostsSumm = fixedCostsData.reduce((accumulator, currentValue) => accumulator + currentValue.value, 0);
+    const newFixedCostsSumm = calculations.data.fixedCosts.reduce(
+      (accumulator, currentValue) => accumulator + currentValue.value,
+      0
+    );
     setFixedCostsSumm(newFixedCostsSumm);
-  }, [fixedCostsData]);
-
-  const handleSave = () => {
-    updateCalContextData('FixedCosts', fixedCostsSumm);
-  };
+  }, [calculations.data.fixedCosts]);
 
   return (
     <>
       <TableContainer sx={{ bgcolor: 'secondary.dark', padding: '50px' }} component={Paper}>
         <Table aria-label="collapsible table">
           <TableBody>
-            {fixedCostsData &&
-              Object.values(fixedCostsData).map((row, index) => <Row key={index} row={row} rowIndex={index} />)}
+            {Object.values(calculations.data.fixedCosts).map((row, index) => (
+              <Row key={index} row={row} rowIndex={index} updateFixedCostsData={updateFixedCosts} />
+            ))}
             <TableRow>
               <TableCell component="th" scope="row">
                 Загальні витрати
@@ -46,10 +39,14 @@ export default function FixedCostsCalcTable() {
           </TableBody>
         </Table>
       </TableContainer>
-      {fixedCostsData.some((item) => item.value > 1) && <PieChartExample data={fixedCostsData} />}
+      {calculations.data.fixedCosts.some((item) => item.value > 1) && (
+        <PieChartExample data={calculations.data.fixedCosts} />
+      )}
 
       <Box sx={{ display: 'flex', justifyContent: 'center', mt: '20px' }}>
-        <GreenCustomButton handleClick={handleSave} buttonText={'Застосувати розрахунки'} />
+        <GreenCustomButton handleClick={() => updateCalcData('FixedCosts', fixedCostsSumm)}>
+          Перенести розрахунки в калькулятор бізнесу
+        </GreenCustomButton>
       </Box>
     </>
   );

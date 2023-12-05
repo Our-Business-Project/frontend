@@ -1,9 +1,9 @@
 import { CALC_FOLDERS_REQUEST, CALC_FOLDERS_SUCCESS, CALC_FOLDERS_FAILED } from '../constants/calcFolders.constants';
 import { CalcFoldersActions } from '../actions/calcFolders.action';
-import { CalcFolders } from '@/core/models/CalcFolders.model';
+import { CalculatorShortDataUnit } from '@/core/models/СalcData.model';
 
 interface CalcFoldersInterface {
-  data: CalcFolders | null;
+  data: CalculatorShortDataUnit[] | null;
   error: string | null;
   pending: boolean;
 }

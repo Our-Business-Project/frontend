@@ -1,5 +1,5 @@
-import { CalcFolders } from '@/core/models/CalcFolders.model';
 import { CALC_FOLDERS_REQUEST, CALC_FOLDERS_SUCCESS, CALC_FOLDERS_FAILED } from '../constants/calcFolders.constants';
+import { CalculatorShortDataUnit } from '@/core/models/СalcData.model';
 
 interface CalcFoldersRequestAction {
   type: typeof CALC_FOLDERS_REQUEST;
@@ -7,7 +7,7 @@ interface CalcFoldersRequestAction {
 
 interface CalcFoldersSuccessAction {
   type: typeof CALC_FOLDERS_SUCCESS;
-  data: CalcFolders;
+  data: CalculatorShortDataUnit[];
 }
 
 interface CalcFoldersFailedAction {
@@ -21,7 +21,7 @@ const calcFoldersRequest = (): CalcFoldersRequestAction => ({
   type: CALC_FOLDERS_REQUEST,
 });
 
-const calcFoldersSuccess = (data: CalcFolders): CalcFoldersSuccessAction => ({
+const calcFoldersSuccess = (data: CalculatorShortDataUnit[]): CalcFoldersSuccessAction => ({
   type: CALC_FOLDERS_SUCCESS,
   data,
 });

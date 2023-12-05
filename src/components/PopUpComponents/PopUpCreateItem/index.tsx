@@ -28,7 +28,6 @@ export function PopUpCreateItem({ setActive, createItemFunction, icon }: PopUpCr
   return (
     <ListItem>
       {icon}
-      {/* <CreateNewFolderIcon color="primary" sx={{ mr: '10px' }} /> */}
       <StyledListItemText>
         <TextField
           autoFocus

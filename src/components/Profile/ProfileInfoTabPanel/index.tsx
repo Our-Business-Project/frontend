@@ -32,8 +32,13 @@ export default function ProfileInfoTabPanel({ value, ...props }: TabPanelProps) 
   );
 }
 
-const StyledTabPanel = styled(TabPanel)(() => ({
+const StyledTabPanel = styled(TabPanel)(({ theme }) => ({
   padding: '0',
   display: 'flex',
   justifyContent: 'space-between',
+
+  [theme.breakpoints.down('smmd')]: {
+    alignItems: 'center',
+    flexDirection: 'column-reverse',
+  },
 }));

@@ -9,52 +9,71 @@ import { useAuth } from '@/core/hooks/useAuth';
 import { useCalcData } from '@/core/hooks/useCalcData';
 import { CalculatorDataIncome } from '@/core/models/СalcData.model';
 import DeleteIcon from '@mui/icons-material/Delete';
-import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
-import { CalcContext } from '@/core/contexts/Calc.context';
-import { redirect } from 'next/navigation';
-import { FixedCostsContext } from '@/core/contexts/FixedCosts.context';
+import DescriptionIcon from '@mui/icons-material/Description';
 import NoteAddIcon from '@mui/icons-material/NoteAdd';
 import PopupLayoutWithActions from '@/components/ui/PopUpLayout/PopupLayoutWithActions';
+import { useCalculations } from '@/core/hooks/useCalculations';
 
 interface FilesContentProps {
   calcFoldersData: CalculatorDataIncome | null;
 }
 
 export default function FilesContent({ calcFoldersData }: FilesContentProps) {
-  const [creatingNewFile, setCreatingNewFile] = React.useState(false);
+  const [creatingNewFile, setCreatingNewFile] = React.useState(true);
   const [deletingFile, setDeletingFile] = React.useState<CalcFoldersUnit | null>(null);
+  const [changingFile, setChangingFile] = React.useState<CalcFoldersUnit | null>(null);
   const [isDeletingingFile, setIsDeletingFile] = React.useState(false);
-  const calcContext = React.useContext(CalcContext);
-  const fixedCostsContext = React.useContext(FixedCostsContext);
+  const [isChangingFile, setIsChangingFile] = React.useState(false);
   const listItemClass = 'mui-1q896iv-MuiButtonBase-root-MuiButton-root';
 
-  if (!calcContext || !fixedCostsContext) {
-    redirect('/404');
-  }
-
-  const { fixedCostsData } = fixedCostsContext;
-  const { calcDataContext } = calcContext;
   const { token } = useAuth();
-  const { deleteData, createData } = useCalcData(token);
+  const { deleteData, createData, patchData } = useCalcData(token);
+  const { calculations } = useCalculations(token);
 
-  const handleClickedDeleteData = (data: CalcFoldersUnit) => {
+  const handleClickedDeleteData = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, data: CalcFoldersUnit) => {
+    event.stopPropagation();
     setIsDeletingFile(true);
     setDeletingFile(data);
   };
 
-  const DeleteFileAction = () => {
+  const handleClickedChangeData = (data: CalcFoldersUnit) => {
+    setIsChangingFile(true);
+    setChangingFile(data);
+  };
+
+  const deleteFileAction = () => {
     deletingFile && calcFoldersData && deleteData(calcFoldersData.id, deletingFile.id);
     setIsDeletingFile(false);
+  };
+
+  const changeFileAction = () => {
+    changingFile &&
+      calcFoldersData &&
+      patchData(
+        calcFoldersData.id,
+        changingFile.id,
+        changingFile.name,
+        calculations.data.data,
+        calculations.data.fixedCosts
+      );
+    setIsChangingFile(false);
+  };
+
+  const handleCloseChangingPopUp = () => {
+    setIsChangingFile(false);
   };
 
   const handleCloseDeletingPopUp = () => {
     setIsDeletingFile(false);
   };
 
-  const createFileFunction = (name: string) => {
-    if (calcFoldersData && fixedCostsData && typeof calcFoldersData.id === 'string')
-      createData(calcFoldersData.id, name, calcDataContext, fixedCostsData);
-  };
+  const createFileFunction = React.useCallback(
+    (name: string) => {
+      if (calcFoldersData && calculations.data?.fixedCosts && typeof calcFoldersData.id === 'string')
+        createData(calcFoldersData.id, name, calculations.data.data, calculations.data.fixedCosts);
+    },
+    [calcFoldersData, calculations.data?.data, calculations.data?.fixedCosts, createData]
+  );
 
   return (
     <>
@@ -68,10 +87,10 @@ export default function FilesContent({ calcFoldersData }: FilesContentProps) {
         )}
         {calcFoldersData && Array.isArray(calcFoldersData.data) && calcFoldersData.data.length > 0
           ? calcFoldersData.data.map((file: CalcFoldersUnit, index: number) => (
-              <StyledListItem key={index} className={listItemClass}>
-                <InsertDriveFileIcon color="primary" sx={{ mr: '10px' }} />
+              <StyledListItem onClick={() => handleClickedChangeData(file)} key={index} className={listItemClass}>
+                <DescriptionIcon color="primary" sx={{ mr: '10px' }} />
                 <StyledListItemText primary={file.name} color={'text.secondary'} />
-                <IconButton onClick={() => handleClickedDeleteData(file)}>
+                <IconButton onClick={(event) => handleClickedDeleteData(event, file)}>
                   <DeleteIcon fontSize="medium" color="error" />
                 </IconButton>
               </StyledListItem>
@@ -90,15 +109,25 @@ export default function FilesContent({ calcFoldersData }: FilesContentProps) {
       </AbsoluteBox>
 
       <PopupLayoutWithActions
+        handleClose={handleCloseChangingPopUp}
+        open={isChangingFile}
+        title="Зміна файлу"
+        agreeBtnText="Перезаписати"
+        agreeBtnAction={changeFileAction}
+      >
+        <DialogContentText>
+          Ви впевнені, що хочете перезаписати в файл "{changingFile?.name}" нові дані?
+        </DialogContentText>
+      </PopupLayoutWithActions>
+
+      <PopupLayoutWithActions
         handleClose={handleCloseDeletingPopUp}
         open={isDeletingingFile}
         title="Видалення файлу"
         agreeBtnText="Видалити"
-        agreeBtnAction={DeleteFileAction}
+        agreeBtnAction={deleteFileAction}
       >
-        <DialogContentText id="alert-dialog-description">
-          Ви впевнені, що хочете видалити файл "{deletingFile?.name}"?
-        </DialogContentText>
+        <DialogContentText>Ви впевнені, що хочете видалити файл "{deletingFile?.name}"?</DialogContentText>
       </PopupLayoutWithActions>
     </>
   );

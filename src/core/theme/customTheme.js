@@ -7,6 +7,7 @@ export const customTheme = createTheme({
       xs: 0,
       mi: 400,
       sm: 600,
+      smmd: 700,
       md: 900,
       lg: 1200,
       xl: 1600,
@@ -25,10 +26,6 @@ export const customTheme = createTheme({
     h3: {
       fontSize: '2rem',
       fontWeight: 500,
-    },
-    h4: {
-      fontSize: '1.25rem',
-      fontWeight: 400,
     },
     button: {
       // textTransform: 'none',
