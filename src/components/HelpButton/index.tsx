@@ -37,13 +37,13 @@ export function HelpButton() {
             самостійно
           </Typography>
           <iframe
-            width="100%"
+            width="560"
             height="315"
-            src="https://www.youtube.com/embed/0LOpjYHV02c?si=GNYgoSYRoxVAxFym&amp;start=10"
+            src="https://www.youtube.com/embed/ULKdxszRIMw?si=-sgsCE4JEZGxNGbP"
             title="YouTube video player"
-            frameBorder="0"
+            frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowFullScreen
+            allowfullscreen
           ></iframe>
           <GreenCustomButton handleClick={(event) => handleClickExample(event)}>
             Завантажити тренувальні дані

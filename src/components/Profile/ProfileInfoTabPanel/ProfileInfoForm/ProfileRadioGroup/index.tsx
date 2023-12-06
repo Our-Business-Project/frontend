@@ -1,10 +1,10 @@
-import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, styled } from '@mui/material';
+import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Tooltip, styled } from '@mui/material';
 import { Props } from './props';
 import { Controller } from 'react-hook-form';
 
 const radioList = [
-  { label: 'ФОП', value: 'FOP' },
-  { label: 'ТОВ', value: 'TOV' },
+  { label: 'ФОП', value: 'FOP', fullName: 'Фізична особа підприємець.' },
+  { label: 'ТОВ', value: 'TOV', fullName: 'Товариство з обмеженою відповідальністю.' },
 ];
 
 export default function ProfileRadioGroup({ control, readOnly }: Props) {
@@ -16,8 +16,15 @@ export default function ProfileRadioGroup({ control, readOnly }: Props) {
         control={control}
         render={({ field }) => (
           <StyledRadioGroup aria-labelledby="taxation-label" {...field}>
-            {radioList.map(({ label, value }) => (
-              <StyledFormControlLabel key={value} label={label} value={value} control={<Radio disabled={readOnly} />} />
+            {radioList.map(({ label, value, fullName }) => (
+              <Tooltip title={fullName} placement="right-start">
+                <StyledFormControlLabel
+                  key={value}
+                  label={label}
+                  value={value}
+                  control={<Radio />}
+                />
+              </Tooltip>
             ))}
           </StyledRadioGroup>
         )}
@@ -61,6 +68,7 @@ const StyledRadioGroup = styled(RadioGroup)(({ theme }) => ({
 }));
 
 const StyledFormControlLabel = styled(FormControlLabel)(({ theme }) => ({
+  width: '90px',
   '& .MuiFormControlLabel-label': {
     color: theme.palette.common.black,
   },
