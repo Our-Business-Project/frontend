@@ -17,13 +17,8 @@ export default function ProfileRadioGroup({ control, readOnly }: Props) {
         render={({ field }) => (
           <StyledRadioGroup aria-labelledby="taxation-label" {...field}>
             {radioList.map(({ label, value, fullName }) => (
-              <Tooltip title={fullName} placement="right-start">
-                <StyledFormControlLabel
-                  key={value}
-                  label={label}
-                  value={value}
-                  control={<Radio />}
-                />
+              <Tooltip title={fullName} placement="right-start" key={label}>
+                <StyledFormControlLabel label={label} value={value} control={<Radio />} />
               </Tooltip>
             ))}
           </StyledRadioGroup>
