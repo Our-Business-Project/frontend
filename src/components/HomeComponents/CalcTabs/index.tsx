@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Box, Tab, Tabs, Typography, styled, tabsClasses } from '@mui/material';
+import { Box, Breadcrumbs, Tab, Tabs, Typography, styled, tabsClasses } from '@mui/material';
 import { TabContext, TabPanel } from '@mui/lab';
 import MainCalcLayout from '@/components/MainCalcLayout';
 import CalcInput from '@/components/ui/InputComponents/CalcInput';
@@ -13,12 +13,15 @@ import { FieldName, isCalculationsData } from '@/core/models/Calculations.model'
 import { HelpButton } from '@/components/HelpButton';
 import SyncIcon from '@mui/icons-material/Sync';
 import { useCalcData } from '@/core/hooks/useCalcData';
+import { useCalcFolders } from '@/core/hooks/useCalcFolders';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
 export default function CalcTabs() {
   const [value, setValue] = React.useState('1');
   const [openPopUp, setOpenPopUp] = React.useState(false);
   const { token } = useAuth();
   const { calculations, updateCalcData } = useCalculations(token);
+  const { calcFolders } = useCalcFolders(token);
   const { patchData } = useCalcData(token);
 
   const handleClosePopUp = () => {
@@ -40,8 +43,24 @@ export default function CalcTabs() {
     }
   };
 
+  const showBreadcrumbs = () => {
+    if (calcFolders.data && isCalculationsData(calculations.data))
+      for (const folder of calcFolders.data) {
+        if (folder.id === calculations.data.parentFolderId) {
+          return (
+            <Breadcrumbs sx={{ margin: '0 0 30px 15px' }} separator={<NavigateNextIcon fontSize="small" />}>
+              <Typography>{folder.name}</Typography>
+              <Typography>{calculations.data.name}</Typography>
+            </Breadcrumbs>
+          );
+        }
+      }
+    return null;
+  };
+
   return (
     <Box sx={{ width: '100%', typography: 'body1' }}>
+      {showBreadcrumbs()}
       <TabContext value={value}>
         <StyledWrapperBox>
           <CustomTabs onChange={handleChange} value={value} variant="scrollable" allowScrollButtonsMobile>
