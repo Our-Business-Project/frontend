@@ -83,6 +83,15 @@ export const useCalculations = (token?: string) => {
         });
 
         dispatch(updateFixedCostsService([...updatedData]));
+      } else {
+        if (typeof DataIndex === 'undefined' && typeof DataItemIndex === 'undefined') {
+          const newData = [...updatedFixedCosts];
+          newData[CostsTypeIndex] = {
+            ...newData[CostsTypeIndex],
+            value: newValue,
+          };
+          dispatch(updateFixedCostsService([...newData]));
+        }
       }
     },
     [calculations.data, dispatch]
