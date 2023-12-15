@@ -122,6 +122,7 @@ const StyledListItemText = styled(ListItemText)(({ theme }) => ({
   margin: '5px 45px 0px 5px',
   fontSize: '50px',
   color: theme.palette.text.secondary,
+   userSelect: 'none',  
   li: {
     color: 'black',
     fontSize: '50px',
@@ -130,6 +131,7 @@ const StyledListItemText = styled(ListItemText)(({ theme }) => ({
 
 const StyledListItem = styled(ListItem)`
   text-transform: none;
+  cursor: pointer;
   button {
     opacity: 0;
   }

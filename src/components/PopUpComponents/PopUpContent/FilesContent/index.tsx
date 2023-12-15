@@ -140,11 +140,19 @@ const AbsoluteBox = styled(Box)`
   margin-left: 90%;
 `;
 
-const StyledListItemText = styled(ListItemText)`
-  text-transform: none;
-`;
+const StyledListItemText = styled(ListItemText)(({ theme }) => ({
+  margin: '5px 45px 0px 5px',
+  fontSize: '50px',
+  color: theme.palette.text.secondary,
+  userSelect: 'none',
+  li: {
+    color: 'black',
+    fontSize: '50px',
+  },
+}));
 
 const StyledListItem = styled(ListItem)`
+  cursor: pointer;
   button {
     opacity: 0;
   }
