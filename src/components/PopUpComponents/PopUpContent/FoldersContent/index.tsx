@@ -122,7 +122,7 @@ const StyledListItemText = styled(ListItemText)(({ theme }) => ({
   margin: '5px 45px 0px 5px',
   fontSize: '50px',
   color: theme.palette.text.secondary,
-   userSelect: 'none',  
+  userSelect: 'none',  
   li: {
     color: 'black',
     fontSize: '50px',
