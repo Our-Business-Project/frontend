@@ -41,7 +41,6 @@ export default function PopupLayoutWithoutActions({
       </Box>
 
       <DialogContent dividers>{children}</DialogContent>
-      <Button color="primary"></Button>
     </StiledDialog>
   );
 }

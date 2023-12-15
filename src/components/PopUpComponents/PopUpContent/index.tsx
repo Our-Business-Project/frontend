@@ -49,8 +49,12 @@ export default function PopUpContent() {
               onClick={() => setIsFolderOpened(false)}
               className={'mui-1q896iv-MuiButtonBase-root-MuiButton-root'}
             >
-              <TurnLeftIcon color="primary" sx={{ mr: '10px' }} />
-              <Typography>Повернутись </Typography>
+              <Box sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+                <TurnLeftIcon color="primary" sx={{ mr: '10px' }} />
+                <Typography sx={{ userSelect: 'none' }} color="text.secondary">
+                  Повернутись
+                </Typography>
+              </Box>
             </Box>
             <FilesContent calcFoldersData={calcFilesData} />
           </>
