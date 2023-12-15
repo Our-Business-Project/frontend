@@ -40,14 +40,15 @@ export function Row({
           {row.name}
         </TableCell>
         <TableCell sx={{ width: '120px' }} component="th" align="right">
-          <Input
+          {/* <Input
             value={deleteZeros(row.value)}
             size="small"
             onChange={(event) => handleInputChange(event, rowIndex)}
             aria-label="Always visible"
             type="number"
             id="standard-basic"
-          />
+          /> */}
+          {row.value}
         </TableCell>
       </TableRow>
       <TableRow>
